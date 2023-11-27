@@ -3,4 +3,6 @@
     <string name="TextSearch">Поиск</string>
     <string name="Media">Медиатека</string>
     <string name="Settings">Настройки</string>
+    <string name="display">Dispaly</string>
+    <string name="share">Share</string>
 </resources>
