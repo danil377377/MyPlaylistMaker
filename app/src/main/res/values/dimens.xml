@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ButtonTextSize">22sp</dimen>
+    <dimen name="ButtonCornerSize">16dp</dimen>
+    <dimen name="ButtonMarginTop">16dp</dimen>
+    <dimen name="settingsTextSize">19sp</dimen>
+    <dimen name="settingsMarginTop">42dp</dimen>
+    <dimen name="Padding">16dp</dimen>
+    <dimen name="HeaderSize">26sp</dimen>
+
+</resources>
