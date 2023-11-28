@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
-            android:text="Настройки"
+            android:text="@string/settings_sign"
             android:textColor="@color/YP_Black"
             android:textSize="@dimen/HeaderSize" />
     </LinearLayout>
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="Темная тема"
+            android:text="@string/dark_theme"
             android:textColor="@color/black"
             android:textSize="@dimen/settingsTextSize" />
 
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Поделиться"
+                android:text="@string/Share_ign"
                 android:textColor="@color/black"
                 android:textSize="@dimen/settingsTextSize" />
             <ImageView
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Написать в поддержку"
+                android:text="@string/Write_to_maintance"
                 android:textColor="@color/black"
                 android:textSize="@dimen/settingsTextSize" />
             <ImageView
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Пользовательское соглашение"
+                android:text="@string/Contract"
                 android:textColor="@color/black"
                 android:textSize="@dimen/settingsTextSize" />
             <ImageView
