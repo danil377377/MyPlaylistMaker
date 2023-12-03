@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="0dp"-->
+<!--    android:layout_marginTop="@dimen/ButtonMarginTop"-->
+
+<!--    android:layout_weight="1"-->
+<!--    android:backgroundTint="@color/white"-->
+
+<!--    android:textColor="@color/YP_Black"-->
+<!--    android:textSize="@dimen/ButtonTextSize"-->
+<!--    app:cornerRadius="@dimen/ButtonCornerSize"-->
+<!--    app:icon="@drawable/settings"-->
+<!--    app:iconGravity="textStart"-->
+<!--    app:iconTint="@color/YP_Black"-->
 <resources>
-    <style name="MessageTextStyle">
-        <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">26sp</item>
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginTop">@dimen/ButtonMarginTop</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textSize">@dimen/ButtonTextSize</item>
+        <item name="cornerRadius">@dimen/ButtonCornerSize</item>
+        <item name="icon">@drawable/settings</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/YP_Black</item>
+
     </style>
 </resources>
