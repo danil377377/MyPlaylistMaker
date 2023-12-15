@@ -1,24 +1,13 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.MyPlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/YP_Black</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="icon">@drawable/dark_mode_arrow_back</item>
     </style>
-    <?xml version="1.0" encoding="utf-8"?>
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="0dp"-->
-    <!--    android:layout_marginTop="@dimen/ButtonMarginTop"-->
 
-    <!--    android:layout_weight="1"-->
-    <!--    android:backgroundTint="@color/white"-->
 
-    <!--    android:textColor="@color/YP_Black"-->
-    <!--    android:textSize="@dimen/ButtonTextSize"-->
-    <!--    app:cornerRadius="@dimen/ButtonCornerSize"-->
-    <!--    app:icon="@drawable/settings"-->
-    <!--    app:iconGravity="textStart"-->
-    <!--    app:iconTint="@color/YP_Black"-->
-    <resources>
 
-    </resources>
 </resources>

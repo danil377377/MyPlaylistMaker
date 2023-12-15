@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        style="@style/SettingsScreenBackStyle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+
+            style="@style/Arrow_back"/>
+
+        <TextView
+            style="@style/SettingsTextStyle"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/ys_display_medium"
+            android:text="@string/search"
+            android:textFontWeight="500"
+
+            android:textSize="@dimen/HeaderSize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context=".SearchActivity">
+    <EditText
+        android:id="@+id/input_text"
+        style="@style/editText"
+         />
+    <ImageView
+        android:id="@+id/clearIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:visibility="gone" />
+</LinearLayout>
+
+</LinearLayout>

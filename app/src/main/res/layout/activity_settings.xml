@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/SettingsScreenBackStyle"
-    >
+    style="@style/SettingsScreenBackStyle">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/arrow_back"/>
+
+            style="@style/Arrow_back"/>
+
         <TextView
             style="@style/SettingsTextStyle"
-            android:fontFamily="@font/ys_display_medium"
-            android:textFontWeight="500"
             android:layout_marginStart="36dp"
+            android:fontFamily="@font/ys_display_medium"
             android:text="@string/settings_sign"
+            android:textFontWeight="500"
 
             android:textSize="@dimen/HeaderSize" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="45dp">
-        <TextView
-            style="@style/SettingsTextStyle"
 
-            android:text="@string/dark_theme"
-             />
+            <TextView
+                style="@style/SettingsTextStyle"
+
+                android:text="@string/dark_theme" />
 
             <Switch
                 android:layout_width="wrap_content"
@@ -42,41 +44,47 @@
                 tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
 
         </FrameLayout>
+
         <FrameLayout
+            android:id="@+id/share_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/settingsMarginTop">
+
             <TextView
                 style="@style/SettingsTextStyle"
 
-                android:text="@string/Share_ign"
-                />
-            <ImageView
-                style="@style/Share"/>
+                android:text="@string/Share_ign" />
 
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/settingsMarginTop">
-            <TextView
-                style="@style/SettingsTextStyle"
-                android:text="@string/Write_to_maintance"
-                 />
-            <ImageView
-                style="@style/Support"/>
+            <ImageView style="@style/Share" />
 
         </FrameLayout>
+
         <FrameLayout
+            android:id="@+id/write_to_support"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/settingsMarginTop">
+
             <TextView
                 style="@style/SettingsTextStyle"
-                android:text="@string/Contract"
-                 />
-            <ImageView
-                style="@style/Arrow_right"/>
+                android:text="@string/Write_to_maintance" />
+
+            <ImageView style="@style/Support" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/contract"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settingsMarginTop">
+
+            <TextView
+                style="@style/SettingsTextStyle"
+                android:text="@string/Contract" />
+
+            <ImageView style="@style/Arrow_right" />
 
         </FrameLayout>
     </LinearLayout>
