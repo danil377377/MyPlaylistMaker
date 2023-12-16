@@ -5,4 +5,11 @@
     <string name="Settings">Настройки</string>
     <string name="display">Dispaly</string>
     <string name="share">Share</string>
+    <string name="Contract">Пользовательское соглашение</string>
+    <string name="Write_to_maintance">Написать в поддержку</string>
+    <string name="Share_ign">Поделиться</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="settings_sign">Настройки</string>
+    <string name="playlist_maker">Playlist maker</string>
+    <string name="search">Поиск</string>
 </resources>
