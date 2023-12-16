@@ -32,14 +32,14 @@
 
         <Button
             android:id="@+id/search"
-            style="@style/ButtonStyle"
+            style="@style/SearchButtonStyle"
 
             android:text="@string/TextSearch" />
 
 
         <Button
             android:id="@+id/media"
-            style="@style/ButtonStyle"
+            style="@style/MediaButtonStyle"
             android:text="@string/Media" />
 
         <Button

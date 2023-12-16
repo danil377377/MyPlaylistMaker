@@ -6,7 +6,10 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
 
 class SettingActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
@@ -17,6 +20,13 @@ class SettingActivity : AppCompatActivity() {
         val ContractButton = findViewById<FrameLayout>(R.id.contract)
         ContractButton.setOnClickListener{
             val displayIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://yandex.ru/legal/practicum_offer/"))
+            startActivity(displayIntent)
+        }
+        val backButton = findViewById<ImageView>(R.id.back_button)
+
+
+        backButton.setOnClickListener{
+            val displayIntent = Intent(this, MainActivity::class.java)
             startActivity(displayIntent)
         }
 

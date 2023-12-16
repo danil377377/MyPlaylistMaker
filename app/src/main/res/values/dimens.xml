@@ -7,5 +7,6 @@
     <dimen name="settingsMarginTop">42dp</dimen>
     <dimen name="Padding">16dp</dimen>
     <dimen name="HeaderSize">22sp</dimen>
+    <dimen name="Padding_top_search">12dp</dimen>
 
 </resources>

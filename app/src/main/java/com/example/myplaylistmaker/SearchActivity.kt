@@ -1,6 +1,8 @@
 package com.example.myplaylistmaker
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -12,14 +14,23 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 
 class SearchActivity : AppCompatActivity() {
+    private var editTextValue: String? = null
+    private lateinit var inputEditText: EditText
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_layout)
 
-        val linearLayout = findViewById<LinearLayout>(R.id.container)
-        val inputEditText = findViewById<EditText>(R.id.input_text)
+
+val backButton = findViewById<ImageView>(R.id.back_button)
+
+        inputEditText = findViewById<EditText>(R.id.input_text)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
+        backButton.setOnClickListener{
+            val displayIntent = Intent(this, MainActivity::class.java)
+            startActivity(displayIntent)
+        }
         clearButton.setOnClickListener {
             inputEditText.setText("")
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -33,7 +44,9 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
+                editTextValue = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -41,6 +54,17 @@ class SearchActivity : AppCompatActivity() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("input", editTextValue)
+    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        // Здесь нужно восстановить значение из Bundle по ключу
+        val savedInput = savedInstanceState.getString("input")
+        inputEditText.setText(savedInput)
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {

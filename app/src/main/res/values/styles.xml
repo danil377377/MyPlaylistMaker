@@ -17,6 +17,12 @@
         <item name="android:textFontWeight">500</item>
 
     </style>
+    <style name="MediaButtonStyle" parent="ButtonStyle">
+        <item name="icon">@drawable/media</item>
+    </style>
+    <style name="SearchButtonStyle" parent="ButtonStyle">
+        <item name="icon">@drawable/searchbig</item>
+    </style>
     <style name="TextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
