@@ -16,24 +16,25 @@ import android.widget.LinearLayout
 class SearchActivity : AppCompatActivity() {
     private var editTextValue: String? = null
     private lateinit var inputEditText: EditText
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_layout)
 
 
-val backButton = findViewById<ImageView>(R.id.back_button)
+        val backButton = findViewById<ImageView>(R.id.back_button)
 
         inputEditText = findViewById<EditText>(R.id.input_text)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
-        backButton.setOnClickListener{
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+        backButton.setOnClickListener {
+            onBackPressed()
         }
         clearButton.setOnClickListener {
             inputEditText.setText("")
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(clearButton.windowToken, 0)
         }
 
@@ -55,10 +56,12 @@ val backButton = findViewById<ImageView>(R.id.back_button)
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("input", editTextValue)
+        outState.putString(INPUT, editTextValue)
     }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
@@ -73,5 +76,9 @@ val backButton = findViewById<ImageView>(R.id.back_button)
         } else {
             View.VISIBLE
         }
+    }
+    companion object {
+        const val INPUT = "input"
+
     }
 }

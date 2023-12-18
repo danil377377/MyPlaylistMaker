@@ -17,8 +17,8 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val ContractButton = findViewById<FrameLayout>(R.id.contract)
-        ContractButton.setOnClickListener{
+        val contractButton = findViewById<FrameLayout>(R.id.contract)
+        contractButton.setOnClickListener{
             val displayIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://yandex.ru/legal/practicum_offer/"))
             startActivity(displayIntent)
         }
@@ -27,7 +27,7 @@ class SettingActivity : AppCompatActivity() {
 
         backButton.setOnClickListener{
             val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            onBackPressed()
         }
 
 
