@@ -12,4 +12,10 @@
     <string name="settings_sign">Настройки</string>
     <string name="playlist_maker">Playlist maker</string>
     <string name="search">Поиск</string>
+    <string name="subject_message">"Сообщение разработчикам и разработчицам приложения Playlist Maker"</string>
+    <string name="message">"Спасибо разработчикам и разработчицам за крутое приложение!"</string>
+    <string name="my_email">"danil377377@gmail.com"</string>
+    <string name="share_link">"https://practicum.yandex.ru/android-developer/"</string>
+    <string name="contract_link">"https://yandex.ru/legal/practicum_offer/"</string>
+
 </resources>
