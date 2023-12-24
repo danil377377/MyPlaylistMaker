@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_height"
+    android:orientation="horizontal">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        app:cardCornerRadius="@dimen/card_corner_radius">
+
+        <ImageView
+            android:layout_width="@dimen/card_image"
+            android:layout_height="@dimen/card_image"
+
+            android:paddingStart="@dimen/card_image_padding_left"
+            android:scaleType="centerCrop"
+            android:src="@drawable/media" />
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/marginCard"
+        android:layout_marginStart="@dimen/text_card_margin_start">
+
+        <TextView
+            style="@style/SettingsTextStyle"
+            android:layout_gravity="top"
+            android:text="Song"
+
+           />
+
+        <TextView
+            style="@style/SingerName"
+
+            android:text="Singer___________________________________________________"
+
+
+            >
+
+        </TextView>
+
+        <ImageView
+            style="@style/Arrow_right"
+            android:layout_marginStart="@dimen/text_card_margin_start"
+            android:layout_marginTop="@dimen/arrow_song_margin_top"
+            android:layout_marginEnd="@dimen/Padding_top_search"
+            android:layout_marginBottom="@dimen/arrow_song_margin_bottom">
+
+        </ImageView>
+
+    </FrameLayout>
+
+
+</LinearLayout>
+

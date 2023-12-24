@@ -8,5 +8,13 @@
     <dimen name="Padding">16dp</dimen>
     <dimen name="HeaderSize">22sp</dimen>
     <dimen name="Padding_top_search">12dp</dimen>
+    <dimen name="marginCard">14dp</dimen>
+    <dimen name="card_height">61dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_image">45dp</dimen>
+    <dimen name="card_image_padding_left">13dp</dimen>
+    <dimen name="text_card_margin_start">8dp</dimen>
+    <dimen name="arrow_song_margin_top">4dp</dimen>
+    <dimen name="arrow_song_margin_bottom">5dp</dimen>
 
 </resources>

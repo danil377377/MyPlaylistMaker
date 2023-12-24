@@ -65,8 +65,8 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        // Здесь нужно восстановить значение из Bundle по ключу
-        val savedInput = savedInstanceState.getString("input")
+
+        val savedInput = savedInstanceState.getString(INPUT)
         inputEditText.setText(savedInput)
     }
 

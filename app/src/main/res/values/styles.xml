@@ -42,6 +42,11 @@
         <item name="android:textFontWeight">400</item>
 
     </style>
+    <style name="SingerName" parent ="SettingsTextStyle">
+    <item name="android:textColor">@color/grey_hint</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
     <style name="MainScreenBackStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
