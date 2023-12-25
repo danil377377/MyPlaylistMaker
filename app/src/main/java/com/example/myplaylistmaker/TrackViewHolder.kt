@@ -13,7 +13,7 @@ class TrackViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val singerName: TextView = itemView.findViewById(R.id.singer_name)
 
     fun bind(model: Track) {
-        Glide.with(itemView).load(model.artworkUrl100).placeholder(R.drawable.ic_launcher_foreground).into(songIcon)
+        Glide.with(itemView).load(model.artworkUrl100).placeholder(R.drawable.placeholder).into(songIcon)
 
         songName.text = model.trackName
         singerName.text = "${model.artistName} • ${model.trackTime}"
