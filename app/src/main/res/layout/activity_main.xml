@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#3772E7"
-    android:orientation="vertical"
-    android:padding="@dimen/Padding">
+    style="@style/MainScreenBackStyle"
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,9 +13,10 @@
             android:layout_height="wrap_content"
 
             android:layout_gravity="start"
-            android:text="Playlist maker"
+            android:text="@string/playlist_maker"
             android:textColor="@color/white"
-            android:textSize="@dimen/HeaderSize" />
+            android:textSize="@dimen/HeaderSize"
+            android:fontFamily="@font/ys_display_medium" />
 
 
     </FrameLayout>
@@ -34,49 +32,21 @@
 
         <Button
             android:id="@+id/search"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:text="@string/TextSearch"
-            android:textColor="@color/YP_Black"
-            android:textSize="@dimen/ButtonTextSize"
-            app:cornerRadius="@dimen/ButtonCornerSize"
-            app:icon="@drawable/search"
-            app:iconGravity="textStart"
-            app:iconTint="@color/YP_Black"/>
+            style="@style/SearchButtonStyle"
+
+            android:text="@string/TextSearch" />
 
 
         <Button
             android:id="@+id/media"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/ButtonMarginTop"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:text="@string/Media"
-            android:textColor="@color/YP_Black"
-            android:textSize="@dimen/ButtonTextSize"
-            app:cornerRadius="@dimen/ButtonCornerSize"
-            app:icon="@drawable/media"
-            app:iconGravity="textStart"
-            app:iconTint="@color/YP_Black"/>
+            style="@style/MediaButtonStyle"
+            android:text="@string/Media" />
 
         <Button
             android:id="@+id/settings"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/ButtonMarginTop"
-
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            style="@style/ButtonStyle"
             android:text="@string/Settings"
 
-            android:textColor="@color/YP_Black"
-            android:textSize="@dimen/ButtonTextSize"
-            app:cornerRadius="@dimen/ButtonCornerSize"
-            app:icon="@drawable/settings"
-            app:iconGravity="textStart"
-            app:iconTint="@color/YP_Black"/>
+            />
     </LinearLayout>
 </LinearLayout>
