@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--    android:layout_width="match_parent"-->
+<?xml version="1.0" encoding="utf-8"?><!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="0dp"-->
 <!--    android:layout_marginTop="@dimen/ButtonMarginTop"-->
 
@@ -13,6 +12,7 @@
 <!--    app:iconGravity="textStart"-->
 <!--    app:iconTint="@color/YP_Black"-->
 <resources>
+
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -28,12 +28,15 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>
+
     <style name="MediaButtonStyle" parent="ButtonStyle">
         <item name="icon">@drawable/media</item>
     </style>
+
     <style name="SearchButtonStyle" parent="ButtonStyle">
         <item name="icon">@drawable/searchbig</item>
     </style>
+
     <style name="TextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -43,6 +46,7 @@
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
     </style>
+
     <style name="SettingsTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -52,19 +56,29 @@
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
     </style>
+    <style name="SongTextStyle" parent="SettingsTextStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:width">320dp</item>
+    </style>
 
-    <style name="SingerName" parent ="SettingsTextStyle">
-    <item name="android:textColor">@color/white</item>
-    <item name="android:textSize">11sp</item>
+    <style name="SingerName" parent="SettingsTextStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:width">320dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:layout_gravity">bottom</item>
     </style>
-        <style name="Share">
-            <item name="android:layout_width">wrap_content</item>
-            <item name="android:layout_height">wrap_content</item>
-            <item name="android:src">@drawable/share_darkv</item>
-            <item name="android:layout_gravity">end</item>
 
-        </style>
+    <style name="Share">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/share_darkv</item>
+        <item name="android:layout_gravity">end</item>
+
+    </style>
+
     <style name="Support">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -73,12 +87,14 @@
 
 
     </style>
+
     <style name="Arrow_right">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/arrow_right_darck</item>
         <item name="android:layout_gravity">end</item>
     </style>
+
     <style name="Arrow_back">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -86,6 +102,7 @@
 
 
     </style>
+
     <style name="MainScreenBackStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -93,6 +110,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/Padding</item>
     </style>
+
     <style name="SettingsScreenBackStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -100,6 +118,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/Padding</item>
     </style>
+
     <style name="editText">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>

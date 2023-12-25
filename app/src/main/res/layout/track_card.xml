@@ -12,10 +12,11 @@
         app:cardCornerRadius="@dimen/card_corner_radius">
 
         <ImageView
+            android:id="@+id/song_icon"
             android:layout_width="@dimen/card_image"
             android:layout_height="@dimen/card_image"
 
-            android:paddingStart="@dimen/card_image_padding_left"
+
             android:scaleType="centerCrop"
             android:src="@drawable/media" />
     </androidx.cardview.widget.CardView>
@@ -27,16 +28,19 @@
         android:layout_marginStart="@dimen/text_card_margin_start">
 
         <TextView
-            style="@style/SettingsTextStyle"
+            android:id="@+id/song_name"
+            style="@style/SongTextStyle"
             android:layout_gravity="top"
-            android:text="Song"
 
            />
 
         <TextView
+            android:id="@+id/singer_name"
             style="@style/SingerName"
+            android:width="320dp"
+            android:ellipsize="end"
+            android:singleLine="true"
 
-            android:text="Singer___________________________________________________"
 
 
             >
@@ -45,9 +49,8 @@
 
         <ImageView
             style="@style/Arrow_right"
-            android:layout_marginStart="@dimen/text_card_margin_start"
+
             android:layout_marginTop="@dimen/arrow_song_margin_top"
-            android:layout_marginEnd="@dimen/Padding_top_search"
             android:layout_marginBottom="@dimen/arrow_song_margin_bottom">
 
         </ImageView>
