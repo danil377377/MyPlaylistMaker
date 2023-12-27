@@ -13,50 +13,46 @@
 
         <ImageView
             android:id="@+id/song_icon"
-            android:layout_width="@dimen/card_image"
-            android:layout_height="@dimen/card_image"
+            style="@style/PlaceHolder"
 
-
-            android:scaleType="centerCrop"
-            android:src="@drawable/media" />
+            />
     </androidx.cardview.widget.CardView>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="@dimen/marginCard"
-        android:layout_marginStart="@dimen/text_card_margin_start">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/song_name"
-            style="@style/SongTextStyle"
-            android:layout_gravity="top"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/marginCard"
+            android:layout_marginStart="@dimen/text_card_margin_start"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-           />
+            <TextView
 
-        <TextView
-            android:id="@+id/singer_name"
-            style="@style/SingerName"
-            android:width="320dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-
-
-
-            >
-
-        </TextView>
-
+                android:id="@+id/song_name"
+                style="@style/SongTextStyle"
+                android:layout_width="match_parent"
+                android:layout_gravity="top"
+                />
+            <TextView
+                android:id="@+id/singer_name"
+                style="@style/SingerName"
+                android:layout_width="match_parent"
+                >
+            </TextView>
+        </LinearLayout>
         <ImageView
             style="@style/Arrow_right"
-
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/text_card_margin_start"
             android:layout_marginTop="@dimen/arrow_song_margin_top"
+            android:layout_marginEnd="@dimen/arrow_song_margin_end"
             android:layout_marginBottom="@dimen/arrow_song_margin_bottom">
-
         </ImageView>
-
-    </FrameLayout>
-
+    </LinearLayout>
 
 </LinearLayout>
 

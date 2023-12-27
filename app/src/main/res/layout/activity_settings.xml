@@ -9,8 +9,8 @@
         android:orientation="horizontal">
 
         <ImageView
-android:id="@+id/back_button"
-            style="@style/Arrow_back"/>
+            android:id="@+id/back_button"
+            style="@style/Arrow_back" />
 
         <TextView
             style="@style/SettingsTextStyle"
