@@ -2,7 +2,6 @@ package com.example.myplaylistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,16 +10,32 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
+import kotlin.random.Random
 
 class SearchActivity : AppCompatActivity() {
     private var editTextValue: String? = null
     private lateinit var inputEditText: EditText
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var tracksAdapter: TrackAdapter
 
     @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_layout)
+
+
+        recyclerView = findViewById(R.id.recyclerView)
+
+
+        tracksAdapter = TrackAdapter(
+            getTrackList())
+
+        recyclerView.adapter = tracksAdapter
+
+
+
 
 
         val backButton = findViewById<ImageView>(R.id.back_button)
@@ -65,8 +80,8 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        // Здесь нужно восстановить значение из Bundle по ключу
-        val savedInput = savedInstanceState.getString("input")
+
+        val savedInput = savedInstanceState.getString(INPUT)
         inputEditText.setText(savedInput)
     }
 
