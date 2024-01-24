@@ -17,5 +17,8 @@
     <string name="my_email">"danil377377@gmail.com"</string>
     <string name="share_link">"https://practicum.yandex.ru/android-developer/"</string>
     <string name="contract_link">"https://yandex.ru/legal/practicum_offer/"</string>
+    <string name="Nothing_found">Ничего не нашлось</string>
+    <string name="InternetProblems">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="Retry">Обновить</string>
 
 </resources>
