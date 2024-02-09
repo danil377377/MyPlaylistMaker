@@ -18,5 +18,7 @@
     <dimen name="arrow_song_margin_bottom">19dp</dimen>
     <dimen name="arrow_song_margin_end">12dp</dimen>
     <dimen name="arrow_song_margin_start">8dp</dimen>
+    <dimen name="_26dp">26dp</dimen>
+    <dimen name="_24dp">24dp</dimen>
 
 </resources>
