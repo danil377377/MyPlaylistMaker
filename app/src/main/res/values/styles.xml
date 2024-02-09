@@ -18,6 +18,18 @@
         <item name="android:textFontWeight">500</item>
 
     </style>
+    <style name="RetryButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:backgroundTint">@color/YP_Black</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="cornerRadius">@dimen/ButtonCornerSize</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
 
     <style name="MediaButtonStyle" parent="ButtonStyle">
         <item name="icon">@drawable/media</item>
@@ -47,6 +59,7 @@
         <item name="android:textFontWeight">400</item>
 
     </style>
+
     <style name="SongTextStyle" parent="SettingsTextStyle">
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
@@ -109,13 +122,12 @@
 
 
     </style>
+
     <style name="PlaceHolder">
         <item name="android:layout_width">@dimen/card_image</item>
         <item name="android:layout_height">@dimen/card_image</item>
         <item name="android:src">@drawable/placeholder</item>
         <item name="android:scaleType">centerCrop</item>
-
-
     </style>
 
     <style name="editText">
@@ -137,4 +149,27 @@
         <item name="android:textColorHint">@color/grey_hint</item>
     </style>
 
+
+    <style name="ErrorText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textColor">@color/YP_Black</item>
+
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+    <style name="NothingFoundIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/error_light_mode</item>
+
+    </style>
+    <style name="InternetProblemsIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/internent_problems_light_mode</item>
+
+    </style>
 </resources>
