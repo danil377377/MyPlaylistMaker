@@ -75,8 +75,13 @@
             android:id="@+id/clearHistoryButton"
             style="@style/RetryButtonStyle"
             android:text="Очистить историю"
+
+
+
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_24dp">
+            android:singleLine="true"
+
+            >
 
         </Button>
     </LinearLayout>

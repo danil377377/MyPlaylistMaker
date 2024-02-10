@@ -98,17 +98,20 @@ class SearchActivity : AppCompatActivity() {
         }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus && inputEditText.text.isEmpty() ) {
+            if (hasFocus && inputEditText.text.isEmpty() && history.getHistoryTrackList() != ArrayList<Track>() ) {
                 historyLinearLayout.visibility = View.VISIBLE
 
             } else {
                 historyLinearLayout.visibility = View.GONE
             }
         }
+        fun hideHistoryLayout() {
+            historyLinearLayout.visibility = View.GONE
+        }
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-
                 search()
+                hideHistoryLayout()
                 true
             }
             false

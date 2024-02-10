@@ -35,7 +35,7 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
             historyTrackList.removeAt(existingTrackIndex)
         } else if (historyTrackList.size >= 10) {
 
-            historyTrackList.removeAt(9)
+            historyTrackList.removeLast()
         }
 
         historyTrackList.add(0,track)
