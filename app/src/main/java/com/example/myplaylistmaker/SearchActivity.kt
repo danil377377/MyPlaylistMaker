@@ -3,6 +3,7 @@ package com.example.myplaylistmaker
 import SearchHistory
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -22,6 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Serializable
 import kotlin.random.Random
 
 const val SHARED_PREFERENCES = "sgared_preferences"
@@ -47,13 +49,21 @@ class SearchActivity : AppCompatActivity() {
         val sharedPrefs = getSharedPreferences(SHARED_PREFERENCES, AppCompatActivity.MODE_PRIVATE)
         val history = SearchHistory(sharedPrefs)
         tracksAdapter = TrackAdapter(
-            tracks, {
-                history.addToHistory(it)
+            tracks
+        ) {
+            history.addToHistory(it)
 
-            })
+            val playerIntent = Intent(this, Player::class.java)
+            playerIntent.putExtra("track", createJsonFromTrack(it))
+            startActivity(playerIntent)
+        }
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.adapter = tracksAdapter
-        val historyAdapter = TrackAdapter(history.getHistoryTrackList(), {})
+        val historyAdapter = TrackAdapter(history.getHistoryTrackList()) {
+            val playerIntent = Intent(this, Player::class.java)
+            playerIntent.putExtra("track", createJsonFromTrack(it))
+            startActivity(playerIntent)
+        }
         val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
         val historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
         historyRecyclerView.adapter = historyAdapter
@@ -224,6 +234,10 @@ class SearchActivity : AppCompatActivity() {
                 .show()
         }
 
+    }
+    private fun createJsonFromTrack(track:Track): String {
+        val gson = Gson()
+        return gson.toJson(track)
     }
 
 
