@@ -28,6 +28,8 @@
         <item name="android:textSize">14sp</item>
         <item name="cornerRadius">@dimen/ButtonCornerSize</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textAllCaps">false</item>
+
         <item name="android:textFontWeight">500</item>
     </style>
 

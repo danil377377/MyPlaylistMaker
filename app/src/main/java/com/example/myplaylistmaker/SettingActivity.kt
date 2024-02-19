@@ -10,13 +10,23 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.switchmaterial.SwitchMaterial
+const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
+const val EDIT_SWITCH_KEY = "key_for_edit_text"
 
 class SettingActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        val app = applicationContext as App
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
+        themeSwitcher.isChecked = app.sharedPrefs.getBoolean(EDIT_SWITCH_KEY, false)
+        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
+            (app).switchTheme(checked)
 
+        }
         val contractButton = findViewById<FrameLayout>(R.id.contract)
         contractButton.setOnClickListener{
             val displayIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contract_link)))
