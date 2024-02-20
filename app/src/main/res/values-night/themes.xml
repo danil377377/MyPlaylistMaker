@@ -4,6 +4,7 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="colorPrimary">@color/YP_Black</item>
+
         <item name="colorSecondary">@color/white</item>
         <item name="icon">@drawable/dark_mode_arrow_back</item>
     </style>
