@@ -27,6 +27,7 @@ class SettingActivity : AppCompatActivity() {
             (app).switchTheme(checked)
 
         }
+
         val contractButton = findViewById<FrameLayout>(R.id.contract)
         contractButton.setOnClickListener{
             val displayIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contract_link)))
