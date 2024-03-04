@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,6 +18,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -23,8 +26,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.Serializable
-import kotlin.random.Random
+
 
 const val SHARED_PREFERENCES = "sgared_preferences"
 const val TRACK_HISTORY_KEY = "key_for_track_history"
@@ -39,6 +41,11 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var nothingFound: LinearLayout
     private lateinit var internetProblems: LinearLayout
     private lateinit var tracksAdapter: TrackAdapter
+    private lateinit var historyLinearLayout: LinearLayout
+    private lateinit var progressBar: ProgressBar
+    private var isClickAllowed = true
+
+    private val handler = Handler(Looper.getMainLooper())
 
 
     @SuppressLint("MissingInflatedId")
@@ -51,21 +58,26 @@ class SearchActivity : AppCompatActivity() {
         tracksAdapter = TrackAdapter(
             tracks
         ) {
-            history.addToHistory(it)
+            if (clickDebounce()) {
+                history.addToHistory(it)
 
-            val playerIntent = Intent(this, Player::class.java)
-            playerIntent.putExtra("track", createJsonFromTrack(it))
-            startActivity(playerIntent)
+                val playerIntent = Intent(this, Player::class.java)
+                playerIntent.putExtra("track", createJsonFromTrack(it))
+                startActivity(playerIntent)
+            }
         }
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.adapter = tracksAdapter
+        progressBar = findViewById(R.id.progressBar)
         val historyAdapter = TrackAdapter(history.getHistoryTrackList()) {
-            val playerIntent = Intent(this, Player::class.java)
-            playerIntent.putExtra("track", createJsonFromTrack(it))
-            startActivity(playerIntent)
+            if (clickDebounce()) {
+                val playerIntent = Intent(this, Player::class.java)
+                playerIntent.putExtra("track", createJsonFromTrack(it))
+                startActivity(playerIntent)
+            }
         }
         val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
-        val historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
+         historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
         historyRecyclerView.adapter = historyAdapter
         fun updateHistoryAdapter() {
             val newHistoryList = history.getHistoryTrackList()
@@ -139,7 +151,8 @@ class SearchActivity : AppCompatActivity() {
                     if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
                 editTextValue = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
-
+                searchDebounce()
+                hideHistoryLayout()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -162,6 +175,14 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setText(savedInput)
     }
 
+    private fun clickDebounce() : Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -170,10 +191,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val INPUT = "input"
 
-    }
 
     private val ITunesBaseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
@@ -184,6 +202,8 @@ class SearchActivity : AppCompatActivity() {
     private val ITunesService = retrofit.create(ITunesApi::class.java)
 
     private fun search() {
+        historyLinearLayout.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
         ITunesService.search(inputEditText.text.toString())
             .enqueue(object : Callback<ITunesResponse> {
                 override fun onResponse(
@@ -200,8 +220,10 @@ class SearchActivity : AppCompatActivity() {
                                 tracks.clear()
                                 tracks.addAll(response.body()?.results!!)
                                 tracksAdapter.notifyDataSetChanged()
-                                showMessage("", "")
+                                progressBar.visibility = View.GONE
+
                             } else {
+                                progressBar.visibility = View.GONE
                                 showMessage("Ничего не найдено", "")
                                 recyclerView.setVisibility(View.GONE)
                                 nothingFound.setVisibility(View.VISIBLE)
@@ -211,6 +233,8 @@ class SearchActivity : AppCompatActivity() {
                         }
 
                         else -> {
+                            progressBar.visibility = View.GONE
+
                             showMessage("Что-то пошло не так", response.code().toString())
                             internetProblems.setVisibility(View.VISIBLE)
                             recyclerView.setVisibility(View.GONE)
@@ -220,12 +244,19 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
+                    progressBar.visibility = View.GONE
                     showMessage("Что-то пошло не так", t.message.toString())
                     internetProblems.setVisibility(View.VISIBLE)
                     recyclerView.setVisibility(View.GONE)
                     nothingFound.setVisibility(View.GONE)
                 }
             })
+    }
+    private val searchRunnable = Runnable { search() }
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+
     }
 
     private fun showMessage(text: String, additionalText: String) {
@@ -238,6 +269,12 @@ class SearchActivity : AppCompatActivity() {
     private fun createJsonFromTrack(track:Track): String {
         val gson = Gson()
         return gson.toJson(track)
+    }
+
+    companion object {
+        const val INPUT = "input"
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 
 

@@ -5,4 +5,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#E6E8EB</color>
     <color name="grey_hint">#AEAFB4</color>
+    <color name="progress_bar">#6200EE</color>
 </resources>
