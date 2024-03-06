@@ -160,6 +160,9 @@
     <style name="Play">
         <item name="android:src">@drawable/play</item>
     </style>
+    <style name="Pause">
+        <item name="android:src">@drawable/pause</item>
+    </style>
     <style name="Add_to_favorites">
         <item name="android:src">@drawable/add_to_favorite</item>
     </style>

@@ -99,6 +99,19 @@
         android:layout_marginTop="@dimen/_30dp"
         />
     <ImageView
+        android:id="@+id/Pause"
+        style="@style/Pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/addToPlaylist"
+        app:layout_constraintEnd_toStartOf="@id/AddtoFavorites"
+        app:layout_constraintTop_toBottomOf="@id/singerName"
+        android:layout_marginTop="38dp"
+android:visibility="invisible"
+
+
+        />
+    <ImageView
         android:id="@+id/AddtoFavorites"
         style="@style/Add_to_favorites"
         android:layout_width="wrap_content"
@@ -117,7 +130,7 @@
         app:layout_constraintTop_toBottomOf="@id/Play"
         app:layout_constraintStart_toStartOf="@id/Play"
         app:layout_constraintEnd_toEndOf="@id/Play"
-        android:text="0:30"
+        android:text="0:00"
         >
     </TextView>
 

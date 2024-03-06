@@ -61,9 +61,9 @@ class SearchActivity : AppCompatActivity() {
             if (clickDebounce()) {
                 history.addToHistory(it)
 
-                val playerIntent = Intent(this, Player::class.java)
-                playerIntent.putExtra("track", createJsonFromTrack(it))
-                startActivity(playerIntent)
+                val playerActivityIntent = Intent(this, PlayerActivity::class.java)
+                playerActivityIntent.putExtra("track", createJsonFromTrack(it))
+                startActivity(playerActivityIntent)
             }
         }
         recyclerView = findViewById(R.id.recyclerView)
@@ -71,9 +71,9 @@ class SearchActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         val historyAdapter = TrackAdapter(history.getHistoryTrackList()) {
             if (clickDebounce()) {
-                val playerIntent = Intent(this, Player::class.java)
-                playerIntent.putExtra("track", createJsonFromTrack(it))
-                startActivity(playerIntent)
+                val playerActivityIntent = Intent(this, PlayerActivity::class.java)
+                playerActivityIntent.putExtra("track", createJsonFromTrack(it))
+                startActivity(playerActivityIntent)
             }
         }
         val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
