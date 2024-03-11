@@ -137,6 +137,9 @@
     <style name="Play">
         <item name="android:src">@drawable/play_dark</item>
     </style>
+    <style name="Pause">
+        <item name="android:src">@drawable/pause_dark</item>
+    </style>
     <style name="Add_to_favorites">
         <item name="android:src">@drawable/add_to_favorite_dark</item>
     </style>
