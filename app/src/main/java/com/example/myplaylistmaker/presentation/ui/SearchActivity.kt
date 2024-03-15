@@ -1,6 +1,6 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.presentation.ui
 
-import SearchHistory
+import com.example.myplaylistmaker.data.sharedprefs.SearchHistory
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -19,10 +19,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myplaylistmaker.data.network.ITunesApi
+import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.models.ITunesResponse
+import com.example.myplaylistmaker.models.Track
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

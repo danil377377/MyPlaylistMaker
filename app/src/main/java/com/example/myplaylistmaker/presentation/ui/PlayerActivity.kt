@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.presentation.ui
 
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
@@ -7,12 +7,15 @@ import android.os.Handler
 import android.os.Looper
 import android.util.TypedValue
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.data.GlideLoaderImpl
+import com.example.myplaylistmaker.data.TrackDataProviderImpl
+import com.example.myplaylistmaker.models.Track
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -46,7 +49,8 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.player)
-        val track = intent.getStringExtra("track")?.let { createTrackFromJson(it) }
+        val track = intent.getStringExtra("track")?.let { val trackProvider = TrackDataProviderImpl()
+        trackProvider.provideTrackFromJson(it)}
         val backButton = findViewById<ImageView>(R.id.backButton)
         val icon = findViewById<ImageView>(R.id.icon)
         val songName = findViewById<TextView>(R.id.songName)
@@ -73,9 +77,9 @@ class PlayerActivity : AppCompatActivity() {
         ).toInt()
         if (track != null) {
             url = track.previewUrl
-            Glide.with(icon).load(track.getCoverArtwork()).transform(RoundedCorners(radiusInPixels))
-                .placeholder(R.drawable.placeholder)
-                .into(icon)
+            val glideLoad = GlideLoaderImpl()
+
+            glideLoad.loadRoundedImage(this , track.getCoverArtwork(), icon, radiusInPixels)
             songName.text = track.trackName
             singerName.text = track.artistName
             fullDurability.text =
@@ -129,10 +133,6 @@ class PlayerActivity : AppCompatActivity() {
         pausePlayer()
     }
 
-    private fun createTrackFromJson(track: String): Track {
-        val gson = Gson()
-        return gson.fromJson(track, Track::class.java)
-    }
 
     private fun playbackControl() {
         when (playerState) {

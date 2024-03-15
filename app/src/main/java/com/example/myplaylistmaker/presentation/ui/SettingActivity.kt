@@ -1,16 +1,14 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.presentation.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatDelegate
+import com.example.myplaylistmaker.data.sharedprefs.App
+import com.example.myplaylistmaker.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
 const val EDIT_SWITCH_KEY = "key_for_edit_text"

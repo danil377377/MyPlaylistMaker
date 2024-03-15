@@ -1,10 +1,12 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.models.Track
 
-class TrackAdapter(private val trackList: MutableList<Track>,val clickListener: LocationClickListener) : RecyclerView.Adapter<TrackViewHolder>() {
+class TrackAdapter(private val trackList: MutableList<Track>, val clickListener: LocationClickListener) : RecyclerView.Adapter<TrackViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_card, parent, false)

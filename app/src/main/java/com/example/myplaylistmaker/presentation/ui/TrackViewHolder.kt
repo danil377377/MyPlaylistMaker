@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.presentation.ui
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -6,6 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
