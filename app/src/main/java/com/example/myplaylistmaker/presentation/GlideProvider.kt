@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker.data
+package com.example.myplaylistmaker.presentation
 
 import android.content.Context
 import android.widget.ImageView

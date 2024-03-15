@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker.ui
+package com.example.myplaylistmaker.presentation.ui
 
 import com.example.myplaylistmaker.data.sharedprefs.SearchHistory
 import android.annotation.SuppressLint

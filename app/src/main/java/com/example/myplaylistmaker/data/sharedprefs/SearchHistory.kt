@@ -1,7 +1,7 @@
 package com.example.myplaylistmaker.data.sharedprefs
 
 import android.content.SharedPreferences
-import com.example.myplaylistmaker.ui.TRACK_HISTORY_KEY
+import com.example.myplaylistmaker.presentation.ui.TRACK_HISTORY_KEY
 import com.example.myplaylistmaker.models.Track
 import com.google.gson.Gson
 
