@@ -1,8 +1,10 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.data.sharedprefs
 
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.myplaylistmaker.ui.EDIT_SWITCH_KEY
+import com.example.myplaylistmaker.ui.PRACTICUM_EXAMPLE_PREFERENCES
 
 class App : Application() {
 
