@@ -280,6 +280,7 @@ class SearchActivity : ComponentActivity() {
 
     private val ITunesService = retrofit.create(ITunesApi::class.java)
 
+
 //    private fun search() {
 //        val query = inputEditText.text.toString().trim() // Trim to remove leading/trailing spaces
 //
