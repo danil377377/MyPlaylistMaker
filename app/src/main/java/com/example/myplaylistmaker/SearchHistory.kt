@@ -23,10 +23,6 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
     }
 
     fun addToHistory(track: Track) {
-
-
-
-
         val historyTrackList = getHistoryTrackList()
         val existingTrackIndex = historyTrackList.indexOfFirst { it.trackId == track.trackId }
 

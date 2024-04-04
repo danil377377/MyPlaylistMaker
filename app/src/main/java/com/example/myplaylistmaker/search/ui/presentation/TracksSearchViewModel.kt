@@ -61,7 +61,7 @@ class TracksSearchViewModel(
         handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
-    private fun searchRequest(newSearchText: String) {
+     fun searchRequest(newSearchText: String) {
         if (newSearchText.isNotEmpty()) {
             renderState(
                 TracksState.Loading
