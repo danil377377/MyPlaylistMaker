@@ -1,6 +1,6 @@
-package com.example.myplaylistmaker.models
+package com.example.myplaylistmaker.search.data.dto
 
-data class Track(
+data class TrackDto(
     val trackId: Int,
     val trackName: String,
     val artistName: String,
@@ -14,4 +14,3 @@ data class Track(
 ) {
     fun getCoverArtwork() = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 }
-

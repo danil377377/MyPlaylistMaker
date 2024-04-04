@@ -1,6 +1,6 @@
-package com.example.myplaylistmaker.data
+package com.example.myplaylistmaker
 
-import com.example.myplaylistmaker.models.Track
+import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.presentation.TrackDataProvider
 import com.google.gson.Gson
 

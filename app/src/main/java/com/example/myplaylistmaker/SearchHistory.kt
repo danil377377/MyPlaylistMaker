@@ -1,8 +1,8 @@
-package com.example.myplaylistmaker.data.sharedprefs
+package com.example.myplaylistmaker
 
 import android.content.SharedPreferences
-import com.example.myplaylistmaker.presentation.ui.TRACK_HISTORY_KEY
-import com.example.myplaylistmaker.models.Track
+import com.example.myplaylistmaker.search.ui.TRACK_HISTORY_KEY
+import com.example.myplaylistmaker.search.domain.models.Track
 import com.google.gson.Gson
 
 class SearchHistory(private val sharedPrefs: SharedPreferences) {

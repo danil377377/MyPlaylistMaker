@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
-import com.example.myplaylistmaker.data.sharedprefs.App
+import com.example.myplaylistmaker.App
 import com.example.myplaylistmaker.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"

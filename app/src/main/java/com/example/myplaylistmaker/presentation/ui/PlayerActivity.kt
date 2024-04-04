@@ -10,13 +10,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.myplaylistmaker.R
-import com.example.myplaylistmaker.data.GlideLoaderImpl
-import com.example.myplaylistmaker.data.TrackDataProviderImpl
-import com.example.myplaylistmaker.models.Track
-import com.google.gson.Gson
+import com.example.myplaylistmaker.GlideLoaderImpl
+import com.example.myplaylistmaker.TrackDataProviderImpl
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -79,7 +75,7 @@ class PlayerActivity : AppCompatActivity() {
             url = track.previewUrl
             val glideLoad = GlideLoaderImpl()
 
-            glideLoad.loadRoundedImage(this , track.getCoverArtwork(), icon, radiusInPixels)
+            glideLoad.loadRoundedImage(this , track.coverArtWork, icon, radiusInPixels)
             songName.text = track.trackName
             singerName.text = track.artistName
             fullDurability.text =

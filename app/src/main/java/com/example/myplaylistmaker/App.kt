@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker.data.sharedprefs
+package com.example.myplaylistmaker
 
 import android.app.Application
 import android.content.SharedPreferences
