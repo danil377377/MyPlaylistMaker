@@ -1,6 +1,6 @@
 package com.example.myplaylistmaker.search.ui
 
-import com.example.myplaylistmaker.SearchHistory
+import com.example.myplaylistmaker.search.domain.SearchHistory
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -22,22 +21,15 @@ import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myplaylistmaker.search.data.network.ITunesApi
 import com.example.myplaylistmaker.R
-import com.example.myplaylistmaker.search.data.dto.ITunesResponse
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.presentation.ui.PlayerActivity
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
 import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-const val SHARED_PREFERENCES = "sgared_preferences"
-const val TRACK_HISTORY_KEY = "key_for_track_history"
+
 
 class SearchActivity : ComponentActivity() {
     companion object {
@@ -45,7 +37,7 @@ class SearchActivity : ComponentActivity() {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
-    private val tracks = ArrayList<Track>()
+
     private var editTextValue: String? = null
     private lateinit var inputEditText: EditText
     private lateinit var recyclerView: RecyclerView
@@ -70,8 +62,7 @@ class SearchActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_layout)
         viewModel = ViewModelProvider(this, TracksSearchViewModel.getViewModelFactory())[TracksSearchViewModel::class.java]
-        val sharedPrefs = getSharedPreferences(SHARED_PREFERENCES, AppCompatActivity.MODE_PRIVATE)
-        val history = SearchHistory(sharedPrefs)
+        val history = SearchHistory(this)
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {
@@ -82,9 +73,18 @@ class SearchActivity : ComponentActivity() {
                 startActivity(playerActivityIntent)
             }
         }
+        val backButton = findViewById<ImageView>(R.id.back_button)
+        val clearHistoryButton = findViewById<Button>(R.id.clearHistoryButton)
+        retryButton = findViewById<Button>(R.id.retry)
+        nothingFound = findViewById<LinearLayout>(R.id.nothing_found)
+        internetProblems = findViewById<LinearLayout>(R.id.internet_problems)
+        inputEditText = findViewById<EditText>(R.id.input_text)
+        val clearButton = findViewById<ImageView>(R.id.clearIcon)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.adapter = tracksAdapter
         progressBar = findViewById(R.id.progressBar)
+        val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
+        historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
         val historyAdapter = TrackAdapter() {
             if (clickDebounce()) {
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
@@ -92,8 +92,6 @@ class SearchActivity : ComponentActivity() {
                 startActivity(playerActivityIntent)
             }
         }
-        val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
-        historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
         historyRecyclerView.adapter = historyAdapter
         fun updateHistoryAdapter() {
             val newHistoryList = history.getHistoryTrackList()
@@ -101,15 +99,9 @@ class SearchActivity : ComponentActivity() {
             historyAdapter.notifyDataSetChanged()
         }
 
+//надо сделать изменение хранение и запрос historyList через LiveData в TracksSearchViewModel
 
-        val backButton = findViewById<ImageView>(R.id.back_button)
 
-        val clearHistoryButton = findViewById<Button>(R.id.clearHistoryButton)
-        retryButton = findViewById<Button>(R.id.retry)
-        nothingFound = findViewById<LinearLayout>(R.id.nothing_found)
-        internetProblems = findViewById<LinearLayout>(R.id.internet_problems)
-        inputEditText = findViewById<EditText>(R.id.input_text)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
         fun hideHistoryLayout() {
             historyLinearLayout.visibility = View.GONE
@@ -124,7 +116,7 @@ class SearchActivity : ComponentActivity() {
             nothingFound.setVisibility(View.GONE)
             hideHistoryLayout()
             inputEditText.setText("")
-            tracks.clear()
+
             tracksAdapter.notifyDataSetChanged()
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -134,7 +126,7 @@ class SearchActivity : ComponentActivity() {
         }
         clearHistoryButton.setOnClickListener {
 
-            sharedPrefs.edit().remove(TRACK_HISTORY_KEY).apply()
+            history.clearHistory()
             updateHistoryAdapter()
             historyLinearLayout.visibility = View.GONE
         }
