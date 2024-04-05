@@ -7,60 +7,50 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.activity.ComponentActivity
+import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.App
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.settings.presentation.SettingsViewModel
 import com.google.android.material.switchmaterial.SwitchMaterial
-const val PRACTICUM_EXAMPLE_PREFERENCES = "practicum_example_preferences"
-const val EDIT_SWITCH_KEY = "key_for_edit_text"
 
-class SettingActivity : AppCompatActivity() {
+
+class SettingActivity : ComponentActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_settings)
         val app = applicationContext as App
+        val settingsInteractor = Creator.provideSettingsInteractor(app)
+        val sharingInteractor = Creator.provideSharingInteractor(this)
+        val viewModel = SettingsViewModel(sharingInteractor, settingsInteractor)
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
-        themeSwitcher.isChecked = app.sharedPrefs.getTheme()
+        themeSwitcher.isChecked = viewModel.getThemeSettings()
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            (app).switchTheme(checked)
+            viewModel.updateThemeSettings(checked)
 
         }
 
         val contractButton = findViewById<FrameLayout>(R.id.contract)
         contractButton.setOnClickListener{
-            val displayIntent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contract_link)))
-            startActivity(displayIntent)
+           viewModel.openTherms()
+        }
+        val shareButton = findViewById<FrameLayout>(R.id.share_button)
+        shareButton.setOnClickListener {
+
+            viewModel.shareApp()
         }
         val backButton = findViewById<ImageView>(R.id.back_button)
-
-
         backButton.setOnClickListener{
 
             onBackPressed()
         }
 
-
         val supportButton = findViewById<FrameLayout>(R.id.write_to_support)
         supportButton.setOnClickListener {
-            val subjectMessage  = getString(R.string.subject_message)
-            val message = getString(R.string.message)
-            val shareIntent = Intent(Intent.ACTION_SENDTO)
-            shareIntent.data = Uri.parse("mailto:")
-            shareIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.my_email)))
-            shareIntent.putExtra(Intent.EXTRA_TEXT, message)
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, subjectMessage)
-            startActivity(shareIntent)
+viewModel.openSupport()
         }
-        val shareButton = findViewById<FrameLayout>(R.id.share_button)
-        shareButton.setOnClickListener {
 
-            val message = getString(R.string.share_link)
-            val shareIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, message)
-            }
-            startActivity(shareIntent)
-        }
     }
 }

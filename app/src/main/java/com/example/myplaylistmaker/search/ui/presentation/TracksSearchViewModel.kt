@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.imdbtraining.utility.Creator
-import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.search.domain.SearchHistory
 import com.example.myplaylistmaker.search.domain.api.TracksInteractor
 import com.example.myplaylistmaker.search.domain.models.Track

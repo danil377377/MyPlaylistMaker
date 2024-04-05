@@ -1,4 +1,3 @@
 package com.example.myplaylistmaker.settings.model
 
-class ThemeSettings {
-}
+class ThemeSettings(var theme: Boolean)

@@ -8,5 +8,20 @@ class SettingsViewModel(
     private val sharingInteractor: SharingInteractor,
     private val settingsInteractor: SettingsInteractor,
 ) : ViewModel() {
-    // Основной код
+    fun getThemeSettings(): Boolean{
+       return settingsInteractor.getThemeSettings()
+    }
+    fun updateThemeSettings(theme: Boolean){
+        settingsInteractor.updateThemeSetting(theme)
+    }
+    fun openTherms(){
+        sharingInteractor.openTerms()
+    }
+    fun shareApp(){
+        sharingInteractor.shareApp()
+    }
+    fun openSupport(){
+        sharingInteractor.openSupport()
+    }
+
 }

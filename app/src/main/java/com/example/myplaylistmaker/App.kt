@@ -1,11 +1,9 @@
 package com.example.myplaylistmaker
 
+import android.app.Activity
 import android.app.Application
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.imdbtraining.utility.Creator
-import com.example.myplaylistmaker.settings.EDIT_SWITCH_KEY
-import com.example.myplaylistmaker.settings.PRACTICUM_EXAMPLE_PREFERENCES
 import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
 
 class App : Application() {
@@ -38,5 +36,14 @@ class App : Application() {
         sharedPrefs.changeTheme(darkThemeEnabled)
 
 
+    }
+
+    fun Activity.setAppTheme() {
+        val darkTheme = sharedPrefs.getTheme()
+        if (darkTheme) {
+            setTheme(com.google.android.material.R.style.Theme_Material3_Dark)
+        } else {
+            setTheme(R.style.Base_Theme_MyPlaylistMaker)
+        }
     }
 }
