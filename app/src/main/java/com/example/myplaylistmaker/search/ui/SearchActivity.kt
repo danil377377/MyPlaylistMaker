@@ -26,39 +26,30 @@ import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
 
-
 class SearchActivity : ComponentActivity() {
     companion object {
         const val INPUT = "input"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
-
     private var editTextValue: String? = null
     private lateinit var inputEditText: EditText
     private lateinit var recyclerView: RecyclerView
-
     private lateinit var retryButton: Button
     private lateinit var nothingFound: LinearLayout
     private lateinit var internetProblems: LinearLayout
     private lateinit var historyLinearLayout: LinearLayout
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
-
     private val handler = Handler(Looper.getMainLooper())
-
     private lateinit var viewModel: TracksSearchViewModel
-
     private lateinit var tracksAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
 
-
     @SuppressLint("MissingInflatedId")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_layout)
         viewModel = ViewModelProvider(this, TracksSearchViewModel.getViewModelFactory())[TracksSearchViewModel::class.java]
-
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {
@@ -88,14 +79,7 @@ class SearchActivity : ComponentActivity() {
         progressBar = findViewById(R.id.progressBar)
         val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
         historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
-
         historyRecyclerView.adapter = historyAdapter
-
-
-
-
-
-
         if (historyLinearLayout.visibility == View.VISIBLE) recyclerView.visibility =
             View.GONE else recyclerView.visibility = View.VISIBLE
         backButton.setOnClickListener {
@@ -107,13 +91,11 @@ class SearchActivity : ComponentActivity() {
             recyclerView.setVisibility(View.GONE)
             viewModel.hideHistory()
             inputEditText.setText("")
-
             tracksAdapter.notifyDataSetChanged()
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(clearButton.windowToken, 0)
             inputEditText.clearFocus()
-
         }
         clearHistoryButton.setOnClickListener {
             viewModel.clearHistory()
@@ -122,16 +104,13 @@ viewModel.hideHistory()
         retryButton.setOnClickListener {
             viewModel.searchRequest(inputEditText.text.toString())
         }
-
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
                 viewModel.showHistory(viewModel.getHistoryTrackList())
-
             } else {
                 viewModel.hideHistory()
             }
         }
-
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 viewModel.searchRequest(inputEditText.text.toString())
@@ -140,15 +119,12 @@ viewModel.searchRequest(inputEditText.text.toString())
             }
             false
         }
-
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
                 internetProblems.setVisibility(View.GONE)
                 nothingFound.setVisibility(View.GONE)
 
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s?.isEmpty() == true && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
 
@@ -165,19 +141,11 @@ viewModel.searchRequest(inputEditText.text.toString())
                     searchDebounce(editTextValue!!)
                     viewModel.hideHistory()
                 }
-
-
             }
-
             override fun afterTextChanged(s: Editable?) {
-
-                // empty
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
-
-
-
         viewModel.observeState().observe(this) {
             render(it)
         }
@@ -185,22 +153,15 @@ viewModel.searchRequest(inputEditText.text.toString())
             historyRender(it)
         }
     }
-
-
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(INPUT, editTextValue)
     }
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
-
         val savedInput = savedInstanceState.getString(INPUT)
         inputEditText.setText(savedInput)
     }
-
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
@@ -209,7 +170,6 @@ viewModel.searchRequest(inputEditText.text.toString())
         }
         return current
     }
-
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -217,12 +177,6 @@ viewModel.searchRequest(inputEditText.text.toString())
             View.VISIBLE
         }
     }
-
-
-
-
-
-
     private fun searchDebounce(text:String) {
         viewModel.searchDebounce(text)
     }
@@ -244,9 +198,6 @@ viewModel.searchRequest(inputEditText.text.toString())
         historyAdapter.notifyDataSetChanged()
 
     }
-
-
-
     private fun render(state: TracksState) {
         when (state) {
             is TracksState.Content -> showContent(state.tracks)
@@ -255,8 +206,6 @@ viewModel.searchRequest(inputEditText.text.toString())
             is TracksState.Loading -> showLoading()
         }
     }
-
-
     private fun showLoading() {
         recyclerView.setVisibility(View.GONE)
         internetProblems.setVisibility(View.GONE)
@@ -264,21 +213,18 @@ viewModel.searchRequest(inputEditText.text.toString())
         historyLinearLayout.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
     }
-
     private fun showError() {
         progressBar.visibility = View.GONE
         internetProblems.setVisibility(View.VISIBLE)
         recyclerView.setVisibility(View.GONE)
         nothingFound.setVisibility(View.GONE)
     }
-
     private fun showEmpty() {
         progressBar.visibility = View.GONE
         recyclerView.setVisibility(View.GONE)
         nothingFound.setVisibility(View.VISIBLE)
         internetProblems.setVisibility(View.GONE)
     }
-
     private fun showContent(tracks: List<Track>) {
         recyclerView.setVisibility(View.VISIBLE)
         internetProblems.setVisibility(View.GONE)
@@ -288,7 +234,5 @@ viewModel.searchRequest(inputEditText.text.toString())
         tracksAdapter.notifyDataSetChanged()
         progressBar.visibility = View.GONE
     }
-
-
 }
 

@@ -1,6 +1,6 @@
 package com.example.imdbtraining.utility
 
-import android.app.Activity
+import android.app.Application
 import android.content.Context
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
@@ -10,6 +10,8 @@ import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.api.TracksInteractor
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
 import com.example.myplaylistmaker.search.domain.impl.TracksInteractorImpl
+import com.example.myplaylistmaker.settings.data.SettingsSharedPrefsImpl
+import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
 
 
 object Creator {
@@ -25,6 +27,9 @@ object Creator {
     }
     fun provideGlideLoader(context: Context):GlideLoaderImpl{
         return GlideLoaderImpl(context)
+    }
+    fun provideSettingsSharedPrefs(app: Application): SettingsSharedPrefs {
+        return SettingsSharedPrefsImpl(app)
     }
 
 

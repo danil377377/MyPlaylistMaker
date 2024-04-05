@@ -5,8 +5,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -74,12 +72,8 @@ class PlayerViewModel(
     }
 
     fun startPlayback() {
-        // Здесь вызовите методы MediaPlayer для начала воспроизведения
         mediaPlayer.start()
-//        pause.visibility = View.VISIBLE
-//        pause.isEnabled = true
-//        play.visibility = View.INVISIBLE
-//        play.isEnabled=false
+
         playerState = STATE_PLAYING
         mainThreadHandler?.post(
             updateTimeRunnable
@@ -88,39 +82,26 @@ class PlayerViewModel(
     }
 
     fun pausePlayback() {
-        // Здесь вызовите методы MediaPlayer для паузы воспроизведения
         mediaPlayer.pause()
-//        play.visibility = View.VISIBLE
-//        play.isEnabled = true
-//        pause.visibility = View.INVISIBLE
-//        pause.isEnabled=false
         playerState = STATE_PAUSED
         mainThreadHandler?.removeCallbacks(updateTimeRunnable)
         renderState(PlayerState.Pause())
     }
 
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {
-        // Здесь вызовите методы MediaPlayer для подготовки к воспроизведению трека по переданному URL
         mediaPlayer.reset()
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepare()
         mediaPlayer.setOnPreparedListener {
-//            play.isEnabled = true
             playerState = STATE_PREPARED
             onPrepared()
-
         }
         mediaPlayer.setOnCompletionListener {
-//            play.visibility = View.VISIBLE
-//            pause.visibility = View.INVISIBLE
-//            pause.isEnabled=false
             onComplete()
-
             mainThreadHandler?.removeCallbacks(updateTimeRunnable)
             mediaPlayer.pause() // Пауза после завершения трека
             playerState = STATE_PAUSED // Установка состояния в STATE_PAUSED
             renderState(PlayerState.Pause()) // Обновление LiveData
-
         }
         renderState(PlayerState.Prepare())
     }
@@ -128,14 +109,11 @@ class PlayerViewModel(
     private fun renderState(state: PlayerState) {
         playLiveData.postValue(state)
     }
-
     override fun onCleared() {
         pausePlayback()
         mainThreadHandler?.removeCallbacks(updateTimeRunnable)
         mediaPlayer.release()
     }
-
-
 }
 
 

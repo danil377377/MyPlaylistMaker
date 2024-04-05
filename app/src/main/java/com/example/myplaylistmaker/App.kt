@@ -3,19 +3,21 @@ package com.example.myplaylistmaker
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.myplaylistmaker.presentation.ui.EDIT_SWITCH_KEY
-import com.example.myplaylistmaker.presentation.ui.PRACTICUM_EXAMPLE_PREFERENCES
+import com.example.imdbtraining.utility.Creator
+import com.example.myplaylistmaker.settings.EDIT_SWITCH_KEY
+import com.example.myplaylistmaker.settings.PRACTICUM_EXAMPLE_PREFERENCES
+import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
 
 class App : Application() {
 
     var darkTheme = false
-    lateinit var sharedPrefs: SharedPreferences
+    lateinit var sharedPrefs: SettingsSharedPrefs
 
     override fun onCreate() {
         super.onCreate()
-        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
-
-        darkTheme = sharedPrefs.getBoolean(EDIT_SWITCH_KEY, false)
+//        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
+         sharedPrefs = Creator.provideSettingsSharedPrefs(this)
+        darkTheme = sharedPrefs.getTheme()
         if (darkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
@@ -33,8 +35,7 @@ class App : Application() {
                 AppCompatDelegate.MODE_NIGHT_NO
             }
         )
-        sharedPrefs.edit().putBoolean(EDIT_SWITCH_KEY, darkThemeEnabled)
-            .apply()
+        sharedPrefs.changeTheme(darkThemeEnabled)
 
 
     }

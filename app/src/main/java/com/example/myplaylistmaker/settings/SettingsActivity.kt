@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker.presentation.ui
+package com.example.myplaylistmaker.settings
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -20,7 +20,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
         val app = applicationContext as App
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
-        themeSwitcher.isChecked = app.sharedPrefs.getBoolean(EDIT_SWITCH_KEY, false)
+        themeSwitcher.isChecked = app.sharedPrefs.getTheme()
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
             (app).switchTheme(checked)
 
