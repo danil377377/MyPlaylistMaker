@@ -11,8 +11,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.search.domain.SearchHistory
 import com.example.myplaylistmaker.search.domain.api.TracksInteractor
 import com.example.myplaylistmaker.search.domain.models.Track
+import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 
 class TracksSearchViewModel(
@@ -20,6 +22,7 @@ class TracksSearchViewModel(
 ): AndroidViewModel(application) {
 
     private val tracksInteractor = Creator.provideTracksInteractor(getApplication<Application>())
+    private val history = SearchHistory(application)
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
@@ -44,7 +47,24 @@ class TracksSearchViewModel(
     }
 
     private val stateLiveData = MutableLiveData<TracksState>()
+    private val historyStateLiveData = MutableLiveData<HistoryState>()
     fun observeState(): LiveData<TracksState> = stateLiveData
+    fun observeHistoryState(): LiveData<HistoryState> = historyStateLiveData
+    fun hideHistory() {
+        historyStateLiveData.postValue(HistoryState.Empty())
+    }
+    fun getHistoryTrackList(): ArrayList<Track>{
+        return history.getHistoryTrackList()
+    }
+    fun clearHistory() {
+        history.clearHistory()
+    }
+    fun showHistory(tracks: ArrayList<Track>) {
+        historyStateLiveData.postValue(HistoryState.Content(tracks))
+    }
+    fun addToHistory(track: Track){
+        history.addToHistory(track)
+    }
 
     override fun onCleared() {
         handler.removeCallbacksAndMessages(searchRunnable)
@@ -110,6 +130,9 @@ class TracksSearchViewModel(
 
     private fun renderState(state: TracksState) {
         stateLiveData.postValue(state)
+    }
+    private fun renderHistoryState(state: HistoryState) {
+        historyStateLiveData.postValue(state)
     }
 
 

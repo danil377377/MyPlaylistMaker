@@ -1,10 +1,8 @@
 package com.example.myplaylistmaker.search.ui
 
-import com.example.myplaylistmaker.search.domain.SearchHistory
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.presentation.ui.PlayerActivity
+import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
 import com.google.gson.Gson
@@ -54,6 +53,7 @@ class SearchActivity : ComponentActivity() {
     private lateinit var viewModel: TracksSearchViewModel
 
     private lateinit var tracksAdapter: TrackAdapter
+    private lateinit var historyAdapter: TrackAdapter
 
 
     @SuppressLint("MissingInflatedId")
@@ -62,12 +62,19 @@ class SearchActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_layout)
         viewModel = ViewModelProvider(this, TracksSearchViewModel.getViewModelFactory())[TracksSearchViewModel::class.java]
-        val history = SearchHistory(this)
+
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {
-                history.addToHistory(it)
+              viewModel.addToHistory(it)
 
+                val playerActivityIntent = Intent(this, PlayerActivity::class.java)
+                playerActivityIntent.putExtra("track", createJsonFromTrack(it))
+                startActivity(playerActivityIntent)
+            }
+        }
+        historyAdapter = TrackAdapter() {
+            if (clickDebounce()) {
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
                 playerActivityIntent.putExtra("track", createJsonFromTrack(it))
                 startActivity(playerActivityIntent)
@@ -85,27 +92,14 @@ class SearchActivity : ComponentActivity() {
         progressBar = findViewById(R.id.progressBar)
         val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
         historyLinearLayout = findViewById<LinearLayout>(R.id.historyLinearLayout)
-        val historyAdapter = TrackAdapter() {
-            if (clickDebounce()) {
-                val playerActivityIntent = Intent(this, PlayerActivity::class.java)
-                playerActivityIntent.putExtra("track", createJsonFromTrack(it))
-                startActivity(playerActivityIntent)
-            }
-        }
+
         historyRecyclerView.adapter = historyAdapter
-        fun updateHistoryAdapter() {
-            val newHistoryList = history.getHistoryTrackList()
-            historyAdapter.updateTracks(newHistoryList)
-            historyAdapter.notifyDataSetChanged()
-        }
 
 //надо сделать изменение хранение и запрос historyList через LiveData в TracksSearchViewModel
 
 
 
-        fun hideHistoryLayout() {
-            historyLinearLayout.visibility = View.GONE
-        }
+
         if (historyLinearLayout.visibility == View.VISIBLE) recyclerView.visibility =
             View.GONE else recyclerView.visibility = View.VISIBLE
         backButton.setOnClickListener {
@@ -114,7 +108,8 @@ class SearchActivity : ComponentActivity() {
         clearButton.setOnClickListener {
             internetProblems.setVisibility(View.GONE)
             nothingFound.setVisibility(View.GONE)
-            hideHistoryLayout()
+            recyclerView.setVisibility(View.GONE)
+            viewModel.hideHistory()
             inputEditText.setText("")
 
             tracksAdapter.notifyDataSetChanged()
@@ -125,29 +120,26 @@ class SearchActivity : ComponentActivity() {
 
         }
         clearHistoryButton.setOnClickListener {
-
-            history.clearHistory()
-            updateHistoryAdapter()
-            historyLinearLayout.visibility = View.GONE
+            viewModel.clearHistory()
+viewModel.hideHistory()
         }
         retryButton.setOnClickListener {
             viewModel.searchRequest(inputEditText.text.toString())
         }
 
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus && inputEditText.text.isEmpty() && history.getHistoryTrackList() != ArrayList<Track>()) {
-                updateHistoryAdapter()
-                historyLinearLayout.visibility = View.VISIBLE
+            if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
+                viewModel.showHistory(viewModel.getHistoryTrackList())
 
             } else {
-                historyLinearLayout.visibility = View.GONE
+                viewModel.hideHistory()
             }
         }
 
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 viewModel.searchRequest(inputEditText.text.toString())
-                hideHistoryLayout()
+                viewModel.hideHistory()
                 true
             }
             false
@@ -162,24 +154,20 @@ viewModel.searchRequest(inputEditText.text.toString())
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s?.isEmpty() == true && history.getHistoryTrackList() != ArrayList<Track>()) {
+                if (s?.isEmpty() == true && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
 
-                   updateHistoryAdapter()
-                    historyLinearLayout.visibility = View.VISIBLE
-                    recyclerView.setVisibility(View.GONE)
+                    viewModel.showHistory(viewModel.getHistoryTrackList())
                 }
 
                 if (inputEditText.hasFocus() && s?.isEmpty() == true) {
-                    updateHistoryAdapter()
-                    historyLinearLayout.visibility = View.VISIBLE
-                    recyclerView.setVisibility(View.GONE)
+                    viewModel.showHistory(viewModel.getHistoryTrackList())
 
                 } else historyLinearLayout.visibility = View.GONE
                 editTextValue = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
                 if (s?.isNotEmpty() == true && inputEditText.hasFocus()) {
                     searchDebounce(editTextValue!!)
-                    hideHistoryLayout()
+                    viewModel.hideHistory()
                 }
 
 
@@ -196,6 +184,9 @@ viewModel.searchRequest(inputEditText.text.toString())
 
         viewModel.observeState().observe(this) {
             render(it)
+        }
+        viewModel.observeHistoryState().observe(this) {
+            historyRender(it)
         }
     }
 
@@ -248,6 +239,25 @@ viewModel.searchRequest(inputEditText.text.toString())
 
 
 
+    private fun historyRender(state: HistoryState) {
+        when (state) {
+            is HistoryState.Content -> showContentHistory(state.tracks)
+            is HistoryState.Empty -> showEmptyHistory()
+
+        }
+    }
+    private fun showEmptyHistory() {
+        historyLinearLayout.setVisibility(View.GONE)
+    }
+    private fun showContentHistory(tracks: List<Track>) {
+        historyLinearLayout.setVisibility(View.VISIBLE)
+        recyclerView.setVisibility(View.GONE)
+        historyAdapter.trackList.clear()
+        historyAdapter.trackList.addAll(tracks)
+        historyAdapter.notifyDataSetChanged()
+
+    }
+
 
 
     private fun render(state: TracksState) {
@@ -258,6 +268,7 @@ viewModel.searchRequest(inputEditText.text.toString())
             is TracksState.Loading -> showLoading()
         }
     }
+
 
     private fun showLoading() {
         recyclerView.setVisibility(View.GONE)
