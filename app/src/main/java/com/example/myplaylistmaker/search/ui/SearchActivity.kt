@@ -253,8 +253,8 @@ viewModel.searchRequest(inputEditText.text.toString())
     private fun render(state: TracksState) {
         when (state) {
             is TracksState.Content -> showContent(state.tracks)
-            is TracksState.Empty -> showEmpty(state.message)
-            is TracksState.Error -> showError(state.errorMessage)
+            is TracksState.Empty -> showEmpty()
+            is TracksState.Error -> showError()
             is TracksState.Loading -> showLoading()
         }
     }
@@ -268,14 +268,14 @@ viewModel.searchRequest(inputEditText.text.toString())
         progressBar.visibility = View.VISIBLE
     }
 
-    private fun showError(errorMessage: String) {
+    private fun showError() {
         progressBar.visibility = View.GONE
         internetProblems.setVisibility(View.VISIBLE)
         recyclerView.setVisibility(View.GONE)
         nothingFound.setVisibility(View.GONE)
     }
 
-    private fun showEmpty(emptyMessage: String) {
+    private fun showEmpty() {
         progressBar.visibility = View.GONE
         recyclerView.setVisibility(View.GONE)
         nothingFound.setVisibility(View.VISIBLE)

@@ -98,18 +98,14 @@ class TracksSearchViewModel(
                         when {
                             errorMessage != null -> {
                                 renderState(
-                                    TracksState.Error(
-                                        errorMessage = getApplication<Application>().getString(R.string.something_went_wrong),
-                                    )
+                                    TracksState.Error()
                                 )
 
                             }
 
                             tracks.isEmpty() -> {
                                 renderState(
-                                    TracksState.Empty(
-                                        message = getApplication<Application>().getString(R.string.nothing_found),
-                                    )
+                                    TracksState.Empty()
                                 )
                             }
 
