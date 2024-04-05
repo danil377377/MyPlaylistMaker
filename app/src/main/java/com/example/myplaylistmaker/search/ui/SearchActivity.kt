@@ -34,7 +34,6 @@ class SearchActivity : ComponentActivity() {
     companion object {
         const val INPUT = "input"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 
     private var editTextValue: String? = null
@@ -69,14 +68,14 @@ class SearchActivity : ComponentActivity() {
               viewModel.addToHistory(it)
 
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
-                playerActivityIntent.putExtra("track", createJsonFromTrack(it))
+                playerActivityIntent.putExtra("track", it)
                 startActivity(playerActivityIntent)
             }
         }
         historyAdapter = TrackAdapter() {
             if (clickDebounce()) {
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
-                playerActivityIntent.putExtra("track", createJsonFromTrack(it))
+                playerActivityIntent.putExtra("track", it)
                 startActivity(playerActivityIntent)
             }
         }
@@ -95,7 +94,7 @@ class SearchActivity : ComponentActivity() {
 
         historyRecyclerView.adapter = historyAdapter
 
-//надо сделать изменение хранение и запрос historyList через LiveData в TracksSearchViewModel
+
 
 
 
@@ -230,15 +229,6 @@ viewModel.searchRequest(inputEditText.text.toString())
     private fun searchDebounce(text:String) {
         viewModel.searchDebounce(text)
     }
-
-
-    private fun createJsonFromTrack(track: Track): String {
-        val gson = Gson()
-        return gson.toJson(track)
-    }
-
-
-
     private fun historyRender(state: HistoryState) {
         when (state) {
             is HistoryState.Content -> showContentHistory(state.tracks)

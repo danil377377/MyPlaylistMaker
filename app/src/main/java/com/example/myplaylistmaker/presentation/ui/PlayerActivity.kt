@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.GlideLoaderImpl
-import com.example.myplaylistmaker.TrackDataProviderImpl
+import com.example.myplaylistmaker.search.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -45,8 +45,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.player)
-        val track = intent.getStringExtra("track")?.let { val trackProvider = TrackDataProviderImpl()
-        trackProvider.provideTrackFromJson(it)}
+        val track = intent.getSerializableExtra("track")as? Track
         val backButton = findViewById<ImageView>(R.id.backButton)
         val icon = findViewById<ImageView>(R.id.icon)
         val songName = findViewById<TextView>(R.id.songName)
