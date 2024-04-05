@@ -22,7 +22,7 @@ android:name="com.example.myplaylistmaker.App"
         <activity
             android:name=".search.ui.SearchActivity"
             android:exported="false" />
-        <activity android:name=".presentation.ui.PlayerActivity"
+        <activity android:name=".player.ui.PlayerActivity"
             android:exported="false"/>
         <activity
             android:name=".presentation.ui.SettingActivity"

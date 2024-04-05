@@ -2,6 +2,7 @@ package com.example.imdbtraining.utility
 
 import android.app.Activity
 import android.content.Context
+import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
 import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl
 import com.example.myplaylistmaker.search.data.sharedprefs.SharedPrefsImpl
@@ -21,6 +22,9 @@ object Creator {
     }
     fun provideSharedPrefs(context: Context): SharedPrefs{
         return SharedPrefsImpl(context)
+    }
+    fun provideGlideLoader(context: Context):GlideLoaderImpl{
+        return GlideLoaderImpl(context)
     }
 
 

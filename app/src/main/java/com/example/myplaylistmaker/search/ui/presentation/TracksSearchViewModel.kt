@@ -33,6 +33,7 @@ class TracksSearchViewModel(
             }
         }
     }
+
     private val tracks = ArrayList<Track>()
 
     private val handler = Handler(Looper.getMainLooper())
@@ -127,9 +128,7 @@ class TracksSearchViewModel(
     private fun renderState(state: TracksState) {
         stateLiveData.postValue(state)
     }
-    private fun renderHistoryState(state: HistoryState) {
-        historyStateLiveData.postValue(state)
-    }
+
 
 
 }

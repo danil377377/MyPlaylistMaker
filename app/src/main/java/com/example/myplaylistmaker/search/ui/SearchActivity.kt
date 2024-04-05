@@ -21,13 +21,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.search.domain.models.Track
-import com.example.myplaylistmaker.presentation.ui.PlayerActivity
+import com.example.myplaylistmaker.player.ui.PlayerActivity
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
-import com.google.gson.Gson
-
-
 
 
 class SearchActivity : ComponentActivity() {
