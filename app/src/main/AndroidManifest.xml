@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
 
-android:name="com.example.myplaylistmaker.data.sharedprefs.App"
+android:name="com.example.myplaylistmaker.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,12 +20,12 @@ android:name="com.example.myplaylistmaker.data.sharedprefs.App"
             android:exported="false"
             />
         <activity
-            android:name=".presentation.ui.SearchActivity"
+            android:name=".search.ui.SearchActivity"
             android:exported="false" />
-        <activity android:name=".presentation.ui.PlayerActivity"
+        <activity android:name=".player.ui.PlayerActivity"
             android:exported="false"/>
         <activity
-            android:name=".presentation.ui.SettingActivity"
+            android:name=".settings.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.ui.MainActivity"

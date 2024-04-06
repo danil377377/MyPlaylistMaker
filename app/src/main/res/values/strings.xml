@@ -20,5 +20,7 @@
     <string name="Nothing_found">Ничего не нашлось</string>
     <string name="InternetProblems">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="Retry">Обновить</string>
+    <string name="something_went_wrong">что тоо пошло не так\n</string>
+    <string name="nothing_found">ничего не найдено\n</string>
 
 </resources>
