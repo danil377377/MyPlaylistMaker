@@ -1,9 +1,10 @@
-package com.example.myplaylistmaker
+package com.example.myplaylistmaker.utility
 
 import android.app.Activity
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.imdbtraining.utility.Creator
+import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
 
 class App : Application() {

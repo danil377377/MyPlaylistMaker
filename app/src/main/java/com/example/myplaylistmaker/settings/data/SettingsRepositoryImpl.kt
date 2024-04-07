@@ -1,7 +1,6 @@
 package com.example.myplaylistmaker.settings.data
 
-import android.app.Application
-import com.example.myplaylistmaker.App
+import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.settings.domen.SettingsRepository
 import com.example.myplaylistmaker.settings.model.ThemeSettings
 

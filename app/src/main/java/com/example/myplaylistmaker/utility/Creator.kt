@@ -2,7 +2,7 @@ package com.example.imdbtraining.utility
 
 import android.app.Application
 import android.content.Context
-import com.example.myplaylistmaker.App
+import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
 import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl

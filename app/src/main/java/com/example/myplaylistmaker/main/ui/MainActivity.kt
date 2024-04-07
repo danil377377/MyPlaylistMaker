@@ -1,4 +1,4 @@
-package com.example.myplaylistmaker.presentation.ui
+package com.example.myplaylistmaker.main.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.widget.Button
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.R.id.media
 import com.example.myplaylistmaker.R.id.settings
+import com.example.myplaylistmaker.media.ui.MediaActivity
 import com.example.myplaylistmaker.search.ui.SearchActivity
 import com.example.myplaylistmaker.settings.SettingActivity
 
