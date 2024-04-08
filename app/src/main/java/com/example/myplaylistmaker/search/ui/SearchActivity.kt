@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
@@ -26,7 +27,7 @@ import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
 
-class SearchActivity : ComponentActivity() {
+class SearchActivity : AppCompatActivity() {
     companion object {
         const val INPUT = "input"
         private const val CLICK_DEBOUNCE_DELAY = 1000L

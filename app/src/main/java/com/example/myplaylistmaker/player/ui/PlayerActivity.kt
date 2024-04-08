@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.player.ui.models.PlayerState
@@ -13,7 +14,7 @@ import com.example.myplaylistmaker.search.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class PlayerActivity : ComponentActivity() {
+class PlayerActivity : AppCompatActivity() {
 
     private lateinit var play: ImageView
     private lateinit var pause: ImageView

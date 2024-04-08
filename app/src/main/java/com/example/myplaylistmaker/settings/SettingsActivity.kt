@@ -5,14 +5,15 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.R
-import com.example.myplaylistmaker.settings.presentation.SettingsViewModel
+import com.example.myplaylistmaker.settings.ui.SettingsViewModel
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 
-class SettingActivity : ComponentActivity() {
+class SettingActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
