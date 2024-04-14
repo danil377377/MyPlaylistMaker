@@ -8,15 +8,15 @@ import com.example.myplaylistmaker.search.data.dto.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitNetworkClient(private val context: Context) : NetworkClient {
+class RetrofitNetworkClient(private val context: Context, val ITunesService: ITunesApi) : NetworkClient {
 
-    private val ITunesBaseUrl = "https://itunes.apple.com"
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(ITunesBaseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+//    private val ITunesBaseUrl = "https://itunes.apple.com"
+//    private val retrofit = Retrofit.Builder()
+//        .baseUrl(ITunesBaseUrl)
+//        .addConverterFactory(GsonConverterFactory.create())
+//        .build()
 
-    private val ITunesService = retrofit.create(ITunesApi::class.java)
+
 
     override fun doRequest(dto: Any): Response {
         if (isConnected() == false) {

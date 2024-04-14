@@ -1,7 +1,9 @@
 package com.example.myplaylistmaker.di
 
+import android.app.Application
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
+import com.example.myplaylistmaker.search.data.network.ITunesApi
 import com.example.myplaylistmaker.search.data.network.NetworkClient
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
 import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl
@@ -14,26 +16,43 @@ import com.example.myplaylistmaker.settings.domen.SettingsRepository
 import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
 import com.example.myplaylistmaker.sharing.domen.ExternalNavigator
 import com.example.myplaylistmaker.utility.App
+import com.google.gson.Gson
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 val repositoryModule = module {
     factory<TracksRepository> {
         TracksRepositoryImpl(get())
     }
+    single<ITunesApi> {
+        Retrofit.Builder()
+            .baseUrl("https://itunes.apple.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ITunesApi::class.java)
+    }
 
 
-    factory<NetworkClient> {
-        RetrofitNetworkClient(get())
+    single<NetworkClient> {
+        RetrofitNetworkClient( androidContext(),get())
     }
     factory<SharedPrefs> {
-        SharedPrefsImpl(get())
+        SharedPrefsImpl(get(), get())
     }
+    factory { Gson() }
     factory<GlideLoader> {
         GlideLoaderImpl(get())
     }
-    factory<SettingsSharedPrefs> { (app: App) ->
-        SettingsSharedPrefsImpl(app)
+    factory<SettingsSharedPrefs> {
+        SettingsSharedPrefsImpl(get())
     }
+    single {
+        androidContext()
+            .getSharedPreferences("practicum_example_preferences", Application.MODE_PRIVATE)
+    }
+
     factory {
         ExternalNavigator()
     }

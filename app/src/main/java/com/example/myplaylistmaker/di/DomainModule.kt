@@ -13,6 +13,7 @@ import com.example.myplaylistmaker.sharing.domen.ExternalNavigator
 import com.example.myplaylistmaker.sharing.domen.SharingInteractor
 import com.example.myplaylistmaker.sharing.impl.SharingInteractorImpl
 import com.example.myplaylistmaker.utility.App
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 
@@ -21,12 +22,15 @@ val interactorModule = module {
         TracksInteractorImpl(get())
     }
     factory<SettingsInteractor>
-    { (app: App) ->
-        SettingsInteractorImpl(SettingsRepositoryImpl(app))
+    {
+        SettingsInteractorImpl(SettingsRepositoryImpl(get()))
+    }
+    single{
+        App()
     }
     factory<SharingInteractor> {
-        (context: Context) ->
-        SharingInteractorImpl(get(), context)
+
+        SharingInteractorImpl(get(), androidContext())
     }
 
 

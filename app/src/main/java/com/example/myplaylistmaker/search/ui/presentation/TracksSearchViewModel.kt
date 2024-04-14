@@ -23,7 +23,7 @@ class TracksSearchViewModel(
 
     private val tracksInteractor: TracksInteractor by inject()
 
-    private val history = SearchHistory(application)
+    private val history = SearchHistory()
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
 

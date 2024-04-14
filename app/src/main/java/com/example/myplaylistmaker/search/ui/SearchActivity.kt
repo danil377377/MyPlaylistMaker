@@ -53,8 +53,8 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val app = applicationContext as App
-        val view:TracksSearchViewModel by viewModel{ parametersOf(app) }
+
+        val view:TracksSearchViewModel by viewModel()
         viewModel = view
 
 

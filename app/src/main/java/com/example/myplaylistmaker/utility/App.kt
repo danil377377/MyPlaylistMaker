@@ -18,9 +18,7 @@ import org.koin.core.parameter.parametersOf
 class App : Application(), KoinComponent {
 
     var darkTheme = false
-    val sharedPrefs: SettingsSharedPrefs by inject{
-        parametersOf(this)
-    }
+    val sharedPrefs: SettingsSharedPrefs by inject()
 
 
     override fun onCreate() {

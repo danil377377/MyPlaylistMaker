@@ -9,7 +9,7 @@ import org.koin.core.component.inject
 
 
 
-class SearchHistory(context: Context): KoinComponent {
+class SearchHistory(): KoinComponent {
     private val sharedPrefs: SharedPrefs by inject()
     private var historyTrackList = getHistoryTrackList()
     fun clearHistory(){

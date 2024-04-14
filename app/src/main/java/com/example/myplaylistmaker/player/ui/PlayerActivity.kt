@@ -39,8 +39,7 @@ class PlayerActivity : AppCompatActivity() {
         val albumInfo = findViewById<TextView>(R.id.albumInfo)
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
-        val app = applicationContext as App
-        val view: PlayerViewModel by viewModel{ parametersOf(app) }
+        val view: PlayerViewModel by viewModel()
         viewModel = view
 
         backButton.setOnClickListener {

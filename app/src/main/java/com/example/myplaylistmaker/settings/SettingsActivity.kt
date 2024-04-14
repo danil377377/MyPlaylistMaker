@@ -22,10 +22,8 @@ class SettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_settings)
-        val app = applicationContext as App
-        val settingsInteractor: SettingsInteractor by inject { parametersOf(app) }
-        val sharingInteractor : SharingInteractor by inject{ parametersOf(this) }
-        val viewModel: SettingsViewModel by viewModel{ parametersOf(sharingInteractor,settingsInteractor) }
+
+        val viewModel: SettingsViewModel by viewModel()
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
         themeSwitcher.isChecked = viewModel.getThemeSettings()
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->

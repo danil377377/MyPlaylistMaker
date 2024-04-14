@@ -10,16 +10,16 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel{ (sharingInteractor: SharingInteractor, settingsInteractor: SettingsInteractor) ->
-        SettingsViewModel(sharingInteractor, settingsInteractor)
+    viewModel{
+        SettingsViewModel(get(),get())
     }
     viewModel{
-        (app: Application) ->
-        TracksSearchViewModel(app)
+
+        TracksSearchViewModel(get())
     }
     viewModel{
-            (app: Application) ->
-        PlayerViewModel(app)
+
+        PlayerViewModel(get())
     }
 
 
