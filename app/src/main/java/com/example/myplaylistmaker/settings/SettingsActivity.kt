@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.settings.domen.SettingsInteractor
 import com.example.myplaylistmaker.settings.ui.SettingsViewModel
+import com.example.myplaylistmaker.sharing.domen.SharingInteractor
 import com.google.android.material.switchmaterial.SwitchMaterial
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 class SettingActivity : AppCompatActivity() {
@@ -20,8 +24,8 @@ class SettingActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_settings)
         val app = applicationContext as App
-        val settingsInteractor = Creator.provideSettingsInteractor(app)
-        val sharingInteractor = Creator.provideSharingInteractor(this)
+        val settingsInteractor: SettingsInteractor by inject { parametersOf(app) }
+        val sharingInteractor : SharingInteractor by inject{ parametersOf(this) }
         val viewModel = SettingsViewModel(sharingInteractor, settingsInteractor)
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
         themeSwitcher.isChecked = viewModel.getThemeSettings()
@@ -31,8 +35,8 @@ class SettingActivity : AppCompatActivity() {
         }
 
         val contractButton = findViewById<FrameLayout>(R.id.contract)
-        contractButton.setOnClickListener{
-           viewModel.openTherms()
+        contractButton.setOnClickListener {
+            viewModel.openTherms()
         }
         val shareButton = findViewById<FrameLayout>(R.id.share_button)
         shareButton.setOnClickListener {
@@ -40,14 +44,14 @@ class SettingActivity : AppCompatActivity() {
             viewModel.shareApp()
         }
         val backButton = findViewById<ImageView>(R.id.back_button)
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
 
             onBackPressed()
         }
 
         val supportButton = findViewById<FrameLayout>(R.id.write_to_support)
         supportButton.setOnClickListener {
-viewModel.openSupport()
+            viewModel.openSupport()
         }
 
     }

@@ -19,28 +19,32 @@ import com.example.myplaylistmaker.settings.impl.SettingsInteractorImpl
 import com.example.myplaylistmaker.sharing.domen.ExternalNavigator
 import com.example.myplaylistmaker.sharing.domen.SharingInteractor
 import com.example.myplaylistmaker.sharing.impl.SharingInteractorImpl
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 
 
-object Creator {
-    private fun getMoviesRepository(context: Context): TracksRepository {
-        return TracksRepositoryImpl(RetrofitNetworkClient(context))
-    }
+object Creator: KoinComponent {
+//    private fun getMoviesRepository(context: Context): TracksRepository {
+//        return TracksRepositoryImpl(RetrofitNetworkClient(context))
+//    }
+//private val repository: TracksRepository by inject()
 
-    fun provideTracksInteractor(context: Context): TracksInteractor {
-        return TracksInteractorImpl(getMoviesRepository(context))
-    }
-    fun provideSharedPrefs(context: Context): SharedPrefs{
-        return SharedPrefsImpl(context)
-    }
-    fun provideGlideLoader(context: Context):GlideLoaderImpl{
-        return GlideLoaderImpl(context)
-    }
-    fun provideSettingsSharedPrefs(app: Application): SettingsSharedPrefs {
-        return SettingsSharedPrefsImpl(app)
-    }
-    fun provideSettingsInteractor(app: App): SettingsInteractor {
-        return SettingsInteractorImpl(SettingsRepositoryImpl(app))
-    }
+//    fun provideTracksInteractor(context: Context): TracksInteractor {
+//        return TracksInteractorImpl(Creator.repository)
+//    }
+//    fun provideSharedPrefs(context: Context): SharedPrefs{
+//        return SharedPrefsImpl(context)
+//    }
+//    fun provideGlideLoader(context: Context):GlideLoaderImpl{
+//        return GlideLoaderImpl(context)
+//    }
+//    fun provideSettingsSharedPrefs(app: Application): SettingsSharedPrefs {
+//        return SettingsSharedPrefsImpl(app)
+//    }
+//    fun provideSettingsInteractor(app: App): SettingsInteractor {
+//        return SettingsInteractorImpl(SettingsRepositoryImpl(app))
+//    }
     fun provideSharingInteractor(context: Context): SharingInteractor {
         return SharingInteractorImpl(ExternalNavigator(), context)
     }

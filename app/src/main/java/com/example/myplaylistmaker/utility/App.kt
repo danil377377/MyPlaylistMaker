@@ -5,17 +5,38 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.di.interactorModule
+import com.example.myplaylistmaker.di.repositoryModule
 import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.parameter.parametersOf
+import org.koin.java.KoinJavaComponent.inject
 
-class App : Application() {
+
+class App : Application(), KoinComponent {
 
     var darkTheme = false
-    lateinit var sharedPrefs: SettingsSharedPrefs
+    val sharedPrefs: SettingsSharedPrefs by inject{
+        parametersOf(this)
+    }
+
 
     override fun onCreate() {
         super.onCreate()
-//        sharedPrefs = getSharedPreferences(PRACTICUM_EXAMPLE_PREFERENCES, MODE_PRIVATE)
-         sharedPrefs = Creator.provideSettingsSharedPrefs(this)
+        startKoin {
+            // Метод специального класса, переданного как this, для добавления контекста в граф
+            androidContext(this@App)
+            // Передаём все модули, чтобы их содержимое было передано в граф
+            modules(interactorModule,repositoryModule)
+        }
+
+
+
+
+
         darkTheme = sharedPrefs.getTheme()
         if (darkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

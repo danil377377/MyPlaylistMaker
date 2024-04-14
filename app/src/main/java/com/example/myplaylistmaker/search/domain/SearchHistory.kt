@@ -1,12 +1,16 @@
 package com.example.myplaylistmaker.search.domain
 
 import android.content.Context
-import com.example.imdbtraining.utility.Creator.provideSharedPrefs
+
+import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.models.Track
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
-class SearchHistory(context: Context) {
-    private val sharedPrefs = provideSharedPrefs(context)
+
+class SearchHistory(context: Context): KoinComponent {
+    private val sharedPrefs: SharedPrefs by inject()
     private var historyTrackList = getHistoryTrackList()
     fun clearHistory(){
         sharedPrefs.clearHistorySharedPrefs()
