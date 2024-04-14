@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
-import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.settings.domen.SettingsInteractor
@@ -14,6 +12,7 @@ import com.example.myplaylistmaker.settings.ui.SettingsViewModel
 import com.example.myplaylistmaker.sharing.domen.SharingInteractor
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 
@@ -26,7 +25,7 @@ class SettingActivity : AppCompatActivity() {
         val app = applicationContext as App
         val settingsInteractor: SettingsInteractor by inject { parametersOf(app) }
         val sharingInteractor : SharingInteractor by inject{ parametersOf(this) }
-        val viewModel = SettingsViewModel(sharingInteractor, settingsInteractor)
+        val viewModel: SettingsViewModel by viewModel{ parametersOf(sharingInteractor,settingsInteractor) }
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
         themeSwitcher.isChecked = viewModel.getThemeSettings()
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->

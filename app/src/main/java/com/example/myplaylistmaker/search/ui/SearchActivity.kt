@@ -26,6 +26,10 @@ import com.example.myplaylistmaker.player.ui.PlayerActivity
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
+import com.example.myplaylistmaker.utility.App
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SearchActivity : AppCompatActivity() {
     companion object {
@@ -42,15 +46,20 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var viewModel: TracksSearchViewModel
+    private lateinit var viewModel :TracksSearchViewModel
     private lateinit var tracksAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = applicationContext as App
+        val view:TracksSearchViewModel by viewModel{ parametersOf(app) }
+        viewModel = view
+
+
         setContentView(R.layout.search_layout)
-        viewModel = ViewModelProvider(this, TracksSearchViewModel.getViewModelFactory())[TracksSearchViewModel::class.java]
+
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {

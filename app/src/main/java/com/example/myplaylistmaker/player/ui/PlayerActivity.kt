@@ -11,6 +11,9 @@ import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
+import com.example.myplaylistmaker.utility.App
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -36,10 +39,9 @@ class PlayerActivity : AppCompatActivity() {
         val albumInfo = findViewById<TextView>(R.id.albumInfo)
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
-        viewModel = ViewModelProvider(
-            this,
-            PlayerViewModel.getViewModelFactory()
-        )[PlayerViewModel::class.java]
+        val app = applicationContext as App
+        val view: PlayerViewModel by viewModel{ parametersOf(app) }
+        viewModel = view
 
         backButton.setOnClickListener {
             onBackPressed()

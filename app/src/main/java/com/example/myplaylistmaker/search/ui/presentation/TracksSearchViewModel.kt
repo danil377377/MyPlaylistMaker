@@ -9,18 +9,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.search.domain.SearchHistory
 import com.example.myplaylistmaker.search.domain.api.TracksInteractor
-import com.example.myplaylistmaker.search.domain.api.TracksRepository
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent
-import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
 
 class TracksSearchViewModel(
     application: Application
@@ -31,11 +26,7 @@ class TracksSearchViewModel(
     private val history = SearchHistory(application)
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                TracksSearchViewModel(this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as Application)
-            }
-        }
+
     }
     private val tracks = ArrayList<Track>()
     private val handler = Handler(Looper.getMainLooper())

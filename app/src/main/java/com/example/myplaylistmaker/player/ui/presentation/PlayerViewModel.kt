@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.imdbtraining.utility.Creator
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import org.koin.core.component.KoinComponent
@@ -48,11 +47,7 @@ class PlayerViewModel(
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                PlayerViewModel(this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as Application)
-            }
-        }
+
     }
 
     private var playerState = STATE_DEFAULT
