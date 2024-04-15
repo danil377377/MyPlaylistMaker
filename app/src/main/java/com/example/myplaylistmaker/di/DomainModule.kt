@@ -23,7 +23,7 @@ val interactorModule = module {
     }
     factory<SettingsInteractor>
     {
-        SettingsInteractorImpl(SettingsRepositoryImpl(get()))
+        SettingsInteractorImpl(SettingsRepositoryImpl())
     }
 
     factory<SharingInteractor> {

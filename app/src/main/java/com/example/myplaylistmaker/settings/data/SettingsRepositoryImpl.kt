@@ -4,12 +4,12 @@ import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.settings.domen.SettingsRepository
 import com.example.myplaylistmaker.settings.model.ThemeSettings
 
-class SettingsRepositoryImpl(val app: App):SettingsRepository {
+class SettingsRepositoryImpl():SettingsRepository {
     override fun getThemeSettings(): ThemeSettings {
-       return ThemeSettings(app.sharedPrefs.getTheme())
+       return ThemeSettings(App().sharedPrefs.getTheme())
     }
 
     override fun updateThemeSetting(settings: ThemeSettings) {
-        app.switchTheme(settings.theme)
+        App().switchTheme(settings.theme)
     }
 }
