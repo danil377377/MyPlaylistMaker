@@ -1,11 +1,8 @@
 package com.example.myplaylistmaker.di
 
-import android.app.Application
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
-import com.example.myplaylistmaker.settings.domen.SettingsInteractor
-import com.example.myplaylistmaker.settings.ui.SettingsViewModel
-import com.example.myplaylistmaker.sharing.domen.SharingInteractor
+import com.example.myplaylistmaker.settings.presentation.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

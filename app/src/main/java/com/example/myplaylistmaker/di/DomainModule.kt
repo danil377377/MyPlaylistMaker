@@ -25,9 +25,7 @@ val interactorModule = module {
     {
         SettingsInteractorImpl(SettingsRepositoryImpl(get()))
     }
-    single{
-        App()
-    }
+
     factory<SharingInteractor> {
 
         SharingInteractorImpl(get(), androidContext())

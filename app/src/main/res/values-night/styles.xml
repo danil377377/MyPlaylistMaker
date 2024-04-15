@@ -194,6 +194,9 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/black</item>
     </style>
+    <style name="ClearButtonStyle" >
+        <item name="android:src">@drawable/clear_button_dark</item>
+    </style>
     <style name="ErrorText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

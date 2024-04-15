@@ -1,19 +1,14 @@
-package com.example.myplaylistmaker.settings
+package com.example.myplaylistmaker.settings.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myplaylistmaker.utility.App
 import com.example.myplaylistmaker.R
-import com.example.myplaylistmaker.settings.domen.SettingsInteractor
-import com.example.myplaylistmaker.settings.ui.SettingsViewModel
-import com.example.myplaylistmaker.sharing.domen.SharingInteractor
+import com.example.myplaylistmaker.settings.presentation.SettingsViewModel
 import com.google.android.material.switchmaterial.SwitchMaterial
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 
 class SettingActivity : AppCompatActivity() {

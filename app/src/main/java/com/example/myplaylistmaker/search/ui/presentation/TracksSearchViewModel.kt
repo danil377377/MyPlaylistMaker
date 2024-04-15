@@ -14,14 +14,16 @@ import com.example.myplaylistmaker.search.domain.api.TracksInteractor
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
+import com.example.myplaylistmaker.utility.App
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 
 class TracksSearchViewModel(
-    application: Application
-): AndroidViewModel(application), KoinComponent {
+    val tracksInteractor: TracksInteractor
+): AndroidViewModel(App()) {
 
-    private val tracksInteractor: TracksInteractor by inject()
+
 
     private val history = SearchHistory()
     companion object {

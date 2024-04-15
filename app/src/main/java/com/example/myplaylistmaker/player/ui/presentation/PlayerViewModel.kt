@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
+import com.example.myplaylistmaker.utility.App
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
@@ -21,9 +22,9 @@ import java.util.Locale
 
 
 class PlayerViewModel(
-    application: Application,
-) : AndroidViewModel(application), KoinComponent {
-    private val glideLoader : GlideLoader by inject()
+    val glideLoader : GlideLoader
+) : AndroidViewModel(App()) {
+
 
      var time = ""
     private var mediaPlayer: MediaPlayer = MediaPlayer()

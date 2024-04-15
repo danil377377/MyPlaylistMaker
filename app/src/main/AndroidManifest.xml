@@ -25,7 +25,7 @@ android:name="com.example.myplaylistmaker.utility.App"
         <activity android:name=".player.ui.PlayerActivity"
             android:exported="false"/>
         <activity
-            android:name=".settings.SettingActivity"
+            android:name=".settings.ui.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".main.ui.MainActivity"
