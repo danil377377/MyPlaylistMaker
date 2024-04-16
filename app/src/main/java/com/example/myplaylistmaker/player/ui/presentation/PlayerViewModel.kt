@@ -21,9 +21,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class PlayerViewModel(
+class PlayerViewModel(application: Application,
     val glideLoader : GlideLoader
-) : AndroidViewModel(App()) {
+) : AndroidViewModel(application) {
 
 
      var time = ""

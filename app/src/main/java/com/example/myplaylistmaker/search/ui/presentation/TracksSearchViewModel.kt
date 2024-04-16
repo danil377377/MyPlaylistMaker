@@ -19,9 +19,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
 
-class TracksSearchViewModel(
+class TracksSearchViewModel(application: Application,
     val tracksInteractor: TracksInteractor
-): AndroidViewModel(App()) {
+): AndroidViewModel(application) {
 
 
 
