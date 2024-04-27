@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -53,7 +54,7 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+Log.d("MyTest", "onCreateSearchActivity")
         val view:TracksSearchViewModel by viewModel()
         viewModel = view
 
@@ -64,17 +65,20 @@ class SearchActivity : AppCompatActivity() {
         ) {
             if (clickDebounce()) {
               viewModel.addToHistory(it)
-
+                Log.d("MyTest", "BeforeIntent")
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
                 playerActivityIntent.putExtra("track", it)
                 startActivity(playerActivityIntent)
+                Log.d("MyTest", "afterIntent")
             }
         }
         historyAdapter = TrackAdapter() {
             if (clickDebounce()) {
+                Log.d("MyTest", "BeforeIntent")
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
                 playerActivityIntent.putExtra("track", it)
                 startActivity(playerActivityIntent)
+                Log.d("MyTest", "afterIntent")
             }
         }
         val backButton = findViewById<ImageView>(R.id.back_button)

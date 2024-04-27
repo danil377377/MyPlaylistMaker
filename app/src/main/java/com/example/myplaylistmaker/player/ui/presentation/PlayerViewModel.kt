@@ -90,19 +90,20 @@ class PlayerViewModel(application: Application,
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {
         mediaPlayer.reset()
         mediaPlayer.setDataSource(url)
-        mediaPlayer.prepare()
+        mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
             playerState = STATE_PREPARED
             onPrepared()
+            renderState(PlayerState.Prepare())
         }
         mediaPlayer.setOnCompletionListener {
             onComplete()
             mainThreadHandler?.removeCallbacks(updateTimeRunnable)
-            mediaPlayer.pause() // Пауза после завершения трека
-            playerState = STATE_PAUSED // Установка состояния в STATE_PAUSED
-            renderState(PlayerState.Pause()) // Обновление LiveData
+            mediaPlayer.pause()
+            playerState = STATE_PAUSED
+            renderState(PlayerState.Pause())
         }
-        renderState(PlayerState.Prepare())
+
     }
 
     private fun renderState(state: PlayerState) {

@@ -1,6 +1,7 @@
 package com.example.myplaylistmaker.player.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.log
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -27,7 +29,9 @@ class PlayerActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MyTest", "onCreatePlayer")
         setContentView(R.layout.player)
+        Log.d("MyTest", "onCreatePlayerSetContenrView")
         val track = intent.getSerializableExtra("track") as? Track
         val backButton = findViewById<ImageView>(R.id.backButton)
         val icon = findViewById<ImageView>(R.id.icon)
@@ -49,7 +53,7 @@ class PlayerActivity : AppCompatActivity() {
             url = track.previewUrl
 
             viewModel.loadIcon(this, track.coverArtWork, icon)
-
+            Log.d("MyTest", "viewModelLoadIcon")
             songName.text = track.trackName
             singerName.text = track.artistName
             fullDurability.text =
@@ -69,18 +73,21 @@ class PlayerActivity : AppCompatActivity() {
         pause = findViewById<ImageView?>(R.id.Pause)
         time = findViewById(R.id.durability)
         viewModel.preparePlayer(url,
-            onPrepared = {
-                play.isEnabled = true
-            },
-            onComplete = {
-                time.text = "00:00"
+        onPrepared = {
+            play.isEnabled = true
+        },
+        onComplete = {
+            time.text = "00:00"
 
 
-                play.visibility = View.VISIBLE
-                pause.visibility = View.INVISIBLE
-                pause.isEnabled = false
-            })
-
+            play.visibility = View.VISIBLE
+            pause.visibility = View.INVISIBLE
+            pause.isEnabled = false
+        })
+        Log.d("MyTest", "viewModelPreparePlayer")
+        viewModel.observePlay().observe(this) {
+            render(it)
+        }
 
         play.setOnClickListener {
             playbackControl()
@@ -89,9 +96,8 @@ class PlayerActivity : AppCompatActivity() {
             playbackControl()
         }
 
-        viewModel.observePlay().observe(this) {
-            render(it)
-        }
+
+
     }
 
     override fun onPause() {
