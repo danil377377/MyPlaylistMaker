@@ -94,7 +94,7 @@ class PlayerViewModel(application: Application,
         mediaPlayer.setOnPreparedListener {
             playerState = STATE_PREPARED
             onPrepared()
-            renderState(PlayerState.Prepare())
+
         }
         mediaPlayer.setOnCompletionListener {
             onComplete()
