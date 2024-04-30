@@ -17,6 +17,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -36,6 +39,8 @@ android {
 }
 
 dependencies {
+    val fragment_version= "1.5.5"
+    implementation ("androidx.fragment:fragment-ktx:$fragment_version")
     implementation ("com.google.android.material:material:1.6.1'")
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
