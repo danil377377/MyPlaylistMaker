@@ -14,10 +14,12 @@ class ExternalNavigator {
             action = Intent.ACTION_SEND
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, message)
+           addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
     }
     fun openLink(link:String):Intent{
-        return Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        return intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
     }
     fun openEmail(emailData:EmailData): Intent{
@@ -28,7 +30,7 @@ class ExternalNavigator {
         shareIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailData.myEmail))
         shareIntent.putExtra(Intent.EXTRA_TEXT, message)
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, subjectMessage)
-        return shareIntent
+        return shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
     }
 }

@@ -6,13 +6,13 @@ import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.google.gson.Gson
 
-class SharedPrefsImpl(private val context: Context):SharedPrefs {
+class SharedPrefsImpl(private val context: Context, val gson: Gson):SharedPrefs {
     companion object {
         const val SHARED_PREFERENCES = "sgared_preferences"
         const val TRACK_HISTORY_KEY = "key_for_track_history"
     }
    val sharedPrefs = context.getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
-    private val gson = Gson()
+//    private val gson = Gson()
      fun createJsonFromTrack(tracks: ArrayList<Track>): String {
         return gson.toJson(tracks)
     }

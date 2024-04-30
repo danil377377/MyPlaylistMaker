@@ -12,16 +12,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.imdbtraining.utility.Creator
+import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
+import com.example.myplaylistmaker.utility.App
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class PlayerViewModel(
-    application: Application,
+class PlayerViewModel(application: Application,
+    val glideLoader : GlideLoader
 ) : AndroidViewModel(application) {
-    private val glideLoader = Creator.provideGlideLoader(application)
+
 
      var time = ""
     private var mediaPlayer: MediaPlayer = MediaPlayer()
@@ -45,11 +48,7 @@ class PlayerViewModel(
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                PlayerViewModel(this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as Application)
-            }
-        }
+
     }
 
     private var playerState = STATE_DEFAULT
@@ -91,19 +90,20 @@ class PlayerViewModel(
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {
         mediaPlayer.reset()
         mediaPlayer.setDataSource(url)
-        mediaPlayer.prepare()
+        mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
             playerState = STATE_PREPARED
             onPrepared()
+
         }
         mediaPlayer.setOnCompletionListener {
             onComplete()
             mainThreadHandler?.removeCallbacks(updateTimeRunnable)
-            mediaPlayer.pause() // Пауза после завершения трека
-            playerState = STATE_PAUSED // Установка состояния в STATE_PAUSED
-            renderState(PlayerState.Pause()) // Обновление LiveData
+            mediaPlayer.pause()
+            playerState = STATE_PAUSED
+            renderState(PlayerState.Pause())
         }
-        renderState(PlayerState.Prepare())
+
     }
 
     private fun renderState(state: PlayerState) {

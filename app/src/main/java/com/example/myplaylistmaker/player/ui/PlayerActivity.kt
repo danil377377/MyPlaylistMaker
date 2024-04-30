@@ -1,19 +1,25 @@
 package com.example.myplaylistmaker.player.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
+import com.example.myplaylistmaker.utility.App
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.log
 
-class PlayerActivity : ComponentActivity() {
+class PlayerActivity : AppCompatActivity() {
 
     private lateinit var play: ImageView
     private lateinit var pause: ImageView
@@ -23,7 +29,9 @@ class PlayerActivity : ComponentActivity() {
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MyTest", "onCreatePlayer")
         setContentView(R.layout.player)
+        Log.d("MyTest", "onCreatePlayerSetContenrView")
         val track = intent.getSerializableExtra("track") as? Track
         val backButton = findViewById<ImageView>(R.id.backButton)
         val icon = findViewById<ImageView>(R.id.icon)
@@ -35,10 +43,8 @@ class PlayerActivity : ComponentActivity() {
         val albumInfo = findViewById<TextView>(R.id.albumInfo)
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
-        viewModel = ViewModelProvider(
-            this,
-            PlayerViewModel.getViewModelFactory()
-        )[PlayerViewModel::class.java]
+        val view: PlayerViewModel by viewModel()
+        viewModel = view
 
         backButton.setOnClickListener {
             onBackPressed()
@@ -47,7 +53,7 @@ class PlayerActivity : ComponentActivity() {
             url = track.previewUrl
 
             viewModel.loadIcon(this, track.coverArtWork, icon)
-
+            Log.d("MyTest", "viewModelLoadIcon")
             songName.text = track.trackName
             singerName.text = track.artistName
             fullDurability.text =
@@ -67,18 +73,21 @@ class PlayerActivity : ComponentActivity() {
         pause = findViewById<ImageView?>(R.id.Pause)
         time = findViewById(R.id.durability)
         viewModel.preparePlayer(url,
-            onPrepared = {
-                play.isEnabled = true
-            },
-            onComplete = {
-                time.text = "00:00"
+        onPrepared = {
+            play.isEnabled = true
+        },
+        onComplete = {
+            time.text = "00:00"
 
 
-                play.visibility = View.VISIBLE
-                pause.visibility = View.INVISIBLE
-                pause.isEnabled = false
-            })
-
+            play.visibility = View.VISIBLE
+            pause.visibility = View.INVISIBLE
+            pause.isEnabled = false
+        })
+        Log.d("MyTest", "viewModelPreparePlayer")
+        viewModel.observePlay().observe(this) {
+            render(it)
+        }
 
         play.setOnClickListener {
             playbackControl()
@@ -87,9 +96,8 @@ class PlayerActivity : ComponentActivity() {
             playbackControl()
         }
 
-        viewModel.observePlay().observe(this) {
-            render(it)
-        }
+
+
     }
 
     override fun onPause() {

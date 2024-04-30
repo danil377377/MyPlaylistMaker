@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +18,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
@@ -25,8 +27,12 @@ import com.example.myplaylistmaker.player.ui.PlayerActivity
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
+import com.example.myplaylistmaker.utility.App
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class SearchActivity : ComponentActivity() {
+class SearchActivity : AppCompatActivity() {
     companion object {
         const val INPUT = "input"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
@@ -41,30 +47,38 @@ class SearchActivity : ComponentActivity() {
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var viewModel: TracksSearchViewModel
+    private lateinit var viewModel :TracksSearchViewModel
     private lateinit var tracksAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+Log.d("MyTest", "onCreateSearchActivity")
+        val view:TracksSearchViewModel by viewModel()
+        viewModel = view
+
+
         setContentView(R.layout.search_layout)
-        viewModel = ViewModelProvider(this, TracksSearchViewModel.getViewModelFactory())[TracksSearchViewModel::class.java]
+
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {
               viewModel.addToHistory(it)
-
+                Log.d("MyTest", "BeforeIntent")
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
                 playerActivityIntent.putExtra("track", it)
                 startActivity(playerActivityIntent)
+                Log.d("MyTest", "afterIntent")
             }
         }
         historyAdapter = TrackAdapter() {
             if (clickDebounce()) {
+                Log.d("MyTest", "BeforeIntent")
                 val playerActivityIntent = Intent(this, PlayerActivity::class.java)
                 playerActivityIntent.putExtra("track", it)
                 startActivity(playerActivityIntent)
+                Log.d("MyTest", "afterIntent")
             }
         }
         val backButton = findViewById<ImageView>(R.id.back_button)
