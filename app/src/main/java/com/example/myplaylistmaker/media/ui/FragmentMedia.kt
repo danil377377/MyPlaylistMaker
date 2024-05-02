@@ -29,16 +29,7 @@ class FragmentMedia: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.nothingFoundTextView.text = when(requireArguments().getInt(POSITION)){
-            0 -> "Ваша медиатека пуста"
-            1 -> "Вы не создали ни одного плейлиста"
-            else -> {""}
-        }
-        binding.newPlaylistButton.visibility = if (requireArguments().getInt(POSITION) == 1) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+
         }
 
 

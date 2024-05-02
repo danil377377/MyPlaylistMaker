@@ -241,4 +241,8 @@
         <item name="tabTextColor">@color/white</item>
 <!--        <item name="tabIndicator">@color/white</item>-->
     </style>
+    <style name="SwitchStyle" >
+        <item name="thumbTint">@color/color_active_switcher</item>
+        <item name="trackTint">@color/background_color_active_switcher</item>
+    </style>
 </resources>

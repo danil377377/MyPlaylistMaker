@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         style="@style/TablayoutTextMedia"
         app:textAllCaps="false"
+
         android:fontFamily="@font/ys_display_medium"
         android:textSize="14sp"
         android:textFontWeight = "500"
