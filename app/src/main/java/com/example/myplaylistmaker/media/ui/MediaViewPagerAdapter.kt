@@ -11,6 +11,6 @@ class MediaViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecyc
 
     override fun getItemCount(): Int = 2
     override fun createFragment(position: Int): Fragment {
-        return if (position == 0) NestedFragmentFavorites() else NestedFragmentPlaylists()
+        return if (position == 0) FragmentFavorites() else FragmentPlaylists()
     }
 }
