@@ -29,6 +29,10 @@ android:name="com.example.myplaylistmaker.utility.App"
             android:exported="false" />
         <activity
             android:name=".main.ui.MainActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".main.ui.RootActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

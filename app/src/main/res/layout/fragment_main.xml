@@ -31,19 +31,19 @@
 
 
         <Button
-            android:id="@+id/search"
+            android:id="@+id/searchButton"
             style="@style/SearchButtonStyle"
 
             android:text="@string/TextSearch" />
 
 
         <Button
-            android:id="@+id/media"
+            android:id="@+id/mediaButton"
             style="@style/MediaButtonStyle"
             android:text="@string/Media" />
 
         <Button
-            android:id="@+id/settings"
+            android:id="@+id/settingsButton"
             style="@style/ButtonStyle"
             android:text="@string/Settings"
 

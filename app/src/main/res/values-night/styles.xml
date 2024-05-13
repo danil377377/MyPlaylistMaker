@@ -238,11 +238,7 @@
     </style>
     <style name="TablayoutTextMedia">
         <item name="android:background">@color/YP_Black</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-        <item name="tabIndicatorColor">@color/white</item>
-    </style>
-    <style name="SwitchStyle" >
-        <item name="thumbTint">@color/color_active_switcher</item>
-        <item name="trackTint">@color/background_color_active_switcher</item>
+        <item name="tabTextColor">@color/white</item>
+<!--        <item name="tabIndicator">@color/white</item>-->
     </style>
 </resources>
