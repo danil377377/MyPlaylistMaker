@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.databinding.FragmentMainBinding
 import com.example.myplaylistmaker.media.ui.MediaContainerFragment
@@ -24,46 +25,18 @@ class MainFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.searchButton.setOnClickListener{
-            // Навигируемся на следующий экран
-            parentFragmentManager.commit {
-                replace(
-                    R.id.rootFragmentContainerView,
-                    SearchFragment.newInstance(),
-                    SearchFragment.TAG
-                )
-
-
-                addToBackStack(SearchFragment.TAG)
-            }
+            findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
         }
 
 
 
         binding.mediaButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(
-                    R.id.rootFragmentContainerView,
-                    MediaContainerFragment.newInstance(),
-                    MediaContainerFragment.TAG
-                )
-
-
-                addToBackStack(MediaContainerFragment.TAG)
-            }
+            findNavController().navigate(R.id.action_mainFragment_to_mediaContainerFragment)
         }
 
 
         binding.settingsButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace(
-                    R.id.rootFragmentContainerView,
-                    SettingsFragment.newInstance(),
-                    SettingsFragment.TAG
-                )
-
-
-                addToBackStack(SettingsFragment.TAG)
-            }
+            findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
         }
     }
     }
