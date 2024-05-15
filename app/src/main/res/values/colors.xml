@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
     <color name="YP_Black">#1A1B22</color>
     <color name="black">#1A1B22</color>
@@ -8,4 +9,7 @@
     <color name="progress_bar">#6200EE</color>
     <color name="nav_bar_active">#3772E7</color>
 
+
+
 </resources>
+

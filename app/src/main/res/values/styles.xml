@@ -7,8 +7,8 @@
 
     <style name="bottom_nav">
         <item name="android:background">@color/white</item>
-        <item name="itemIconTint">@color/YP_Black</item>
-        <item name="itemTextColor">@color/YP_Black</item>
+        <item name="itemIconTint">@color/nav_bar</item>
+        <item name="itemTextColor">@color/nav_bar</item>
         <!-- Другие атрибуты для светлой темы -->
     </style>
 
