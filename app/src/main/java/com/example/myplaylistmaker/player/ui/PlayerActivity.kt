@@ -26,6 +26,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var time: TextView
     private lateinit var url: String
     private lateinit var viewModel: PlayerViewModel
+
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
