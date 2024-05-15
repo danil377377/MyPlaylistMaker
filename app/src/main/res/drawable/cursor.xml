@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- Определение размеров и цвета вашего курсора -->
+        <size android:width="2dp" android:height="30dp" /> <!-- Ширина и высота курсора -->
+        <solid android:color="@color/nav_bar_active" /> <!-- Цвет курсора -->
+    </shape>

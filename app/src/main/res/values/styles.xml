@@ -2,6 +2,19 @@
 
 <resources>
 
+
+
+
+    <style name="bottom_nav">
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">@color/YP_Black</item>
+        <item name="itemTextColor">@color/YP_Black</item>
+        <!-- Другие атрибуты для светлой темы -->
+    </style>
+
+
+
+
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>

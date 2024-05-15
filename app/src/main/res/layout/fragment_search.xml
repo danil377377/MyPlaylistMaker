@@ -36,7 +36,9 @@
             style="@style/editText"
             android:imeOptions="actionDone"
             android:singleLine="true"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            android:textCursorDrawable="@drawable/cursor"
+            />
 
         <ImageView
             android:id="@+id/clearIcon"
@@ -99,7 +101,7 @@
         android:layout_height="44dp"
         android:layout_marginTop="140dp"
         android:layout_gravity="center_horizontal"
-        android:indeterminateTint="@color/progress_bar"
+        android:indeterminateTint="@color/nav_bar_active"
         android:visibility="gone"/>
     <androidx.recyclerview.widget.RecyclerView
         android:paddingTop="@dimen/Padding"

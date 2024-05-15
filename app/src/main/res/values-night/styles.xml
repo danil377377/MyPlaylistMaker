@@ -1,18 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="0dp"-->
-<!--    android:layout_marginTop="@dimen/ButtonMarginTop"-->
+<?xml version="1.0" encoding="utf-8"?>
 
-<!--    android:layout_weight="1"-->
-<!--    android:backgroundTint="@color/white"-->
-
-<!--    android:textColor="@color/YP_Black"-->
-<!--    android:textSize="@dimen/ButtonTextSize"-->
-<!--    app:cornerRadius="@dimen/ButtonCornerSize"-->
-<!--    app:icon="@drawable/settings"-->
-<!--    app:iconGravity="textStart"-->
-<!--    app:iconTint="@color/YP_Black"-->
 <resources>
+    <style name="bottom_nav">
+        <item name="android:background">@color/YP_Black</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
 
+
+    </style>
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
