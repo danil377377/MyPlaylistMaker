@@ -21,7 +21,9 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myplaylistmaker.R
 
 import com.example.myplaylistmaker.databinding.FragmentSearchBinding
 import com.example.myplaylistmaker.player.ui.PlayerActivity
@@ -70,25 +72,30 @@ class SearchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
             val view: TracksSearchViewModel by viewModel()
             viewModel = view
             tracksAdapter = TrackAdapter(
             ) {
                 if (clickDebounce()) {
+                    val bundle = Bundle().apply {
+                        putSerializable("track", it)
+                    }
                     viewModel.addToHistory(it)
                     Log.d("MyTest", "BeforeIntent")
-                    val playerActivityIntent = Intent(requireContext(), PlayerActivity::class.java)
-                    playerActivityIntent.putExtra("track", it)
-                    startActivity(playerActivityIntent)
+                    findNavController().navigate(R.id.action_searchFragment_to_playerActivity, bundle)
+
                     Log.d("MyTest", "afterIntent")
                 }
             }
             historyAdapter = TrackAdapter() {
                 if (clickDebounce()) {
                     Log.d("MyTest", "BeforeIntent")
-                    val playerActivityIntent = Intent(requireContext(), PlayerActivity::class.java)
-                    playerActivityIntent.putExtra("track", it)
-                    startActivity(playerActivityIntent)
+                    val bundle = Bundle().apply {
+                        putSerializable("track", it)
+                    }
+                    findNavController().navigate(R.id.action_searchFragment_to_playerActivity, bundle)
                     Log.d("MyTest", "afterIntent")
                 }
             }

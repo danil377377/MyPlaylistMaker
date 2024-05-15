@@ -24,7 +24,8 @@
         android:label="SearchFragment" >
         <action
             android:id="@+id/action_searchFragment_to_playerActivity"
-            app:destination="@id/playerActivity" />
+            app:destination="@id/playerActivity"
+            />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

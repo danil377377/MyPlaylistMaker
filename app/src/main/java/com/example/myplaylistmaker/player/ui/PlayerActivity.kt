@@ -33,6 +33,7 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(R.layout.player)
         Log.d("MyTest", "onCreatePlayerSetContenrView")
         val track = intent.getSerializableExtra("track") as? Track
+
         val backButton = findViewById<ImageView>(R.id.backButton)
         val icon = findViewById<ImageView>(R.id.icon)
         val songName = findViewById<TextView>(R.id.songName)
