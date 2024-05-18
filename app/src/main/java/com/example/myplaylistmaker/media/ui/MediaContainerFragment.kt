@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MediaContainerFragment: Fragment() {
 
     private lateinit var binding: FragmentContainerMediaBinding
-    private lateinit var tabMediator: TabLayoutMediator
+    var tabMediator: TabLayoutMediator? = null
     companion object {
 
         const val TAG = "MediaContainerFragment"
@@ -43,13 +43,13 @@ class MediaContainerFragment: Fragment() {
 
             }
         }
-        tabMediator.attach()
+        tabMediator!!.attach()
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressed()
         }
     }
     override fun onDestroy() {
         super.onDestroy()
-        tabMediator.detach()
+        tabMediator?.detach()
     }
 }
