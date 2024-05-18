@@ -124,7 +124,7 @@ class SearchFragment : Fragment() {
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(clearButton.windowToken, 0)
             inputEditText.clearFocus()
-        }//не понимаю почему не работает обработка нажатий
+        }
 
 
 
@@ -160,12 +160,7 @@ class SearchFragment : Fragment() {
 
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
 
-            if (hasFocus) {
-                bottomNavigationView.visibility = View.GONE
-            } else {
 
-                bottomNavigationView.visibility = View.VISIBLE
-            }
 
             if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
                 viewModel.showHistory(viewModel.getHistoryTrackList())
