@@ -54,10 +54,7 @@ class SettingsFragment: Fragment() {
             viewModel.shareApp()
         }
 
-        binding.backButton.setOnClickListener {
 
-            requireActivity().onBackPressed()
-        }
 
 
         binding.writeToSupport.setOnClickListener {

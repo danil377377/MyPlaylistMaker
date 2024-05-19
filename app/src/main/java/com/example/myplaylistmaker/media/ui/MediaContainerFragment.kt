@@ -14,11 +14,6 @@ class MediaContainerFragment: Fragment() {
 
     private lateinit var binding: FragmentContainerMediaBinding
     var tabMediator: TabLayoutMediator? = null
-    companion object {
-
-        const val TAG = "MediaContainerFragment"
-        fun newInstance() = MediaContainerFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +39,7 @@ class MediaContainerFragment: Fragment() {
             }
         }
         tabMediator!!.attach()
-        binding.backButton.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
+
     }
     override fun onDestroy() {
         super.onDestroy()

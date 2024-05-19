@@ -22,5 +22,6 @@
     <string name="Retry">Обновить</string>
     <string name="something_went_wrong">что тоо пошло не так\n</string>
     <string name="nothing_found">ничего не найдено\n</string>
+    <string name="Mediatec">Медиатека</string>
 
 </resources>

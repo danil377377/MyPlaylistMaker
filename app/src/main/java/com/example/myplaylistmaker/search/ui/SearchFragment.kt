@@ -2,7 +2,7 @@ package com.example.myplaylistmaker.search.ui
 
 
 import android.content.Context
-import android.content.Intent
+
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,13 +26,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
 
 import com.example.myplaylistmaker.databinding.FragmentSearchBinding
-import com.example.myplaylistmaker.player.ui.PlayerActivity
+
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -103,7 +102,6 @@ class SearchFragment : Fragment() {
                 Log.d("MyTest", "afterIntent")
             }
         }
-        val backButton = binding.backButton
         val clearHistoryButton = binding.clearHistoryButton
         retryButton = binding.retry
         nothingFound = binding.nothingFound
@@ -116,8 +114,6 @@ class SearchFragment : Fragment() {
         val historyRecyclerView = binding.historyRecyclerView
         historyLinearLayout = binding.historyLinearLayout
         historyRecyclerView.adapter = historyAdapter
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         binding.linearLayout.setOnClickListener {
             val inputMethodManager =
@@ -131,9 +127,6 @@ class SearchFragment : Fragment() {
 
         if (historyLinearLayout.visibility == View.VISIBLE) recyclerView.visibility =
             View.GONE else recyclerView.visibility = View.VISIBLE
-        backButton.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
         clearButton.setOnClickListener {
             internetProblems.setVisibility(View.GONE)
             nothingFound.setVisibility(View.GONE)
