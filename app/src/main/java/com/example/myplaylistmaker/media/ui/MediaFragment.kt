@@ -32,7 +32,7 @@ class MediaFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.nothingFoundTextView.text = when(requireArguments().getInt(POSITION)){
             0 -> "Ваша медиатека пуста"
-            1 -> "Вы не создали ни одного плейлиста"
+            1 -> "Вы не создали\nни одного плейлиста"
             else -> {""}
         }
         binding.newPlaylistButton.visibility = if (requireArguments().getInt(POSITION) == 1) {

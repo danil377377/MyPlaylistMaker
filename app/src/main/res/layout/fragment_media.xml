@@ -48,6 +48,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/errorImage"
         android:text="Ваша медиатека пуста"
+        android:gravity="center"
+
        app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
         app:layout_constraintEnd_toEndOf="@id/RightInfoBorder"
 

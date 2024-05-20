@@ -78,6 +78,7 @@ class TracksSearchViewModel(application: Application,
             tracksInteractor.searchTracks(newSearchText, object : TracksInteractor.TracksConsumer {
                 override fun consume(foundMovies: List<Track>?, errorMessage: String?) {
                     handler.post {
+                        tracks.clear()
                         if (foundMovies != null) {
                             tracks.addAll(foundMovies)
                         }
