@@ -26,6 +26,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var time: TextView
     private lateinit var url: String
     private lateinit var viewModel: PlayerViewModel
+
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,7 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(R.layout.player)
         Log.d("MyTest", "onCreatePlayerSetContenrView")
         val track = intent.getSerializableExtra("track") as? Track
+
         val backButton = findViewById<ImageView>(R.id.backButton)
         val icon = findViewById<ImageView>(R.id.icon)
         val songName = findViewById<TextView>(R.id.songName)

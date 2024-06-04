@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".media.ui.MediaActivity"
+
     style="@style/ScreenBackStyle">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftInfoBorder"
@@ -12,29 +12,17 @@
         app:layout_constraintGuide_begin="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <ImageView
 
-        style="@style/Arrow_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/backButton"
-        android:layout_marginTop="12dp"
-
-        app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-
-    </ImageView>
     <TextView
         style="@style/MediaTextStyle"
-
+android:id="@+id/Header"
         android:fontFamily="@font/ys_display_medium"
-        android:text="Медиатека"
-        app:layout_constraintStart_toEndOf="@id/backButton"
-        app:layout_constraintTop_toTopOf="@id/backButton"
+        android:text="@string/Mediatec"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:textSize="@dimen/HeaderSize"
-        android:layout_marginStart="@dimen/_24dp">
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_14dp">
 
     </TextView>
     <com.google.android.material.tabs.TabLayout
@@ -42,15 +30,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TablayoutTextMedia"
+        app:textAllCaps="false"
+
+
         android:layout_marginTop="32dp"
-        app:tabTextAppearance="@style/MyCustomTextAppearance"
         app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
-        app:layout_constraintTop_toBottomOf="@id/backButton"/>
+        app:layout_constraintTop_toBottomOf="@id/Header"/>
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

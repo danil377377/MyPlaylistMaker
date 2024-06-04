@@ -2,6 +2,19 @@
 
 <resources>
 
+
+
+
+    <style name="bottom_nav">
+        <item name="android:background">@color/white</item>
+        <item name="itemIconTint">@color/nav_bar</item>
+        <item name="itemTextColor">@color/nav_bar</item>
+        <!-- Другие атрибуты для светлой темы -->
+    </style>
+
+
+
+
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -241,14 +254,7 @@
     </style>
     <style name="TablayoutTextMedia">
         <item name="android:background">@color/white</item>
-        <item name="tabSelectedTextColor">@color/YP_Black</item>
-        <item name="tabIndicatorColor">@color/YP_Black</item>
-    </style>
-    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">false</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textFontWeight">500</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="tabTextColor">@color/YP_Black</item>
+<!--        <item name="tabIndicator">@color/YP_Black</item>-->
     </style>
 </resources>

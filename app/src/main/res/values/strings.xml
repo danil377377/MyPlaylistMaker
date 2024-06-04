@@ -20,13 +20,8 @@
     <string name="Nothing_found">Ничего не нашлось</string>
     <string name="InternetProblems">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="Retry">Обновить</string>
-    <string name="something_went_wrong">что то пошло не так\n</string>
+    <string name="something_went_wrong">что тоо пошло не так\n</string>
     <string name="nothing_found">ничего не найдено\n</string>
-    <string name="new_paylist">Новый плейлист</string>
-    <string name="you_did_not_made_playlists">Вы не создали ни одного плейлиста</string>
-    <string name="new_playlists">Новый плейлист</string>
-    <string name="your_media_is_empty">Ваша медиатека пуста</string>
-    <string name="favorites_tracks">Избранные треки</string>
-    <string name="playlists">Плейлисты</string>
+    <string name="Mediatec">Медиатека</string>
 
 </resources>

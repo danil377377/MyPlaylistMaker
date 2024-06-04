@@ -31,7 +31,7 @@
     <Button
         style="@style/RetryButtonStyle"
         android:id="@+id/newPlaylistButton"
-        android:text="@string/new_paylist"
+        android:text="Новый плейлист"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -47,8 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/errorImage"
-        android:text="@string/you_did_not_made_playlists"
-        app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
+        android:text="Ваша медиатека пуста"
+        android:gravity="center"
+
+       app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
         app:layout_constraintEnd_toEndOf="@id/RightInfoBorder"
 
         >
