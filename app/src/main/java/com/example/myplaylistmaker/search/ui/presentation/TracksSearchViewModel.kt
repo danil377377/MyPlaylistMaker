@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myplaylistmaker.search.domain.SearchHistory
@@ -15,6 +16,9 @@ import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.utility.App
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
@@ -34,10 +38,11 @@ class TracksSearchViewModel(application: Application,
     private val handler = Handler(Looper.getMainLooper())
     private var lastSearchText: String? = null
     private var latestSearchText: String? = null
-    private val searchRunnable = Runnable {
-        val newSearchText = lastSearchText ?: ""
-        searchRequest(newSearchText)
-    }
+//    private val searchRunnable = Runnable {
+//        val newSearchText = lastSearchText ?: ""
+//        searchRequest(newSearchText)
+//    }
+private var searchJob: Job? = null
     private val stateLiveData = MutableLiveData<TracksState>()
     private val historyStateLiveData = MutableLiveData<HistoryState>()
     fun observeState(): LiveData<TracksState> = stateLiveData
@@ -59,17 +64,31 @@ class TracksSearchViewModel(application: Application,
     }
 
     override fun onCleared() {
-        handler.removeCallbacksAndMessages(searchRunnable)
+//        handler.removeCallbacksAndMessages(searchRunnable)
     }
-    fun searchDebounce(changedText: String) {
-        if (latestSearchText == changedText) {
-            return
-        }
-        this.latestSearchText = changedText
+//    fun searchDebounce(changedText: String) {
+//        if (latestSearchText == changedText) {
+//            return
+//        }
+//        this.latestSearchText = changedText
+//        this.lastSearchText = changedText
+//        handler.removeCallbacks(searchRunnable)
+//        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+//    }
+fun searchDebounce(changedText: String) {
+    if (latestSearchText == changedText) {
+        return
+    }
+
+    this.latestSearchText = changedText
         this.lastSearchText = changedText
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    searchJob?.cancel()
+    searchJob = viewModelScope.launch {
+        delay(SEARCH_DEBOUNCE_DELAY)
+        searchRequest(changedText)
     }
+}
+
      fun searchRequest(newSearchText: String) {
         if (newSearchText.isNotEmpty()) {
             renderState(

@@ -28,23 +28,10 @@ import java.util.Locale
 class PlayerViewModel(application: Application,
     val glideLoader : GlideLoader
 ) : AndroidViewModel(application) {
-
-
      var time = ""
     private var mediaPlayer: MediaPlayer = MediaPlayer()
 
     private var timerJob: Job? = null
-
-//    val updateTimeRunnable = object : Runnable {
-//        override fun run() {
-//            time = SimpleDateFormat(
-//                "mm:ss",
-//                Locale.getDefault()
-//            ).format(mediaPlayer.currentPosition)
-//            mainThreadHandler?.postDelayed(this, 300)
-//        }
-//    }
-    val mainThreadHandler = Handler(Looper.getMainLooper())
 
     private val playLiveData = MutableLiveData<PlayerState>()
     fun observePlay(): LiveData<PlayerState> = playLiveData
@@ -80,9 +67,7 @@ class PlayerViewModel(application: Application,
         mediaPlayer.start()
 
         playerState = STATE_PLAYING
-//        mainThreadHandler?.post(
-//            updateTimeRunnable
-//        )
+
         startTimer()
         renderState(PlayerState.Play())
     }
@@ -90,7 +75,7 @@ class PlayerViewModel(application: Application,
     fun pausePlayback() {
         mediaPlayer.pause()
         playerState = STATE_PAUSED
-//        mainThreadHandler?.removeCallbacks(updateTimeRunnable)
+
         renderState(PlayerState.Pause())
     }
 
@@ -105,7 +90,7 @@ class PlayerViewModel(application: Application,
         }
         mediaPlayer.setOnCompletionListener {
             onComplete()
-//            mainThreadHandler?.removeCallbacks(updateTimeRunnable)
+
             mediaPlayer.pause()
             playerState = STATE_PAUSED
             renderState(PlayerState.Pause())
@@ -118,7 +103,6 @@ class PlayerViewModel(application: Application,
     }
     override fun onCleared() {
         pausePlayback()
-//        mainThreadHandler?.removeCallbacks(updateTimeRunnable)
         mediaPlayer.release()
     }
 
