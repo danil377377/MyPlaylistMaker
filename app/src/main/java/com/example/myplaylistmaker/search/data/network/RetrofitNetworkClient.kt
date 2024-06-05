@@ -5,6 +5,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.myplaylistmaker.search.data.dto.ITunesRequest
 import com.example.myplaylistmaker.search.data.dto.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,7 +16,7 @@ class RetrofitNetworkClient(private val context: Context, val ITunesService: ITu
 
 
 
-    override fun doRequest(dto: Any): Response {
+    override suspend fun doRequest(dto: Any): Response {
         if (isConnected() == false) {
             return Response().apply { resultCode = -1 }
         }
@@ -22,12 +24,13 @@ class RetrofitNetworkClient(private val context: Context, val ITunesService: ITu
             return Response().apply { resultCode = 400 }
         }
 
-        val response = ITunesService.search(dto.expression).execute()
-        val body = response.body()
-        return if (body != null) {
-            body.apply { resultCode = response.code() }
-        } else {
-            Response().apply { resultCode = response.code() }
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = ITunesService.search(dto.expression)
+                response.apply { resultCode = 200 }
+            } catch (e: Throwable) {
+                Response().apply { resultCode = 500 }
+            }
         }
     }
     private fun isConnected(): Boolean {
