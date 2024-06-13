@@ -10,11 +10,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.utility.App
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
@@ -24,21 +28,10 @@ import java.util.Locale
 class PlayerViewModel(application: Application,
     val glideLoader : GlideLoader
 ) : AndroidViewModel(application) {
-
-
      var time = ""
     private var mediaPlayer: MediaPlayer = MediaPlayer()
 
-    val updateTimeRunnable = object : Runnable {
-        override fun run() {
-            time = SimpleDateFormat(
-                "mm:ss",
-                Locale.getDefault()
-            ).format(mediaPlayer.currentPosition)
-            mainThreadHandler?.postDelayed(this, 300)
-        }
-    }
-    val mainThreadHandler = Handler(Looper.getMainLooper())
+    private var timerJob: Job? = null
 
     private val playLiveData = MutableLiveData<PlayerState>()
     fun observePlay(): LiveData<PlayerState> = playLiveData
@@ -74,16 +67,15 @@ class PlayerViewModel(application: Application,
         mediaPlayer.start()
 
         playerState = STATE_PLAYING
-        mainThreadHandler?.post(
-            updateTimeRunnable
-        )
+
+        startTimer()
         renderState(PlayerState.Play())
     }
 
     fun pausePlayback() {
         mediaPlayer.pause()
         playerState = STATE_PAUSED
-        mainThreadHandler?.removeCallbacks(updateTimeRunnable)
+
         renderState(PlayerState.Pause())
     }
 
@@ -98,7 +90,7 @@ class PlayerViewModel(application: Application,
         }
         mediaPlayer.setOnCompletionListener {
             onComplete()
-            mainThreadHandler?.removeCallbacks(updateTimeRunnable)
+
             mediaPlayer.pause()
             playerState = STATE_PAUSED
             renderState(PlayerState.Pause())
@@ -111,8 +103,19 @@ class PlayerViewModel(application: Application,
     }
     override fun onCleared() {
         pausePlayback()
-        mainThreadHandler?.removeCallbacks(updateTimeRunnable)
         mediaPlayer.release()
+    }
+
+    private fun startTimer() {
+        timerJob = viewModelScope.launch {
+            while (mediaPlayer.isPlaying) {
+                delay(300L)
+                time = SimpleDateFormat(
+                "mm:ss",
+                Locale.getDefault()
+            ).format(mediaPlayer.currentPosition)
+            }
+        }
     }
 }
 

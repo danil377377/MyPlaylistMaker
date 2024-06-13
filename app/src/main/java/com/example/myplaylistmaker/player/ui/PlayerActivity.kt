@@ -52,15 +52,15 @@ class PlayerActivity : AppCompatActivity() {
             onBackPressed()
         }
         if (track != null) {
-            url = track.previewUrl
+            url = track.previewUrl?:""
 
-            viewModel.loadIcon(this, track.coverArtWork, icon)
+            viewModel.loadIcon(this, track.coverArtWork?:"", icon)
             Log.d("MyTest", "viewModelLoadIcon")
             songName.text = track.trackName
             singerName.text = track.artistName
             fullDurability.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
-            year.text = track.releaseDate.substring(0, 4)
+            year.text = track.releaseDate?.substring(0, 4)
 
             if (track.collectionName != null || track.collectionName != "") {
                 album.text = track.collectionName

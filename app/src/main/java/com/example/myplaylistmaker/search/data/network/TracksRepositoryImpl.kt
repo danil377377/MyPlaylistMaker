@@ -5,22 +5,24 @@ import com.example.myplaylistmaker.search.data.dto.ITunesRequest
 import com.example.myplaylistmaker.search.data.dto.ITunesResponse
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
 import com.example.myplaylistmaker.search.domain.models.Track
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class TracksRepositoryImpl(private val networkClient: NetworkClient) : TracksRepository {
 
-    override fun searchTracks(expression: String): Resource<List<Track>> {
+    override fun searchTracks(expression: String): Flow<Resource<List<Track>>> = flow {
         val response = networkClient.doRequest(ITunesRequest(expression))
-        return when (response.resultCode) {
+         when (response.resultCode) {
             -1 -> {
-                Resource.Error("Проверьте подключение к интернету")
+                emit(Resource.Error("Проверьте подключение к интернету"))
             }
             200 -> {
-                Resource.Success((response as ITunesResponse).results.map {
+                emit(Resource.Success((response as ITunesResponse).results.map {
                     Track(it.trackId, it.trackName, it.artistName, it.trackTimeMillis, it.artworkUrl100, it.collectionName, it.releaseDate,
-                        it.primaryGenreName, it.country, it.previewUrl, it.getCoverArtwork())})
+                        it.primaryGenreName, it.country, it.previewUrl, it.getCoverArtwork())}))
             }
             else -> {
-                Resource.Error("Ошибка сервера")
+                emit(Resource.Error("Ошибка сервера"))
             }
         }
     }
