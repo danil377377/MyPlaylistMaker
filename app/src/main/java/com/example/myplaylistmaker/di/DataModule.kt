@@ -1,8 +1,11 @@
 package com.example.myplaylistmaker.di
 
 import android.app.Application
+import androidx.room.Room
+import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
+import com.example.myplaylistmaker.search.data.converters.TrackDbConvertor
 import com.example.myplaylistmaker.search.data.network.ITunesApi
 import com.example.myplaylistmaker.search.data.network.NetworkClient
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
@@ -21,8 +24,16 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+val dataModule = module{
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+            .build()
+    }
+}
 
 val repositoryModule = module {
+    factory { TrackDbConvertor() }
+
     factory<TracksRepository> {
         TracksRepositoryImpl(get())
     }
@@ -56,5 +67,7 @@ val repositoryModule = module {
     factory {
         ExternalNavigator()
     }
+
+
 
 }

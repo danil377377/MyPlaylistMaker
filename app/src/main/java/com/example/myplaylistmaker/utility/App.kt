@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.di.dataModule
 import com.example.myplaylistmaker.di.interactorModule
 import com.example.myplaylistmaker.di.repositoryModule
 import com.example.myplaylistmaker.di.viewModelModule
@@ -27,7 +28,7 @@ class App : Application(), KoinComponent {
             // Метод специального класса, переданного как this, для добавления контекста в граф
             androidContext(this@App)
             // Передаём все модули, чтобы их содержимое было передано в граф
-            modules(interactorModule,repositoryModule, viewModelModule)
+            modules(interactorModule,repositoryModule, viewModelModule, dataModule)
         }
 
 

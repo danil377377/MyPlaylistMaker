@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-
+    id ("kotlin-kapt")
 }
 
 android {
@@ -38,7 +38,7 @@ android {
         jvmTarget = "1.8"
     }
 }
-
+val room_version = "2.5.1"
 dependencies {
     val fragment_version= "1.5.5"
     implementation ("androidx.fragment:fragment-ktx:$fragment_version")
@@ -62,4 +62,9 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.5.6")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
 }
