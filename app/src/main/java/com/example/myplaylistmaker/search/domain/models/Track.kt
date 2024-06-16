@@ -13,6 +13,7 @@ data class Track(
     val primaryGenreName: String?,
     val country: String?,
     val previewUrl: String?,
-    val coverArtWork: String?
+    val coverArtWork: String?,
+    var isFavorite: Boolean = false
 ):Serializable
 

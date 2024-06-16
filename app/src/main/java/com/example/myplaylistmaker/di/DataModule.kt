@@ -41,7 +41,7 @@ val repositoryModule = module {
     }
 
     factory<TracksRepository> {
-        TracksRepositoryImpl(get())
+        TracksRepositoryImpl(get(), get())
     }
     single<ITunesApi> {
         Retrofit.Builder()
@@ -56,7 +56,7 @@ val repositoryModule = module {
         RetrofitNetworkClient( androidContext(),get())
     }
     factory<SharedPrefs> {
-        SharedPrefsImpl(get(), get())
+        SharedPrefsImpl(get(), get(), get())
     }
     factory { Gson() }
     factory<GlideLoader> {
