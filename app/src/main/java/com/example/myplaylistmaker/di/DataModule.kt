@@ -6,6 +6,7 @@ import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.search.data.converters.TrackDbConvertor
+import com.example.myplaylistmaker.search.data.db.FavoritesRepositoryImpl
 import com.example.myplaylistmaker.search.data.network.ITunesApi
 import com.example.myplaylistmaker.search.data.network.NetworkClient
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
@@ -13,6 +14,7 @@ import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl
 import com.example.myplaylistmaker.search.data.sharedprefs.SharedPrefsImpl
 import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
+import com.example.myplaylistmaker.search.domain.db.FavoritesRepository
 import com.example.myplaylistmaker.settings.data.SettingsRepositoryImpl
 import com.example.myplaylistmaker.settings.data.SettingsSharedPrefsImpl
 import com.example.myplaylistmaker.settings.domen.SettingsRepository
@@ -33,6 +35,10 @@ val dataModule = module{
 
 val repositoryModule = module {
     factory { TrackDbConvertor() }
+
+    single<FavoritesRepository> {
+        FavoritesRepositoryImpl(get(), get())
+    }
 
     factory<TracksRepository> {
         TracksRepositoryImpl(get())
