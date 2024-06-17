@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/leftBorder"
         app:layout_constraintTop_toBottomOf="@id/singerName"
-        app:layout_constraintEnd_toStartOf="@id/Play"
+
         android:layout_marginTop="@dimen/_54dp"
         />
     <ImageView
@@ -93,8 +93,8 @@
         style="@style/Play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/addToPlaylist"
-        app:layout_constraintEnd_toStartOf="@id/AddtoFavorites"
+        app:layout_constraintStart_toEndOf="@id/leftBorder"
+        app:layout_constraintEnd_toStartOf="@id/rightBorder"
         app:layout_constraintTop_toBottomOf="@id/singerName"
         android:layout_marginTop="@dimen/_30dp"
         />
@@ -103,8 +103,8 @@
         style="@style/Pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/addToPlaylist"
-        app:layout_constraintEnd_toStartOf="@id/AddtoFavorites"
+        app:layout_constraintStart_toEndOf="@id/leftBorder"
+        app:layout_constraintEnd_toStartOf="@id/rightBorder"
         app:layout_constraintTop_toBottomOf="@id/singerName"
         android:layout_marginTop="38dp"
 android:visibility="invisible"
@@ -116,10 +116,21 @@ android:visibility="invisible"
         style="@style/Add_to_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/Play"
+
         app:layout_constraintTop_toBottomOf="@id/singerName"
         app:layout_constraintEnd_toEndOf="@id/rightBorder"
         android:layout_marginTop="@dimen/_54dp"
+        />
+    <ImageView
+        android:id="@+id/DeleteFromFavorites"
+        style="@style/Delete_from_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/singerName"
+        app:layout_constraintEnd_toEndOf="@id/rightBorder"
+        android:layout_marginTop="@dimen/_54dp"
+        android:visibility="invisible"
         />
     <TextView
         android:id="@+id/durability"

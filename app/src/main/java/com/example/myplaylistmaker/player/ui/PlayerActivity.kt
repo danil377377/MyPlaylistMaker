@@ -1,23 +1,20 @@
 package com.example.myplaylistmaker.player.ui
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.isVisible
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
-import com.example.myplaylistmaker.utility.App
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
 import java.util.Locale
-import kotlin.math.log
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -47,14 +44,25 @@ class PlayerActivity : AppCompatActivity() {
         val country = findViewById<TextView>(R.id.country)
         val view: PlayerViewModel by viewModel()
         viewModel = view
-
+        if (track != null) {
+            viewModel.track = track
+        }
         backButton.setOnClickListener {
             onBackPressed()
         }
+        val addtoFavorites = findViewById<ImageView>(R.id.AddtoFavorites)
+        val deleteFromVavorites = findViewById<ImageView>(R.id.DeleteFromFavorites)
+        deleteFromVavorites.setOnClickListener{
+            viewModel.onFavoriteClicked()
+        }
+        addtoFavorites.setOnClickListener {
+            viewModel.onFavoriteClicked()
+        }
         if (track != null) {
-            url = track.previewUrl?:""
 
-            viewModel.loadIcon(this, track.coverArtWork?:"", icon)
+            url = track.previewUrl ?: ""
+
+            viewModel.loadIcon(this, track.coverArtWork ?: "", icon)
             Log.d("MyTest", "viewModelLoadIcon")
             songName.text = track.trackName
             singerName.text = track.artistName
@@ -74,19 +82,32 @@ class PlayerActivity : AppCompatActivity() {
         play = findViewById(R.id.Play)
         pause = findViewById<ImageView?>(R.id.Pause)
         time = findViewById(R.id.durability)
+
+
         viewModel.preparePlayer(url,
-        onPrepared = {
-            play.isEnabled = true
-        },
-        onComplete = {
-            time.text = "00:00"
+            onPrepared = {
+                play.isEnabled = true
+            },
+            onComplete = {
+                time.text = "00:00"
 
 
-            play.visibility = View.VISIBLE
-            pause.visibility = View.INVISIBLE
-            pause.isEnabled = false
-        })
+                play.visibility = View.VISIBLE
+                pause.visibility = View.INVISIBLE
+                pause.isEnabled = false
+            })
         Log.d("MyTest", "viewModelPreparePlayer")
+        viewModel.observeFavorite().observe(this){
+            if (it) {
+                addtoFavorites.isVisible = true
+                deleteFromVavorites.isVisible = false
+                deleteFromVavorites.isEnabled = false
+            } else {
+                addtoFavorites.isVisible = false
+                deleteFromVavorites.isVisible = true
+                addtoFavorites.isEnabled = false
+            }
+        }
         viewModel.observePlay().observe(this) {
             render(it)
         }
@@ -99,13 +120,13 @@ class PlayerActivity : AppCompatActivity() {
         }
 
 
-
     }
 
     override fun onPause() {
         super.onPause()
         render(PlayerState.Pause())
     }
+
     fun render(playerState: PlayerState) {
         when (playerState) {
             is PlayerState.Pause -> {
@@ -143,7 +164,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun playbackControl() {
-       viewModel.playbackControl()
+        viewModel.playbackControl()
     }
 
 }

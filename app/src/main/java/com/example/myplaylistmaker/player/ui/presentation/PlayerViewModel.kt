@@ -15,6 +15,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
+import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
+import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.utility.App
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -26,12 +28,15 @@ import java.util.Locale
 
 
 class PlayerViewModel(application: Application,
-    val glideLoader : GlideLoader
+    val glideLoader : GlideLoader,
+    val favoritesInteractor: FavoritesInteractor
 ) : AndroidViewModel(application) {
      var time = ""
     private var mediaPlayer: MediaPlayer = MediaPlayer()
-
+lateinit var track:Track
     private var timerJob: Job? = null
+    private var favoriteLivaeData = MutableLiveData<Boolean>()
+    fun observeFavorite(): LiveData<Boolean> = favoriteLivaeData
 
     private val playLiveData = MutableLiveData<PlayerState>()
     fun observePlay(): LiveData<PlayerState> = playLiveData
@@ -114,6 +119,21 @@ class PlayerViewModel(application: Application,
                 "mm:ss",
                 Locale.getDefault()
             ).format(mediaPlayer.currentPosition)
+            }
+        }
+    }
+    fun onFavoriteClicked() {
+        if (track != null) {
+            viewModelScope.launch {
+                if (track.isFavorite) {
+                    favoritesInteractor.deleteTrackFromFavorites(track)
+                    track.isFavorite = !track.isFavorite
+                } else {
+                    favoritesInteractor.addTrackToFavorites(track)
+                    track.isFavorite = !track.isFavorite
+                }
+
+                favoriteLivaeData.postValue(track.isFavorite)
             }
         }
     }

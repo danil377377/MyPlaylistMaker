@@ -148,6 +148,9 @@
     <style name="Add_to_favorites">
         <item name="android:src">@drawable/add_to_favorite_dark</item>
     </style>
+    <style name="Delete_from_favorites">
+        <item name="android:src">@drawable/deletefromfavoritesbuttondark</item>
+    </style>
     <style name="PlaceHolder">
         <item name="android:layout_width">@dimen/card_image</item>
         <item name="android:layout_height">@dimen/card_image</item>

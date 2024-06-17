@@ -24,7 +24,7 @@ class FavoritesRepositoryImpl(
         appDatabase.trackDao().insertTrack(trackDb)
     }
 
-    override fun deleteTrackFromFavorites(track: Track) {
+    override suspend fun deleteTrackFromFavorites(track: Track) {
         val trackDto = convertFromTrackToTrackDto(track)
         val trackDb = movieDbConvertor.map(trackDto)
         appDatabase.trackDao().deleteTrack(trackDb)
