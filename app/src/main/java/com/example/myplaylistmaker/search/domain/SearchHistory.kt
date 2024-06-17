@@ -4,6 +4,9 @@ import android.content.Context
 
 import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.models.Track
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -11,7 +14,14 @@ import org.koin.core.component.inject
 
 class SearchHistory(): KoinComponent {
     private val sharedPrefs: SharedPrefs by inject()
-    private var historyTrackList = getHistoryTrackList()
+    private var historyTrackList = arrayListOf<Track>()
+
+    init {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            historyTrackList = getHistoryTrackList()
+        }
+    }
     fun clearHistory(){
         sharedPrefs.clearHistorySharedPrefs()
         historyTrackList.clear()
@@ -35,7 +45,7 @@ class SearchHistory(): KoinComponent {
 
     }
 
-    fun getHistoryTrackList(): ArrayList<Track> {
+    suspend fun getHistoryTrackList(): ArrayList<Track> {
         return sharedPrefs.getHistory()
     }
 }
