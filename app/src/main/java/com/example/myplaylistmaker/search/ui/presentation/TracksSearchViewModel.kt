@@ -49,7 +49,7 @@ class TracksSearchViewModel(
         historyStateLiveData.postValue(HistoryState.Empty())
     }
 
-    fun getHistoryTrackList(): ArrayList<Track> {
+    suspend fun getHistoryTrackList(): ArrayList<Track> {
         return history.getHistoryTrackList()
     }
 

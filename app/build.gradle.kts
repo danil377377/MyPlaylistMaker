@@ -38,7 +38,7 @@ android {
         jvmTarget = "1.8"
     }
 }
-val room_version = "2.5.1"
+val room_version = "2.6.1"
 dependencies {
     val fragment_version= "1.5.5"
     implementation ("androidx.fragment:fragment-ktx:$fragment_version")

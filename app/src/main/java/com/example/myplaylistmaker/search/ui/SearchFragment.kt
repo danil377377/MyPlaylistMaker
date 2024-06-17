@@ -32,6 +32,8 @@ import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.models.HistoryState
 import com.example.myplaylistmaker.search.ui.models.TracksState
 import com.example.myplaylistmaker.search.ui.presentation.TracksSearchViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -63,7 +65,7 @@ class SearchFragment : Fragment() {
     private lateinit var viewModel: TracksSearchViewModel
     private lateinit var tracksAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
-
+    private var historyTrackList = ArrayList<Track>()
     private lateinit var binding: FragmentSearchBinding
 
     override fun onCreateView(
@@ -79,9 +81,11 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val view: TracksSearchViewModel by viewModel()
         viewModel = view
+        CoroutineScope(Dispatchers.IO).launch {
+           historyTrackList =  viewModel.getHistoryTrackList()
+        }
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {
@@ -154,12 +158,12 @@ class SearchFragment : Fragment() {
             viewModel.searchRequest(inputEditText.text.toString())
         }
 
+
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
 
 
-
-            if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
-                viewModel.showHistory(viewModel.getHistoryTrackList())
+            if (hasFocus && inputEditText.text.isEmpty() && historyTrackList != ArrayList<Track>()) {
+                viewModel.showHistory(historyTrackList)
             } else {
                 viewModel.hideHistory()
             }
@@ -182,14 +186,14 @@ class SearchFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s?.isEmpty() == true && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
+                if (s?.isEmpty() == true && historyTrackList != ArrayList<Track>()) {
 
-                    viewModel.showHistory(viewModel.getHistoryTrackList())
+                    viewModel.showHistory(historyTrackList)
 
                 }
 
                 if (inputEditText.hasFocus() && s?.isEmpty() == true) {
-                    viewModel.showHistory(viewModel.getHistoryTrackList())
+                    viewModel.showHistory(historyTrackList)
 
                 } else historyLinearLayout.visibility = View.GONE
                 editTextValue = s.toString()
