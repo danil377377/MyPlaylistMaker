@@ -45,7 +45,7 @@ class SearchHistory(): KoinComponent {
 
     }
 
-    suspend fun getHistoryTrackList(): ArrayList<Track> {
+     suspend fun getHistoryTrackList(): ArrayList<Track> {
         return sharedPrefs.getHistory()
     }
 }
