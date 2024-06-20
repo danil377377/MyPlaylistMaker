@@ -57,6 +57,8 @@ class TracksSearchViewModel(
         history.clearHistory()
     }
 
+
+
     fun showHistory(tracks: ArrayList<Track>) {
         historyStateLiveData.postValue(HistoryState.Content(tracks))
     }

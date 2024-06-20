@@ -156,12 +156,12 @@ class SearchFragment : Fragment() {
 
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
             lifecycleScope.launch {
-                val historyList = viewModel.getHistoryTrackList()
-                if (hasFocus && inputEditText.text.isEmpty() && historyList.isNotEmpty()) {
-                    viewModel.showHistory(historyList)
+
+                if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList().isNotEmpty()) {
+                    viewModel.showHistory(viewModel.getHistoryTrackList())
                 }
-//            if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
-//                viewModel.showHistory(viewModel.getHistoryTrackList())
+            if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
+                viewModel.showHistory(viewModel.getHistoryTrackList())}
                 else {
                     viewModel.hideHistory()
                 }
@@ -223,7 +223,13 @@ class SearchFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+        historyAdapter.trackList.clear()
+        historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())}
 
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(INPUT, editTextValue)
@@ -265,6 +271,7 @@ class SearchFragment : Fragment() {
             is HistoryState.Content -> showContentHistory(state.tracks)
             is HistoryState.Empty -> showEmptyHistory()
 
+            else -> {}
         }
     }
 
@@ -287,6 +294,7 @@ class SearchFragment : Fragment() {
             is TracksState.Empty -> showEmpty()
             is TracksState.Error -> showError()
             is TracksState.Loading -> showLoading()
+            else -> {}
         }
     }
 

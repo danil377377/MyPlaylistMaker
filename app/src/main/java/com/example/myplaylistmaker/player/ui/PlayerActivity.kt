@@ -23,6 +23,8 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var time: TextView
     private lateinit var url: String
     private lateinit var viewModel: PlayerViewModel
+    private lateinit var addtoFavorites :ImageView
+    private lateinit var deleteFromVavorites :ImageView
 
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,13 +47,13 @@ class PlayerActivity : AppCompatActivity() {
         val view: PlayerViewModel by viewModel()
         viewModel = view
         if (track != null) {
-            viewModel.track = track
+            viewModel.mysetTrack(track)
         }
         backButton.setOnClickListener {
             onBackPressed()
         }
-        val addtoFavorites = findViewById<ImageView>(R.id.AddtoFavorites)
-        val deleteFromVavorites = findViewById<ImageView>(R.id.DeleteFromFavorites)
+         addtoFavorites = findViewById<ImageView>(R.id.AddtoFavorites)
+        deleteFromVavorites = findViewById<ImageView>(R.id.DeleteFromFavorites)
         deleteFromVavorites.setOnClickListener{
             viewModel.onFavoriteClicked()
         }
@@ -59,6 +61,7 @@ class PlayerActivity : AppCompatActivity() {
             viewModel.onFavoriteClicked()
         }
         if (track != null) {
+
 
             url = track.previewUrl ?: ""
 
@@ -98,15 +101,8 @@ class PlayerActivity : AppCompatActivity() {
             })
         Log.d("MyTest", "viewModelPreparePlayer")
         viewModel.observeFavorite().observe(this){
-            if (it) {
-                addtoFavorites.isVisible = true
-                deleteFromVavorites.isVisible = false
-                deleteFromVavorites.isEnabled = false
-            } else {
-                addtoFavorites.isVisible = false
-                deleteFromVavorites.isVisible = true
-                addtoFavorites.isEnabled = false
-            }
+            renderFavorites(it)
+
         }
         viewModel.observePlay().observe(this) {
             render(it)
@@ -125,8 +121,20 @@ class PlayerActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         render(PlayerState.Pause())
+
     }
 
+    fun renderFavorites(value: Boolean){
+        if (value) {
+            addtoFavorites.isVisible = false
+            deleteFromVavorites.isVisible = true
+            deleteFromVavorites.isEnabled = true
+        } else {
+            addtoFavorites.isVisible = true
+            deleteFromVavorites.isVisible = false
+            addtoFavorites.isEnabled = true
+        }
+    }
     fun render(playerState: PlayerState) {
         when (playerState) {
             is PlayerState.Pause -> {

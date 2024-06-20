@@ -20,6 +20,7 @@ import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.utility.App
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -35,11 +36,16 @@ class PlayerViewModel(application: Application,
     private var mediaPlayer: MediaPlayer = MediaPlayer()
 lateinit var track:Track
     private var timerJob: Job? = null
-    private var favoriteLivaeData = MutableLiveData<Boolean>()
-    fun observeFavorite(): LiveData<Boolean> = favoriteLivaeData
+    private var favoriteLiveData = MutableLiveData<Boolean>()
+    fun observeFavorite(): LiveData<Boolean> = favoriteLiveData
 
     private val playLiveData = MutableLiveData<PlayerState>()
     fun observePlay(): LiveData<PlayerState> = playLiveData
+
+    fun mysetTrack(track: Track) {
+        this.track = track
+        favoriteLiveData.value = track.isFavorite
+    }
 
     companion object {
         private const val STATE_DEFAULT = 0
@@ -127,16 +133,18 @@ lateinit var track:Track
             viewModelScope.launch {
                 if (track.isFavorite) {
                     favoritesInteractor.deleteTrackFromFavorites(track)
-                    track.isFavorite = !track.isFavorite
+
                 } else {
                     favoritesInteractor.addTrackToFavorites(track)
-                    track.isFavorite = !track.isFavorite
-                }
 
-                favoriteLivaeData.postValue(track.isFavorite)
+                }
+                track.isFavorite = !track.isFavorite
+                favoriteLiveData.postValue(track.isFavorite)
             }
         }
     }
+
+
 }
 
 
