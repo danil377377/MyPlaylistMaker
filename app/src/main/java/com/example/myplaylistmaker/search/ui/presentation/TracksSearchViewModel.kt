@@ -37,9 +37,9 @@ class TracksSearchViewModel(
 
     }
 
-    private val tracks = ArrayList<Track>()
+     val tracks = ArrayList<Track>()
     private var lastSearchText: String? = null
-    private var latestSearchText: String? = null
+     var latestSearchText: String? = null
     private var searchJob: Job? = null
     private val stateLiveData = MutableLiveData<TracksState>()
     private val historyStateLiveData = MutableLiveData<HistoryState>()
@@ -82,7 +82,7 @@ class TracksSearchViewModel(
     }
 
     fun searchRequest(newSearchText: String) {
-        if (newSearchText.isNotEmpty()) {
+        if (newSearchText.isNotEmpty() and !newSearchText.equals("check")) {
             renderState(
                 TracksState.Loading
             )

@@ -25,10 +25,6 @@ class TrackAdapter( val clickListener: LocationClickListener) : RecyclerView.Ada
     fun interface LocationClickListener {
         fun onLocationClick(location: Track)
     }
-    fun updateTracks(newTracks: List<Track>) {
-        trackList.clear()
-        trackList.addAll(newTracks)
-        notifyDataSetChanged()
-    }
+
 
 }

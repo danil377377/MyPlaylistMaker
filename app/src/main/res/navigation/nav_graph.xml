@@ -25,5 +25,13 @@
     <fragment
         android:id="@+id/mediaContainerFragment"
         android:name="com.example.myplaylistmaker.media.ui.MediaContainerFragment"
-        android:label="MediaContainerFragment" />
+        android:label="MediaContainerFragment" >
+        <action
+            android:id="@+id/action_mediaContainerFragment_to_playerActivity"
+            app:destination="@id/playerActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.myplaylistmaker.media.ui.FavoritesFragment"
+        android:label="FavoritesFragment" />
 </navigation>

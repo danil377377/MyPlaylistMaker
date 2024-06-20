@@ -59,7 +59,6 @@ class SearchFragment : Fragment() {
     private lateinit var historyLinearLayout: LinearLayout
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
-    private val handler = Handler(Looper.getMainLooper())
     private lateinit var viewModel: TracksSearchViewModel
     private lateinit var tracksAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
@@ -223,13 +222,21 @@ class SearchFragment : Fragment() {
 
     }
 
+
+
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
         historyAdapter.trackList.clear()
-        historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())}
+        historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())
+            tracksAdapter.trackList.clear()
+            viewModel.searchRequest(viewModel.latestSearchText?:"check")
+
+        }
 
     }
+
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(INPUT, editTextValue)
