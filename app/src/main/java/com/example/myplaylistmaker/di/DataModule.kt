@@ -1,6 +1,7 @@
 package com.example.myplaylistmaker.di
 
 import android.app.Application
+import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
@@ -59,6 +60,7 @@ val repositoryModule = module {
         SharedPrefsImpl(get(), get(), get())
     }
     factory { Gson() }
+    factory { MediaPlayer() }
     factory<GlideLoader> {
         GlideLoaderImpl(get())
     }

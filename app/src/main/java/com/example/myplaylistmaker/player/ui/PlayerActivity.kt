@@ -22,13 +22,14 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var pause: ImageView
     private lateinit var time: TextView
     private lateinit var url: String
-    private lateinit var viewModel: PlayerViewModel
+    private val viewModel: PlayerViewModel by viewModel()
     private lateinit var addtoFavorites :ImageView
     private lateinit var deleteFromVavorites :ImageView
 
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Log.d("MyTest", "onCreatePlayer")
         setContentView(R.layout.player)
         Log.d("MyTest", "onCreatePlayerSetContenrView")
@@ -44,8 +45,7 @@ class PlayerActivity : AppCompatActivity() {
         val albumInfo = findViewById<TextView>(R.id.albumInfo)
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
-        val view: PlayerViewModel by viewModel()
-        viewModel = view
+
         if (track != null) {
             viewModel.mysetTrack(track)
         }
@@ -60,6 +60,7 @@ class PlayerActivity : AppCompatActivity() {
         addtoFavorites.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
+
         if (track != null) {
 
 
@@ -117,6 +118,7 @@ class PlayerActivity : AppCompatActivity() {
 
 
     }
+
 
     override fun onPause() {
         super.onPause()

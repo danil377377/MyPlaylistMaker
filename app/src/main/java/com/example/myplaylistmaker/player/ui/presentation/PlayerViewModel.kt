@@ -3,6 +3,7 @@ package com.example.myplaylistmaker.player.ui.presentation
 import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
@@ -30,10 +31,12 @@ import java.util.Locale
 
 class PlayerViewModel(application: Application,
     val glideLoader : GlideLoader,
-    val favoritesInteractor: FavoritesInteractor
+    val favoritesInteractor: FavoritesInteractor,
+                     val mediaPlayer: MediaPlayer
 ) : AndroidViewModel(application) {
      var time = ""
-    private var mediaPlayer: MediaPlayer = MediaPlayer()
+
+
 lateinit var track:Track
     private var timerJob: Job? = null
     private var favoriteLiveData = MutableLiveData<Boolean>()
@@ -61,6 +64,9 @@ lateinit var track:Track
 
     }
 
+
+
+
     fun playbackControl() {
         when (playerState) {
 
@@ -75,6 +81,7 @@ lateinit var track:Track
     }
 
     fun startPlayback() {
+
         mediaPlayer.start()
 
         playerState = STATE_PLAYING
@@ -88,6 +95,7 @@ lateinit var track:Track
         playerState = STATE_PAUSED
 
         renderState(PlayerState.Pause())
+
     }
 
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {

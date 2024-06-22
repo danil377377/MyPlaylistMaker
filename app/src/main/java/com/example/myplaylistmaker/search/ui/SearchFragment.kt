@@ -153,15 +153,11 @@ class SearchFragment : Fragment() {
             viewModel.searchRequest(inputEditText.text.toString())
         }
 
-        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+        inputEditText.setOnFocusChangeListener { _, hasFocus ->
             lifecycleScope.launch {
-
                 if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList().isNotEmpty()) {
                     viewModel.showHistory(viewModel.getHistoryTrackList())
-                }
-            if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
-                viewModel.showHistory(viewModel.getHistoryTrackList())}
-                else {
+                } else {
                     viewModel.hideHistory()
                 }
             }
@@ -181,24 +177,18 @@ class SearchFragment : Fragment() {
                 internetProblems.setVisibility(View.GONE)
                 nothingFound.setVisibility(View.GONE)
 
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
                 lifecycleScope.launch {
 
-
-                    if (s?.isEmpty() == true && viewModel.getHistoryTrackList() != ArrayList<Track>()) {
-
+                    if (s.isNullOrEmpty() && inputEditText.hasFocus() && viewModel.getHistoryTrackList().isNotEmpty()) {
                         viewModel.showHistory(viewModel.getHistoryTrackList())
-
+                    } else {
+                        viewModel.hideHistory()
                     }
-
-                    if (inputEditText.hasFocus() && s?.isEmpty() == true) {
-                        viewModel.showHistory(viewModel.getHistoryTrackList())
-
-                    } else historyLinearLayout.visibility = View.GONE
-
-
                 }
                 editTextValue = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
@@ -209,6 +199,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
