@@ -81,14 +81,14 @@ class TracksSearchViewModel(
         }
     }
 
-    fun searchRequest(newSearchText: String) {
-        if (newSearchText.isNotEmpty() and !newSearchText.equals("check")) {
+    fun searchRequest(newSearchText: String?) {
+        if (!newSearchText.isNullOrEmpty() and !newSearchText.equals("check")) {
             renderState(
                 TracksState.Loading
             )
             viewModelScope.launch {
                 tracksInteractor
-                    .searchTracks(newSearchText)
+                    .searchTracks(newSearchText!!)
                     .collect { pair ->
 
                         processResult(pair.first, pair.second)
