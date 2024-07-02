@@ -136,6 +136,7 @@ class SearchFragment : Fragment() {
             viewModel.hideHistory()
             inputEditText.setText("")
             tracksAdapter.notifyDataSetChanged()
+            viewModel.latestSearchText = null
             val inputMethodManager =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(clearButton.windowToken, 0)
@@ -155,7 +156,9 @@ class SearchFragment : Fragment() {
 
         inputEditText.setOnFocusChangeListener { _, hasFocus ->
             lifecycleScope.launch {
-                if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList().isNotEmpty()) {
+                if (hasFocus && inputEditText.text.isEmpty() && viewModel.getHistoryTrackList()
+                        .isNotEmpty()
+                ) {
                     viewModel.showHistory(viewModel.getHistoryTrackList())
                 } else {
                     viewModel.hideHistory()
@@ -184,18 +187,28 @@ class SearchFragment : Fragment() {
 
                 lifecycleScope.launch {
 
-                    if (s.isNullOrEmpty() && inputEditText.hasFocus() && viewModel.getHistoryTrackList().isNotEmpty()) {
+                    if (s.isNullOrEmpty() && inputEditText.hasFocus() && viewModel.getHistoryTrackList()
+                            .isNotEmpty()
+                    ) {
                         viewModel.showHistory(viewModel.getHistoryTrackList())
                     } else {
                         viewModel.hideHistory()
                     }
+                    if (s?.isNotEmpty() == true && inputEditText.hasFocus()) {
+                        delay(1000)
+
+                        editTextValue = s.toString()
+                        searchDebounce(editTextValue!!)
+
+                    }else {
+                        delay(100)
+                        recyclerView.visibility = View.GONE
+                        viewModel.latestSearchText = null
+                    }
                 }
-                editTextValue = s.toString()
+
                 clearButton.visibility = clearButtonVisibility(s)
-                if (s?.isNotEmpty() == true && inputEditText.hasFocus()) {
-                    searchDebounce(editTextValue!!)
-                    viewModel.hideHistory()
-                }
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -214,14 +227,13 @@ class SearchFragment : Fragment() {
     }
 
 
-
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-        historyAdapter.trackList.clear()
-        historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())
+            historyAdapter.trackList.clear()
+            historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())
             tracksAdapter.trackList.clear()
-            viewModel.searchRequest(viewModel.latestSearchText?:"check")
+            viewModel.searchRequest(viewModel.latestSearchText ?: "check")
 
         }
 

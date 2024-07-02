@@ -4,6 +4,8 @@ import android.app.Application
 import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.myplaylistmaker.db.AppDatabase
+import com.example.myplaylistmaker.media.data.db.MakePlaylistRepositoryImpl
+import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.search.data.converters.TrackDbConvertor
@@ -27,9 +29,11 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-val dataModule = module{
+
+val dataModule = module {
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 }
@@ -40,6 +44,7 @@ val repositoryModule = module {
     single<FavoritesRepository> {
         FavoritesRepositoryImpl(get(), get())
     }
+    single<MakePlaylistRepository> { MakePlaylistRepositoryImpl(get(), get()) }
 
     factory<TracksRepository> {
         TracksRepositoryImpl(get(), get())
@@ -54,7 +59,7 @@ val repositoryModule = module {
 
 
     single<NetworkClient> {
-        RetrofitNetworkClient( androidContext(),get())
+        RetrofitNetworkClient(androidContext(), get())
     }
     factory<SharedPrefs> {
         SharedPrefsImpl(get(), get(), get())
@@ -75,7 +80,6 @@ val repositoryModule = module {
     factory {
         ExternalNavigator()
     }
-
 
 
 }
