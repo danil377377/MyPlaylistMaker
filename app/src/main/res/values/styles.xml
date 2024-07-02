@@ -192,6 +192,15 @@
     <style name="Delete_from_favorites">
         <item name="android:src">@drawable/deletefromfavoritesbutton</item>
     </style>
+    <style name="Add_photo">
+        <item name="android:src">@drawable/add_photo_placeholder</item>
+    </style>
+
+
+    <style name="Edit_text_dashes">
+        <item name="android:background">@drawable/for_edit_text</item>
+        <item name="android:textColorHint">@color/YP_Black</item>
+    </style>
 
 
 

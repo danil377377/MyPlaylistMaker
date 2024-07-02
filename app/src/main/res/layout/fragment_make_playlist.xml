@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ScreenBackStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+
+        style="@style/Arrow_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/backButton"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+    </ImageView>
+    <TextView
+        style="@style/MediaTextStyle"
+        android:id="@+id/Header"
+        android:fontFamily="@font/ys_display_medium"
+        android:text="@string/new_playlist"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/HeaderSize"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp">
+
+    </TextView>
+    <ImageView
+        style="@style/Add_photo"
+        android:id="@+id/playlist_photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/Header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/name"
+        android:layout_marginTop="42dp"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/dashes_light"
+        >
+
+    </ImageView>
+    <EditText
+        style="@style/Edit_text_dashes"
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintTop_toBottomOf="@id/playlist_photo"
+android:hint="@string/name"
+
+
+android:paddingStart="@dimen/_16dp"
+        >
+
+    </EditText>
+    <EditText
+        style="@style/Edit_text_dashes"
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:layout_constraintStart_toStartOf="@id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:layout_marginTop="@dimen/_16dp"
+        android:hint="@string/description"
+
+
+        android:paddingStart="@dimen/_16dp"
+        >
+
+    </EditText>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        android:text="@string/Create"
+        android:fontFamily="@font/ys_display_medium"
+        android:textSize="@dimen/_16dp"
+        android:textFontWeight="500"
+        android:gravity="center"
+android:background="@drawable/create_playlist_button"
+        android:enabled="false"
+        android:textColor="@color/white"
+
+        >
+
+    </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

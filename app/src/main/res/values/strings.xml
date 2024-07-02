@@ -24,5 +24,9 @@
     <string name="nothing_found">ничего не найдено\n</string>
     <string name="Mediatec">Медиатека</string>
     <string name="your_library_is_empty">Ваша медиатека пуста</string>
+    <string name="new_playlist">Новый плейлист</string>
+    <string name="name">Название*</string>
+    <string name="description">Описание</string>
+    <string name="Create">Создать</string>
 
 </resources>
