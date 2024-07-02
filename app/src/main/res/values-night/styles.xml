@@ -154,7 +154,7 @@
 
 
     <style name="Edit_text_dashes">
-        <item name="android:background">@drawable/for_edit_text_dark</item>
+        <item name="android:background">@drawable/edit_text_selector_make_playlist_dark</item>
         <item name="android:textColorHint">@color/white</item>
     </style>
 

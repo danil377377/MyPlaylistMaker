@@ -198,7 +198,7 @@
 
 
     <style name="Edit_text_dashes">
-        <item name="android:background">@drawable/for_edit_text</item>
+        <item name="android:background">@drawable/edit_text_selector_make_playlist</item>
         <item name="android:textColorHint">@color/YP_Black</item>
     </style>
 
