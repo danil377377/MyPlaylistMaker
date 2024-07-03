@@ -9,7 +9,7 @@ import com.example.myplaylistmaker.db.dao.TrackDao
 import com.example.myplaylistmaker.db.entity.PlaylistEntity
 import com.example.myplaylistmaker.db.entity.TrackEntity
 
-@Database(version = 4, entities = [TrackEntity::class, PlaylistEntity::class])
+@Database(version = 5, entities = [TrackEntity::class, PlaylistEntity::class])
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase(){
 

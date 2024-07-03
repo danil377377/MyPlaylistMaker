@@ -12,10 +12,10 @@ import com.example.myplaylistmaker.db.entity.TrackEntity
 interface PlaylistDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPlaylist(track: PlaylistEntity)
+    suspend fun insertPlaylist(playlist: PlaylistEntity)
 
     @Delete(entity = PlaylistEntity::class)
-    suspend fun deletePlaylist(trackEntity: PlaylistEntity)
+    suspend fun deletePlaylist(playlistEntity: PlaylistEntity)
 
     @Query("SELECT * FROM playlist_table")
     suspend fun getPlaylists(): List<PlaylistEntity>

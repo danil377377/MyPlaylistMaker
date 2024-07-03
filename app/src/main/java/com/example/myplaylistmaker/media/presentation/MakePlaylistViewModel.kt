@@ -30,6 +30,8 @@ private val _name = MutableLiveData<String>()
 
     private val _imageUri = MutableLiveData<Uri?>()
     val imageUri: LiveData<Uri?> = _imageUri
+    private val _filePath = MutableLiveData<File>()
+    val filePath:LiveData<File> = _filePath
 
     fun onImageSelected(uri: Uri?) {
         _imageUri.value = uri
@@ -43,6 +45,7 @@ private val _name = MutableLiveData<String>()
             filePath.mkdirs()
         }
         val file = File(filePath, "$name.jpg")
+        _filePath.value=file
         val inputStream = context.contentResolver.openInputStream(uri)
         val outputStream = FileOutputStream(file)
         BitmapFactory.decodeStream(inputStream).compress(Bitmap.CompressFormat.JPEG, 30, outputStream)
@@ -60,7 +63,7 @@ private val _name = MutableLiveData<String>()
     fun shouldShowConfirmDialog(): Boolean {
         return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri ==MutableLiveData<Uri?>())
     }
-    suspend fun saveToDb(name:String, description: String, path:File){
-makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name, description = description, pathToFile = path, tracksIds = "", quantityTracks = 0))
+    suspend fun saveToDb(){
+makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))
     }
 }
