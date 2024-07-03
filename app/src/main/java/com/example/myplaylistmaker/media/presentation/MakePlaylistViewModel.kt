@@ -61,7 +61,7 @@ private val _name = MutableLiveData<String>()
     }
 
     fun shouldShowConfirmDialog(): Boolean {
-        return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri ==MutableLiveData<Uri?>())
+        return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri.value == null)
     }
     suspend fun saveToDb(){
 makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))
