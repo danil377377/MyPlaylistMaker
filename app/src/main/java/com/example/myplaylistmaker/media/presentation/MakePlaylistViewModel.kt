@@ -13,6 +13,7 @@ import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
 import com.example.myplaylistmaker.search.domain.models.Track
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -32,6 +33,8 @@ private val _name = MutableLiveData<String>()
     val imageUri: LiveData<Uri?> = _imageUri
     private val _filePath = MutableLiveData<File>()
     val filePath:LiveData<File> = _filePath
+    private val _playlistsList = MutableLiveData<List<Playlist>>()
+    val playlistsList = _playlistsList
 
     fun onImageSelected(uri: Uri?) {
         _imageUri.value = uri
@@ -49,6 +52,14 @@ private val _name = MutableLiveData<String>()
         val inputStream = context.contentResolver.openInputStream(uri)
         val outputStream = FileOutputStream(file)
         BitmapFactory.decodeStream(inputStream).compress(Bitmap.CompressFormat.JPEG, 30, outputStream)
+    }
+
+    fun getListOfPlaylists(){
+        viewModelScope.launch {
+            makePlaylistInteractor.getPlaylists().collect{playlists ->
+                _playlistsList.value = playlists
+            }
+        }
     }
 
 

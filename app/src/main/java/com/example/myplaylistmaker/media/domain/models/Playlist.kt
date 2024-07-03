@@ -1,5 +1,7 @@
 package com.example.myplaylistmaker.media.domain.models
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import java.io.File
 
 data class Playlist(
@@ -9,4 +11,10 @@ data class Playlist(
     val pathToFile: File?,
     val tracksIds: String,
     val quantityTracks: Int
-)
+){
+    fun getImage(): Bitmap {
+        // Создание объекта Bitmap из файла
+        return BitmapFactory.decodeFile(pathToFile.toString())
+
+    }
+}

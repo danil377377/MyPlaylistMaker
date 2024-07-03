@@ -146,7 +146,7 @@
     <style name="ScreenBackStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
     </style>
 
     <style name="Share">
@@ -194,6 +194,9 @@
     </style>
     <style name="Add_photo">
         <item name="android:src">@drawable/add_photo_placeholder</item>
+    </style>
+    <style name="playlist">
+        <item name="android:src">@drawable/playlist_placeholder</item>
     </style>
 
 
