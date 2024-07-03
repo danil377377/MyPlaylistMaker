@@ -18,23 +18,6 @@ class MakePlaylistRepositoryImpl(
     private val playlistDbConvertor: PlaylistDbConvertor
 
 ) : MakePlaylistRepository {
-//    override fun getFavoritesTracks(): Flow<List<Track>> = flow {
-//        val tracks = appDatabase.trackDao().getTracks()
-//        emit(convertFromTrackEntity(tracks))
-//    }
-//
-//    override suspend fun addTrackToFavorites(track: Track) {
-//        val trackDto = convertFromTrackToTrackDto(track)
-//        val trackDb = trackDbConvertor.map(trackDto)
-//        appDatabase.trackDao().insertTrack(trackDb)
-//
-//    }
-//
-//    override suspend fun deleteTrackFromFavorites(track: Track) {
-//        val trackDto = convertFromTrackToTrackDto(track)
-//        val trackDb = trackDbConvertor.map(trackDto)
-//        appDatabase.trackDao().deleteTrack(trackDb)
-//    }
 
     override fun getPlaylists(): Flow<List<Playlist>> = flow {
         val playlists = appDatabase.playlistDao().getPlaylists()

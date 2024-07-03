@@ -4,6 +4,7 @@ import android.app.Application
 import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.myplaylistmaker.db.AppDatabase
+import com.example.myplaylistmaker.media.data.converters.PlaylistDbConvertor
 import com.example.myplaylistmaker.media.data.db.MakePlaylistRepositoryImpl
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
@@ -35,6 +36,9 @@ val dataModule = module {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
             .fallbackToDestructiveMigration()
             .build()
+    }
+    single {
+        PlaylistDbConvertor()
     }
 }
 

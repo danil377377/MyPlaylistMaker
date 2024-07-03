@@ -6,12 +6,12 @@ import com.example.myplaylistmaker.media.domain.models.Playlist
 class PlaylistDbConvertor {
     fun map(playlist: Playlist): PlaylistEntity {
         return PlaylistEntity(
-            playlist.id,
-            playlist.name,
-            playlist.description,
-            playlist.pathToFile,
-            playlist.tracksIds,
-            playlist.quantityTracks
+
+           name = playlist.name,
+            description = playlist.description,
+            pathToFile = playlist.pathToFile,
+            tracksIds = playlist.tracksIds,
+            quantityTracks = playlist.quantityTracks
         )
     }
 

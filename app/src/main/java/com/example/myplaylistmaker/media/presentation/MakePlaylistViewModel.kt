@@ -9,6 +9,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
+import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
 import com.example.myplaylistmaker.search.domain.models.Track
 import kotlinx.coroutines.launch
@@ -17,25 +19,9 @@ import java.io.FileOutputStream
 
 class MakePlaylistViewModel(
     application: Application,
-    val favoritesInteractor: FavoritesInteractor,
+    private val makePlaylistInteractor: MakePlaylistInteractor,
 ) : AndroidViewModel(application) {
-//    private val tracks = ArrayList<Track>()
-//    private val tracksLiveData = MutableLiveData<ArrayList<Track>>()
-//
-//    fun observeFavorites(): LiveData<ArrayList<Track>> = tracksLiveData
-//    suspend fun getFavoritesTrackList() {
-//
-//        viewModelScope.launch {
-//            favoritesInteractor.getFavoritesTracks().collect { tracks ->
-//                val modifiedTracks = tracks.map { track ->
-//                    track.copy(isFavorite = true)
-//                }
-//                tracksLiveData.postValue(ArrayList(modifiedTracks))
-//
-//            }
-//
-//        }
-//    }
+
 private val _name = MutableLiveData<String>()
     val name: LiveData<String> = _name
 
@@ -56,7 +42,7 @@ private val _name = MutableLiveData<String>()
         if (!filePath.exists()) {
             filePath.mkdirs()
         }
-        val file = File(filePath, "first_cover.jpg")
+        val file = File(filePath, "$name.jpg")
         val inputStream = context.contentResolver.openInputStream(uri)
         val outputStream = FileOutputStream(file)
         BitmapFactory.decodeStream(inputStream).compress(Bitmap.CompressFormat.JPEG, 30, outputStream)
@@ -73,5 +59,8 @@ private val _name = MutableLiveData<String>()
 
     fun shouldShowConfirmDialog(): Boolean {
         return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri ==MutableLiveData<Uri?>())
+    }
+    suspend fun saveToDb(name:String, description: String, path:File){
+makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name, description = description, pathToFile = path, tracksIds = "", quantityTracks = 0))
     }
 }
