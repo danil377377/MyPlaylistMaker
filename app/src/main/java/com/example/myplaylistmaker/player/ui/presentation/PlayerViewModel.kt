@@ -3,6 +3,7 @@ package com.example.myplaylistmaker.player.ui.presentation
 import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
@@ -15,9 +16,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
+import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
+import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.utility.App
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -26,15 +30,25 @@ import java.util.Locale
 
 
 class PlayerViewModel(application: Application,
-    val glideLoader : GlideLoader
+    val glideLoader : GlideLoader,
+    val favoritesInteractor: FavoritesInteractor,
+                     val mediaPlayer: MediaPlayer
 ) : AndroidViewModel(application) {
      var time = ""
-    private var mediaPlayer: MediaPlayer = MediaPlayer()
 
+
+lateinit var track:Track
     private var timerJob: Job? = null
+    private var favoriteLiveData = MutableLiveData<Boolean>()
+    fun observeFavorite(): LiveData<Boolean> = favoriteLiveData
 
     private val playLiveData = MutableLiveData<PlayerState>()
     fun observePlay(): LiveData<PlayerState> = playLiveData
+
+    fun mysetTrack(track: Track) {
+        this.track = track
+        favoriteLiveData.value = track.isFavorite
+    }
 
     companion object {
         private const val STATE_DEFAULT = 0
@@ -50,6 +64,9 @@ class PlayerViewModel(application: Application,
 
     }
 
+
+
+
     fun playbackControl() {
         when (playerState) {
 
@@ -64,6 +81,7 @@ class PlayerViewModel(application: Application,
     }
 
     fun startPlayback() {
+
         mediaPlayer.start()
 
         playerState = STATE_PLAYING
@@ -77,6 +95,7 @@ class PlayerViewModel(application: Application,
         playerState = STATE_PAUSED
 
         renderState(PlayerState.Pause())
+
     }
 
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {
@@ -117,6 +136,23 @@ class PlayerViewModel(application: Application,
             }
         }
     }
+    fun onFavoriteClicked() {
+        if (track != null) {
+            viewModelScope.launch {
+                if (track.isFavorite) {
+                    favoritesInteractor.deleteTrackFromFavorites(track)
+
+                } else {
+                    favoritesInteractor.addTrackToFavorites(track)
+
+                }
+                track.isFavorite = !track.isFavorite
+                favoriteLiveData.postValue(track.isFavorite)
+            }
+        }
+    }
+
+
 }
 
 

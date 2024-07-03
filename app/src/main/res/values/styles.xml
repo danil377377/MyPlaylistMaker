@@ -189,6 +189,9 @@
     <style name="Add_to_favorites">
         <item name="android:src">@drawable/add_to_favorite</item>
     </style>
+    <style name="Delete_from_favorites">
+        <item name="android:src">@drawable/deletefromfavoritesbutton</item>
+    </style>
 
 
 

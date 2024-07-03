@@ -1,8 +1,13 @@
 package com.example.myplaylistmaker.di
 
 import android.app.Application
+import android.media.MediaPlayer
+import androidx.room.Room
+import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
+import com.example.myplaylistmaker.search.data.converters.TrackDbConvertor
+import com.example.myplaylistmaker.search.data.db.FavoritesRepositoryImpl
 import com.example.myplaylistmaker.search.data.network.ITunesApi
 import com.example.myplaylistmaker.search.data.network.NetworkClient
 import com.example.myplaylistmaker.search.data.network.RetrofitNetworkClient
@@ -10,6 +15,7 @@ import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl
 import com.example.myplaylistmaker.search.data.sharedprefs.SharedPrefsImpl
 import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
+import com.example.myplaylistmaker.search.domain.db.FavoritesRepository
 import com.example.myplaylistmaker.settings.data.SettingsRepositoryImpl
 import com.example.myplaylistmaker.settings.data.SettingsSharedPrefsImpl
 import com.example.myplaylistmaker.settings.domen.SettingsRepository
@@ -21,10 +27,22 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+val dataModule = module{
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database.db")
+            .build()
+    }
+}
 
 val repositoryModule = module {
+    factory { TrackDbConvertor() }
+
+    single<FavoritesRepository> {
+        FavoritesRepositoryImpl(get(), get())
+    }
+
     factory<TracksRepository> {
-        TracksRepositoryImpl(get())
+        TracksRepositoryImpl(get(), get())
     }
     single<ITunesApi> {
         Retrofit.Builder()
@@ -39,9 +57,10 @@ val repositoryModule = module {
         RetrofitNetworkClient( androidContext(),get())
     }
     factory<SharedPrefs> {
-        SharedPrefsImpl(get(), get())
+        SharedPrefsImpl(get(), get(), get())
     }
     factory { Gson() }
+    factory { MediaPlayer() }
     factory<GlideLoader> {
         GlideLoaderImpl(get())
     }
@@ -56,5 +75,7 @@ val repositoryModule = module {
     factory {
         ExternalNavigator()
     }
+
+
 
 }

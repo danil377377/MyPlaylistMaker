@@ -23,5 +23,6 @@
     <string name="something_went_wrong">что тоо пошло не так\n</string>
     <string name="nothing_found">ничего не найдено\n</string>
     <string name="Mediatec">Медиатека</string>
+    <string name="your_library_is_empty">Ваша медиатека пуста</string>
 
 </resources>

@@ -37,9 +37,9 @@ class TracksSearchViewModel(
 
     }
 
-    private val tracks = ArrayList<Track>()
+     val tracks = ArrayList<Track>()
     private var lastSearchText: String? = null
-    private var latestSearchText: String? = null
+     var latestSearchText: String? = null
     private var searchJob: Job? = null
     private val stateLiveData = MutableLiveData<TracksState>()
     private val historyStateLiveData = MutableLiveData<HistoryState>()
@@ -49,13 +49,15 @@ class TracksSearchViewModel(
         historyStateLiveData.postValue(HistoryState.Empty())
     }
 
-    fun getHistoryTrackList(): ArrayList<Track> {
+     suspend fun getHistoryTrackList(): ArrayList<Track> {
         return history.getHistoryTrackList()
     }
 
     fun clearHistory() {
         history.clearHistory()
     }
+
+
 
     fun showHistory(tracks: ArrayList<Track>) {
         historyStateLiveData.postValue(HistoryState.Content(tracks))
@@ -79,14 +81,14 @@ class TracksSearchViewModel(
         }
     }
 
-    fun searchRequest(newSearchText: String) {
-        if (newSearchText.isNotEmpty()) {
+    fun searchRequest(newSearchText: String?) {
+        if (!newSearchText.isNullOrEmpty() and !newSearchText.equals("check")) {
             renderState(
                 TracksState.Loading
             )
             viewModelScope.launch {
                 tracksInteractor
-                    .searchTracks(newSearchText)
+                    .searchTracks(newSearchText!!)
                     .collect { pair ->
 
                         processResult(pair.first, pair.second)

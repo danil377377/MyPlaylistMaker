@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl
 import com.example.myplaylistmaker.search.domain.api.TracksInteractor
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
+import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
+import com.example.myplaylistmaker.search.domain.impl.FavoritesInteractorImpl
 import com.example.myplaylistmaker.search.domain.impl.TracksInteractorImpl
 import com.example.myplaylistmaker.settings.data.SettingsRepositoryImpl
 import com.example.myplaylistmaker.settings.data.SettingsSharedPrefsImpl
@@ -31,7 +33,9 @@ val interactorModule = module {
         SharingInteractorImpl(get(), androidContext())
     }
 
-
+    single<FavoritesInteractor> {
+        FavoritesInteractorImpl(get())
+    }
 
 
 }
