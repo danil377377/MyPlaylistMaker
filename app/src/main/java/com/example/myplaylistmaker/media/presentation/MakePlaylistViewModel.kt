@@ -41,6 +41,7 @@ private val _name = MutableLiveData<String>()
     fun onImageSelected(uri: Uri?) {
         _imageUri.value = uri
         uri?.let { saveImageToPrivateStorage(it) }
+
     }
 
     private fun saveImageToPrivateStorage(uri: Uri) {
