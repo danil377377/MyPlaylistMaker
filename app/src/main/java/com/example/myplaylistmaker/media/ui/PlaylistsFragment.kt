@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -50,9 +51,17 @@ viewModel.getListOfPlaylists()
 
         viewModel.observePlaylists().observe(viewLifecycleOwner){
             if(it != emptyList<Playlist>()) {
+                recyclerView.isVisible = true
+                errorIcon.isVisible = false
+                errorText.isVisible = false
                 adapter.clear()
                 adapter.addAll(it)
                 adapter.notifyDataSetChanged()
+            }
+            else{
+                recyclerView.isVisible = false
+                errorIcon.isVisible = true
+                errorText.isVisible = true
             }
         }
     }
