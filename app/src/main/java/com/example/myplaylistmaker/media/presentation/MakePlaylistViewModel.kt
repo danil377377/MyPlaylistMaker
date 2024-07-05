@@ -33,8 +33,10 @@ private val _name = MutableLiveData<String>()
     val imageUri: LiveData<Uri?> = _imageUri
     private val _filePath = MutableLiveData<File>()
     val filePath:LiveData<File> = _filePath
-    private val _playlistsList = MutableLiveData<List<Playlist>>()
-    val playlistsList = _playlistsList
+    private val playlistsList = MutableLiveData<List<Playlist>>()
+    fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList
+
+    var lastPlaylists = emptyList<Playlist>()
 
     fun onImageSelected(uri: Uri?) {
         _imageUri.value = uri
@@ -54,10 +56,11 @@ private val _name = MutableLiveData<String>()
         BitmapFactory.decodeStream(inputStream).compress(Bitmap.CompressFormat.JPEG, 30, outputStream)
     }
 
+
     fun getListOfPlaylists(){
         viewModelScope.launch {
             makePlaylistInteractor.getPlaylists().collect{playlists ->
-                _playlistsList.value = playlists
+                playlistsList.postValue(playlists)
             }
         }
     }
@@ -76,5 +79,9 @@ private val _name = MutableLiveData<String>()
     }
     suspend fun saveToDb(){
 makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))
+       viewModelScope.launch {  makePlaylistInteractor.getPlaylists().collect{playlistsList->
+           lastPlaylists = playlistsList
+
+       }}
     }
 }

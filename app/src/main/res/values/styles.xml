@@ -3,7 +3,9 @@
 <resources>
 
 
-
+    <style name="backStyle">
+        <item name="android:background">@color/white</item>
+    </style>
 
     <style name="bottom_nav">
         <item name="android:background">@color/white</item>

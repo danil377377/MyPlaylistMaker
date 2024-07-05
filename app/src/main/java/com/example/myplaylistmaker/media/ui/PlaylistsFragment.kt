@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myplaylistmaker.R
 
 import com.example.myplaylistmaker.databinding.FragmentPlaylistsBinding
+import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.media.presentation.MakePlaylistViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaylistsFragment: Fragment() {
@@ -32,10 +35,26 @@ class PlaylistsFragment: Fragment() {
 binding.newPlaylistButton.setOnClickListener{
     findNavController().navigate(R.id.action_mediaContainerFragment_to_makePlaylistFragment)
 }
+        val errorIcon = binding.errorImage
+        val errorText = binding.nothingFoundTextView
         val recyclerView = binding.recyclerView
 viewModel.getListOfPlaylists()
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerView.adapter = PlaylistsAdapter(viewModel.playlistsList.value?: emptyList())
+        val adapter = PlaylistsAdapter(viewModel.lastPlaylists){
+
+        }
+        recyclerView.adapter = adapter
+        lifecycleScope.launch {
+            viewModel.getListOfPlaylists()}
+
+
+        viewModel.observePlaylists().observe(viewLifecycleOwner){
+            if(it != emptyList<Playlist>()) {
+                adapter.clear()
+                adapter.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
 

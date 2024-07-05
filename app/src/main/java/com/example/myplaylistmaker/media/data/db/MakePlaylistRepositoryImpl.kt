@@ -21,7 +21,7 @@ class MakePlaylistRepositoryImpl(
 
     override fun getPlaylists(): Flow<List<Playlist>> = flow {
         val playlists = appDatabase.playlistDao().getPlaylists()
-        emit(convertFromPlaylistEntity(playlists))
+        emit(convertFromPlaylistEntity(playlists).reversed())
     }
 
     override suspend fun addPlaylist(playlist: Playlist) {

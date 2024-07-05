@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    style="@style/ScreenBackStyle">
+    style="@style/backStyle">
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftInfoBorder"
         android:orientation="vertical"
@@ -37,6 +37,7 @@ android:id="@+id/Header"
         app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
         app:layout_constraintTop_toBottomOf="@id/Header"/>
     <androidx.viewpager2.widget.ViewPager2
+        style="@style/backStyle"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

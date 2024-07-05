@@ -6,9 +6,13 @@
     android:layout_height="wrap_content"
 
 
+    android:layout_marginBottom="@dimen/_16dp"
+    android:layout_marginEnd="8dp"
+    card_view:cardElevation="0dp"
     >
 
     <LinearLayout
+
         style="@style/ScreenBackStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +25,11 @@
             style="@style/playlist"
             android:layout_width="160dp"
             android:layout_height="160dp"
-
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:background="@drawable/radius_corner_8"
+            android:clipToOutline="true"
             >
 
         </ImageView>
@@ -43,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0 songs"
-            android:ellipsize="end">
+            android:ellipsize="end"
+            >
 
         </TextView>
     </LinearLayout>

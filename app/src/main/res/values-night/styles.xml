@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+
+    <style name="backStyle">
+        <item name="android:background">@color/YP_Black</item>
+    </style>
     <style name="bottom_nav">
         <item name="android:background">@color/YP_Black</item>
         <item name="itemIconTint">@color/nav_bar_dark</item>
