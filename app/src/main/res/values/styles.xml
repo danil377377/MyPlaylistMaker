@@ -7,11 +7,21 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="bottom_sheet_background">
+        <item name="android:background">@drawable/bottom_sheet_bacground_dark</item>
+    </style>
+
+
+
     <style name="bottom_nav">
         <item name="android:background">@color/white</item>
         <item name="itemIconTint">@color/nav_bar</item>
         <item name="itemTextColor">@color/nav_bar</item>
         <!-- Другие атрибуты для светлой темы -->
+    </style>
+
+    <style name="handle_bottom_sheet">
+        <item name="android:background">@drawable/handle_bottom_sheet</item>
     </style>
 
 

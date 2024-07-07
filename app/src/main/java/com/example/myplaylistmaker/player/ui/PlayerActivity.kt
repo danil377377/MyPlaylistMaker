@@ -8,10 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -45,6 +50,28 @@ class PlayerActivity : AppCompatActivity() {
         val albumInfo = findViewById<TextView>(R.id.albumInfo)
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = PlaylistsBottomSheetAdapter(emptyList()){
+
+        }
+        recyclerView.adapter = adapter
+        lifecycleScope.launch {
+            viewModel.getListOfPlaylists()}
+        viewModel.observePlaylists().observe(this){
+            if(it != emptyList<Playlist>()) {
+                recyclerView.isVisible = true
+                adapter.clear()
+                adapter.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+            else{
+                recyclerView.isVisible = false
+            }
+        }
+
 
         if (track != null) {
             viewModel.mysetTrack(track)
@@ -52,7 +79,7 @@ class PlayerActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             onBackPressed()
         }
-         addtoFavorites = findViewById<ImageView>(R.id.AddtoFavorites)
+        addtoFavorites = findViewById<ImageView>(R.id.AddtoFavorites)
         deleteFromVavorites = findViewById<ImageView>(R.id.DeleteFromFavorites)
         deleteFromVavorites.setOnClickListener{
             viewModel.onFavoriteClicked()
@@ -105,6 +132,7 @@ class PlayerActivity : AppCompatActivity() {
             renderFavorites(it)
 
         }
+
         viewModel.observePlay().observe(this) {
             render(it)
         }

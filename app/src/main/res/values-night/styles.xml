@@ -9,9 +9,17 @@
         <item name="android:background">@color/YP_Black</item>
         <item name="itemIconTint">@color/nav_bar_dark</item>
         <item name="itemTextColor">@color/nav_bar_dark</item>
-
-
     </style>
+
+
+    <style name="handle_bottom_sheet">
+        <item name="android:background">@drawable/handle_bottom_sheet_dark</item>
+    </style>
+
+    <style name="bottom_sheet_background">
+        <item name="android:background">@drawable/bottom_sheet_bacground</item>
+    </style>
+
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>

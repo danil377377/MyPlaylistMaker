@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
+import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
@@ -30,14 +32,24 @@ import java.util.Locale
 
 
 class PlayerViewModel(application: Application,
-    val glideLoader : GlideLoader,
-    val favoritesInteractor: FavoritesInteractor,
-                     val mediaPlayer: MediaPlayer
+                      val glideLoader : GlideLoader,
+                      val favoritesInteractor: FavoritesInteractor,
+                      val mediaPlayer: MediaPlayer,
+                      private val makePlaylistInteractor: MakePlaylistInteractor
 ) : AndroidViewModel(application) {
-     var time = ""
+    var time = ""
 
+    private val playlistsList = MutableLiveData<List<Playlist>>()
+    fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList
+    fun getListOfPlaylists(){
+        viewModelScope.launch {
+            makePlaylistInteractor.getPlaylists().collect{playlists ->
+                playlistsList.postValue(playlists)
+            }
+        }
+    }
 
-lateinit var track:Track
+    lateinit var track:Track
     private var timerJob: Job? = null
     private var favoriteLiveData = MutableLiveData<Boolean>()
     fun observeFavorite(): LiveData<Boolean> = favoriteLiveData
@@ -130,9 +142,9 @@ lateinit var track:Track
             while (mediaPlayer.isPlaying) {
                 delay(300L)
                 time = SimpleDateFormat(
-                "mm:ss",
-                Locale.getDefault()
-            ).format(mediaPlayer.currentPosition)
+                    "mm:ss",
+                    Locale.getDefault()
+                ).format(mediaPlayer.currentPosition)
             }
         }
     }
@@ -154,8 +166,6 @@ lateinit var track:Track
 
 
 }
-
-
 
 
 
