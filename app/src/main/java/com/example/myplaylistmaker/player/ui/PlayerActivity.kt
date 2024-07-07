@@ -1,9 +1,12 @@
 package com.example.myplaylistmaker.player.ui
 
+
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.main.ui.RootActivity
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
@@ -20,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -51,6 +56,7 @@ class PlayerActivity : AppCompatActivity() {
         val genre = findViewById<TextView>(R.id.genre)
         val country = findViewById<TextView>(R.id.country)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val newPlaylistButton = findViewById<Button>(R.id.newPlaylistButton)
 
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -86,6 +92,15 @@ class PlayerActivity : AppCompatActivity() {
         }
         addtoFavorites.setOnClickListener {
             viewModel.onFavoriteClicked()
+        }
+
+        newPlaylistButton.setOnClickListener{
+            val intent: Intent = Intent(
+                this@PlayerActivity,
+                RootActivity::class.java
+            )
+            intent.putExtra("showFragment", true)
+            startActivity(intent)
         }
 
         if (track != null) {

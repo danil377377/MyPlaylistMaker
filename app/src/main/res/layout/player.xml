@@ -303,7 +303,30 @@
 
             android:layout_gravity="center_horizontal"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_playlist"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_30dp"
+            style="@style/ErrorText"
+            android:textFontWeight="500">
+
+        </TextView>
+        <Button
+
+            style="@style/RetryButtonStyle"
+            android:id="@+id/newPlaylistButton"
+            android:text="Новый плейлист"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+android:layout_marginTop="28dp"
+            android:textAllCaps="false">
+
+        </Button>
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/_24dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
