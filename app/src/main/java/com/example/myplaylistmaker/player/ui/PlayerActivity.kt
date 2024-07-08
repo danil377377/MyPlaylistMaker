@@ -46,8 +46,9 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(R.layout.player)
         Log.d("MyTest", "onCreatePlayerSetContenrView")
         val track = intent.getSerializableExtra("track") as? Track
-
+val overlay = findViewById<View>(R.id.overlay)
         val backButton = findViewById<ImageView>(R.id.backButton)
+        val addToPlaylist = findViewById<ImageView>(R.id.addToPlaylist)
         val icon = findViewById<ImageView>(R.id.icon)
         val songName = findViewById<TextView>(R.id.songName)
         val singerName = findViewById<TextView>(R.id.singerName)
@@ -61,7 +62,38 @@ class PlayerActivity : AppCompatActivity() {
         val newPlaylistButton = findViewById<Button>(R.id.newPlaylistButton)
         val bottomSheetContainer = findViewById<LinearLayout>(R.id.standard_bottom_sheet)
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        addToPlaylist.setOnClickListener{
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            overlay.visibility = View.VISIBLE
+        }
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                // newState — новое состояние BottomSheet
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        // загружаем рекламный баннер
+                        overlay.visibility = View.VISIBLE
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        // останавливаем трейлер
+                        overlay.visibility = View.VISIBLE
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        // возобновляем трейлер
+                        overlay.visibility = View.GONE
+                    }
+                    else -> {
+                        // Остальные состояния не обрабатываем
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+
+
 
 
         recyclerView.layoutManager = LinearLayoutManager(this)

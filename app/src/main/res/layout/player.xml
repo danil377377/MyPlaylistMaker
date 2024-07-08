@@ -285,7 +285,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#99000000"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
     <LinearLayout
         android:id="@+id/standard_bottom_sheet"
         style="@style/bottom_sheet_background"
