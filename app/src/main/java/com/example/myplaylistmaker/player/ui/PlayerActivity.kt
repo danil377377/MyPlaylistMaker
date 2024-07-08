@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -20,6 +21,7 @@ import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -57,6 +59,9 @@ class PlayerActivity : AppCompatActivity() {
         val country = findViewById<TextView>(R.id.country)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val newPlaylistButton = findViewById<Button>(R.id.newPlaylistButton)
+        val bottomSheetContainer = findViewById<LinearLayout>(R.id.standard_bottom_sheet)
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
 
         recyclerView.layoutManager = LinearLayoutManager(this)

@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/edit_text_stroke</item>
+        <item name="hintTextColor">@color/nav_bar_active</item>
+        <!--        <item name="android:background">@drawable/edit_text_selector_make_playlist</item>-->
+        <item name="boxBackgroundColor">@color/white</item>
+
+        <item name="android:textColorHint">@color/YP_Black</item>
+        <item name="shapeAppearance">@style/CustomShapeAppearance</item>
+
+    </style>
+    <style name="CustomShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+        <item name="color">@color/progress_bar</item>
+    </style>
 
 
     <style name="backStyle">

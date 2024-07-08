@@ -69,7 +69,7 @@ class MakePlaylistFragment: Fragment() {
 
 
 
-        binding.name.addTextChangedListener(object : TextWatcher {
+        binding.textInputName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onNameChanged(s.toString())
@@ -77,7 +77,7 @@ class MakePlaylistFragment: Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.description.addTextChangedListener(object : TextWatcher {
+        binding.textInputDescription.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onDescriptionChanged(s.toString())
