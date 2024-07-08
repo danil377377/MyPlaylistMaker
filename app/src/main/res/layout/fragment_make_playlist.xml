@@ -44,7 +44,8 @@
         android:layout_marginEnd="@dimen/_24dp"
         android:scaleType="centerInside"
         android:background="@drawable/dashes_light"
-
+        android:adjustViewBounds="true"
+        android:clipToOutline="true"
         >
 
     </ImageView>
