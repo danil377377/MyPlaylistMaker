@@ -56,6 +56,8 @@ class PlayerViewModel(application: Application,
 
     private val playLiveData = MutableLiveData<PlayerState>()
     fun observePlay(): LiveData<PlayerState> = playLiveData
+    private val addStatusLiveData = MutableLiveData<Boolean>()
+    fun observeaddStatus(): LiveData<Boolean> = addStatusLiveData
 
     fun mysetTrack(track: Track) {
         this.track = track
@@ -76,9 +78,10 @@ class PlayerViewModel(application: Application,
 
     }
 
-
-
-
+    fun  checkTrackInPlaylist(playlist: Playlist, track: Track){
+        val trackList: List<String> = playlist.tracksIds.split(", ").map { it.trim() }
+        addStatusLiveData.postValue(track.trackId.toString() in trackList)
+    }
     fun playbackControl() {
         when (playerState) {
 

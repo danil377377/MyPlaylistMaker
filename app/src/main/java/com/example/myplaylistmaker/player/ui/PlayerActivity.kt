@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -95,10 +96,11 @@ val overlay = findViewById<View>(R.id.overlay)
 
 
 
-
+var playlistName = ""
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = PlaylistsBottomSheetAdapter(emptyList()){
-
+            playlistName = it.name
+            viewModel.checkTrackInPlaylist(it, track!!)
         }
         recyclerView.adapter = adapter
         lifecycleScope.launch {
@@ -187,6 +189,13 @@ val overlay = findViewById<View>(R.id.overlay)
 
         viewModel.observePlay().observe(this) {
             render(it)
+        }
+        viewModel.observeaddStatus().observe(this){
+            if(!it) {
+                Toast.makeText(this, "Добавлено в плейлист  $playlistName", Toast.LENGTH_LONG)
+                    .show()
+            } else Toast.makeText(this, "Трек уже добавлен в плейлист  $playlistName", Toast.LENGTH_LONG)
+                .show()
         }
 
         play.setOnClickListener {
