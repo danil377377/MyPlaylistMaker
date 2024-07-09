@@ -100,7 +100,10 @@ var playlistName = ""
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = PlaylistsBottomSheetAdapter(emptyList()){
             playlistName = it.name
-            viewModel.checkTrackInPlaylist(it, track!!)
+            lifecycleScope.launch {
+                viewModel.checkTrackInPlaylist(it, track!!)
+            }
+
         }
         recyclerView.adapter = adapter
         lifecycleScope.launch {

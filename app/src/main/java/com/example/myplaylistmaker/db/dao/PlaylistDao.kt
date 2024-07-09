@@ -5,6 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.example.myplaylistmaker.db.entity.PlaylistEntity
 import com.example.myplaylistmaker.db.entity.TrackEntity
 
@@ -22,4 +24,23 @@ interface PlaylistDao {
 
     @Query("SELECT id FROM playlist_table")
     suspend fun getPlaylistsId(): List<Int>
+
+    @Update
+    suspend fun updatePlaylist(playlist: PlaylistEntity)
+    @Query("SELECT * FROM playlist_table WHERE id = :id")
+    suspend fun getPlaylistById(id: Int): PlaylistEntity?
+
+    @Transaction
+    suspend fun addTrackToPlaylist(playlistId: Int, trackId: String) {
+        val playlist = getPlaylistById(playlistId)
+        playlist?.let {
+            val updatedTrackIds = it.tracksIds.split(",").toMutableList()
+            if (!updatedTrackIds.contains(trackId)) {
+                updatedTrackIds.add(trackId)
+                val updatedTrackIdsString = updatedTrackIds.joinToString(",")
+                val updatedPlaylist = it.copy(tracksIds = updatedTrackIdsString, quantityTracks = it.quantityTracks + 1)
+                updatePlaylist(updatedPlaylist)
+            }
+        }
+    }
 }

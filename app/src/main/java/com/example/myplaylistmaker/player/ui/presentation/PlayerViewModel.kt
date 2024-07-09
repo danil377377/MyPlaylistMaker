@@ -3,30 +3,20 @@ package com.example.myplaylistmaker.player.ui.presentation
 import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
 import com.example.myplaylistmaker.search.domain.models.Track
-import com.example.myplaylistmaker.utility.App
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -78,9 +68,13 @@ class PlayerViewModel(application: Application,
 
     }
 
-    fun  checkTrackInPlaylist(playlist: Playlist, track: Track){
-        val trackList: List<String> = playlist.tracksIds.split(", ").map { it.trim() }
+    suspend fun  checkTrackInPlaylist(playlist: Playlist, track: Track){
+        val trackList: List<String> = playlist.tracksIds.split(",").map { it.trim() }
         addStatusLiveData.postValue(track.trackId.toString() in trackList)
+        if(track.trackId.toString() !in trackList){
+            makePlaylistInteractor.addTrackToPlaylist(playlist, track)
+getListOfPlaylists()
+        }
     }
     fun playbackControl() {
         when (playerState) {

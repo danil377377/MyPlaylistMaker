@@ -8,4 +8,5 @@ interface MakePlaylistRepository {
     fun getPlaylists(): Flow<List<Playlist>>
     suspend fun addPlaylist(playlist: Playlist)
     suspend fun deletePlaylist(playlist: Playlist)
+    suspend fun addTrackToPlaylist(playlist: Playlist, track: Track)
 }

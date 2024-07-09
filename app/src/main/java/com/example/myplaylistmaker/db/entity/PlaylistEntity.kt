@@ -11,5 +11,5 @@ data class PlaylistEntity(
     val description : String,
     val pathToFile: File?,
     val tracksIds: String,
-    val quantityTracks: Int
+    var quantityTracks: Int
 )

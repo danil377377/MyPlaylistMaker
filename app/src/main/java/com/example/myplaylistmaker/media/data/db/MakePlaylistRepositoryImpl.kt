@@ -38,5 +38,9 @@ class MakePlaylistRepositoryImpl(
         return playlists.map { playlist -> playlistDbConvertor.map(playlist) }
     }
 
+    override suspend fun addTrackToPlaylist(playlist: Playlist, track: Track) {
+        appDatabase.playlistDao().addTrackToPlaylist(playlist.id, track.trackId.toString())
+    }
+
 
 }
