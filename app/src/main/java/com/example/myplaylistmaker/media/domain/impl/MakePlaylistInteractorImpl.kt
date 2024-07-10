@@ -25,4 +25,6 @@ class MakePlaylistInteractorImpl(private val makePlaylistRepository: MakePlaylis
     override suspend fun addTrackToPlaylist(playlistId: Playlist, track: Track) {
         makePlaylistRepository.addTrackToPlaylist(playlistId, track)
     }
+
+
 }

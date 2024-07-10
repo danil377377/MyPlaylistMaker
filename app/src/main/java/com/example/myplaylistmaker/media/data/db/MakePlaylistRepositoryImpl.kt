@@ -3,6 +3,7 @@ package com.example.myplaylistmaker.media.data.db
 import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.db.entity.PlaylistEntity
 import com.example.myplaylistmaker.db.entity.TrackEntity
+import com.example.myplaylistmaker.db.entity.TrackInPlaylistEntity
 import com.example.myplaylistmaker.media.data.converters.PlaylistDbConvertor
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
 import com.example.myplaylistmaker.media.domain.models.Playlist
@@ -40,6 +41,11 @@ class MakePlaylistRepositoryImpl(
 
     override suspend fun addTrackToPlaylist(playlist: Playlist, track: Track) {
         appDatabase.playlistDao().addTrackToPlaylist(playlist.id, track.trackId.toString())
+        addTrackToTrackInPlaylist(track)
+    }
+
+    override suspend fun addTrackToTrackInPlaylist(track: Track) {
+        appDatabase.TrackInPlaylistEntityDao().insertTrack(TrackInPlaylistEntity(track.trackId.toString(), track.trackName, track.artistName,track.trackTimeMillis, track.artworkUrl100, track.collectionName, track.releaseDate, track.collectionName, track.country, track.artworkUrl100, track.coverArtWork,"trackFile"))
     }
 
 

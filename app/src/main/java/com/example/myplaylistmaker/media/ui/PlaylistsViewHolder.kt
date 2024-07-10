@@ -18,6 +18,17 @@ class PlaylistsViewHolder(view: View): RecyclerView.ViewHolder(view) {
         name.text = playlist.name
 
        if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage())
-        quantity.text = playlist.quantityTracks.toString()
+        quantity.text = getTrackCountString(playlist.quantityTracks)
+    }
+    fun getTrackCountString(count: Int): String {
+        val lastDigit = count % 10
+        val lastTwoDigits = count % 100
+
+        return when {
+            lastTwoDigits in 11..19 -> "$count треков"
+            lastDigit == 1 -> "$count трек"
+            lastDigit in 2..4 -> "$count трека"
+            else -> "$count треков"
+        }
     }
 }
