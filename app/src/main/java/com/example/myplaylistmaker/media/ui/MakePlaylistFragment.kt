@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myplaylistmaker.R
@@ -62,8 +63,8 @@ class MakePlaylistFragment: Fragment() {
                 Log.d("PhotoPicker", "No media selected")
             }
         }
-        viewModel.name.observe(viewLifecycleOwner){name ->
-            if(name.isNotEmpty()) binding.createButton.isEnabled = true
+        viewModel.name.observe(viewLifecycleOwner) { name ->
+            if (name.isNotEmpty()) binding.createButton.isEnabled = true
             else binding.createButton.isEnabled = false
         }
 
@@ -74,6 +75,7 @@ class MakePlaylistFragment: Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onNameChanged(s.toString())
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -82,6 +84,7 @@ class MakePlaylistFragment: Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onDescriptionChanged(s.toString())
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -90,35 +93,60 @@ class MakePlaylistFragment: Fragment() {
             .setMessage("Все несохранённые данные будут потеряны")
             .setNeutralButton("Отмена") { dialog, which -> }
             .setPositiveButton("Завершить") { dialog, which ->
-                findNavController().navigateUp()
-            }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (viewModel.shouldShowConfirmDialog()) {
-                    confirmDialog.show()
-                } else {
-                    findNavController().navigateUp()
+                try {
+                    val navController = findNavController()
+                    navController.navigateUp()
+                } catch (e: IllegalStateException) {
+                    activity?.finish()
                 }
             }
-        })
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (viewModel.shouldShowConfirmDialog()) {
+                        confirmDialog.show()
+                    } else {
+                        try {
+                            val navController = findNavController()
+                            navController.navigateUp()
+                        } catch (e: IllegalStateException) {
+                            activity?.finish()
+                        }
+                    }
+                }
+            })
 
         binding.backButton.setOnClickListener {
             if (viewModel.shouldShowConfirmDialog()) {
                 confirmDialog.show()
             } else {
-                findNavController().navigateUp()
+                try {
+                    val navController = findNavController()
+                    navController.navigateUp()
+                } catch (e: IllegalStateException) {
+                    activity?.finish()
+                }
+            }
+            binding.createButton.setOnClickListener {
+                lifecycleScope.launch {
+                    viewModel.saveToDb()
+                }
+                Toast.makeText(
+                    requireContext(),
+                    "Плейлист ${viewModel.name.value} создан",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+                try {
+                    val navController = findNavController()
+                    navController.navigateUp()
+                } catch (e: IllegalStateException) {
+                    activity?.finish()
+                }
             }
         }
-        binding.createButton.setOnClickListener{
-            lifecycleScope.launch {
-            viewModel.saveToDb()}
-            Toast.makeText(requireContext(), "Плейлист ${viewModel.name.value} создан", Toast.LENGTH_LONG)
-                .show()
-            findNavController().navigateUp()
-        }
-    }
 
 
-
-    }
+    }}
