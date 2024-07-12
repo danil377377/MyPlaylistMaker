@@ -45,16 +45,7 @@ private val _name = MutableLiveData<String>()
     }
 
     private fun saveImageToPrivateStorage(uri: Uri) {
-        val context = getApplication<Application>().applicationContext
-        val filePath = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "myalbum")
-        if (!filePath.exists()) {
-            filePath.mkdirs()
-        }
-        val file = File(filePath, "$name.jpg")
-        _filePath.value=file
-        val inputStream = context.contentResolver.openInputStream(uri)
-        val outputStream = FileOutputStream(file)
-        BitmapFactory.decodeStream(inputStream).compress(Bitmap.CompressFormat.JPEG, 30, outputStream)
+        _filePath.value= makePlaylistInteractor.saveImageToPrivateStorage(uri, name.value?:"")
     }
 
 

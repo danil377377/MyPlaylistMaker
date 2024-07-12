@@ -3,9 +3,7 @@
 <resources>
     <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/edit_text_stroke_dark</item>
-
         <item name="hintTextColor">@color/nav_bar_active</item>
-        <!--        <item name="android:background">@drawable/edit_text_selector_make_playlist</item>-->
         <item name="boxBackgroundColor">@color/YP_Black</item>
         <item name="android:textColorHint">@color/white</item>
         <item name="shapeAppearance">@style/CustomShapeAppearance</item>
@@ -277,6 +275,5 @@
     <style name="TablayoutTextMedia">
         <item name="android:background">@color/YP_Black</item>
         <item name="tabTextColor">@color/white</item>
-<!--        <item name="tabIndicator">@color/white</item>-->
     </style>
 </resources>

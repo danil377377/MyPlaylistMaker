@@ -8,6 +8,7 @@ import com.example.myplaylistmaker.media.data.converters.PlaylistDbConvertor
 import com.example.myplaylistmaker.media.data.db.MakePlaylistRepositoryImpl
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
+import com.example.myplaylistmaker.player.data.MediaPlayerWrapper
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.search.data.converters.TrackDbConvertor
 import com.example.myplaylistmaker.search.data.db.FavoritesRepositoryImpl
@@ -75,6 +76,9 @@ val repositoryModule = module {
     }
     factory<SettingsSharedPrefs> {
         SettingsSharedPrefsImpl(get())
+    }
+    factory<MediaPlayerWrapper> {
+        MediaPlayerWrapper(get())
     }
     single {
         androidContext()

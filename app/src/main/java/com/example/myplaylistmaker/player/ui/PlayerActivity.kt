@@ -36,18 +36,15 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var time: TextView
     private lateinit var url: String
     private val viewModel: PlayerViewModel by viewModel()
-    private lateinit var addtoFavorites :ImageView
-    private lateinit var deleteFromVavorites :ImageView
+    private lateinit var addtoFavorites: ImageView
+    private lateinit var deleteFromVavorites: ImageView
 
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d("MyTest", "onCreatePlayer")
         setContentView(R.layout.player)
-        Log.d("MyTest", "onCreatePlayerSetContenrView")
         val track = intent.getSerializableExtra("track") as? Track
-val overlay = findViewById<View>(R.id.overlay)
+        val overlay = findViewById<View>(R.id.overlay)
         val backButton = findViewById<ImageView>(R.id.backButton)
         val addToPlaylist = findViewById<ImageView>(R.id.addToPlaylist)
         val icon = findViewById<ImageView>(R.id.icon)
@@ -65,11 +62,12 @@ val overlay = findViewById<View>(R.id.overlay)
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        addToPlaylist.setOnClickListener{
+        addToPlaylist.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             overlay.visibility = View.VISIBLE
         }
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 // newState — новое состояние BottomSheet
                 when (newState) {
@@ -77,10 +75,12 @@ val overlay = findViewById<View>(R.id.overlay)
                         // загружаем рекламный баннер
                         overlay.visibility = View.VISIBLE
                     }
+
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         // останавливаем трейлер
                         overlay.visibility = View.VISIBLE
                     }
+
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         // возобновляем трейлер
                         overlay.visibility = View.GONE
@@ -90,37 +90,30 @@ val overlay = findViewById<View>(R.id.overlay)
                     }
                 }
             }
-
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
-
-
-
-var playlistName = ""
+        var playlistName = ""
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = PlaylistsBottomSheetAdapter(emptyList()){
+        val adapter = PlaylistsBottomSheetAdapter(emptyList()) {
             playlistName = it.name
             lifecycleScope.launch {
                 viewModel.checkTrackInPlaylist(it, track!!)
             }
-
         }
         recyclerView.adapter = adapter
         lifecycleScope.launch {
-            viewModel.getListOfPlaylists()}
-        viewModel.observePlaylists().observe(this){
-            if(it != emptyList<Playlist>()) {
+            viewModel.getListOfPlaylists()
+        }
+        viewModel.observePlaylists().observe(this) {
+            if (it != emptyList<Playlist>()) {
                 recyclerView.isVisible = true
                 adapter.clear()
                 adapter.addAll(it)
                 adapter.notifyDataSetChanged()
-            }
-            else{
+            } else {
                 recyclerView.isVisible = false
             }
         }
-
-
         if (track != null) {
             viewModel.mysetTrack(track)
         }
@@ -129,14 +122,13 @@ var playlistName = ""
         }
         addtoFavorites = findViewById<ImageView>(R.id.AddtoFavorites)
         deleteFromVavorites = findViewById<ImageView>(R.id.DeleteFromFavorites)
-        deleteFromVavorites.setOnClickListener{
+        deleteFromVavorites.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
         addtoFavorites.setOnClickListener {
             viewModel.onFavoriteClicked()
         }
-
-        newPlaylistButton.setOnClickListener{
+        newPlaylistButton.setOnClickListener {
             val intent: Intent = Intent(
                 this@PlayerActivity,
                 RootActivity::class.java
@@ -144,20 +136,14 @@ var playlistName = ""
             intent.putExtra("showFragment", true)
             startActivity(intent)
         }
-
         if (track != null) {
-
-
             url = track.previewUrl ?: ""
-
             viewModel.loadIcon(this, track.coverArtWork ?: "", icon)
-            Log.d("MyTest", "viewModelLoadIcon")
             songName.text = track.trackName
             singerName.text = track.artistName
             fullDurability.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
             year.text = track.releaseDate?.substring(0, 4)
-
             if (track.collectionName != null || track.collectionName != "") {
                 album.text = track.collectionName
                 album.visibility = View.VISIBLE
@@ -171,21 +157,17 @@ var playlistName = ""
         pause = findViewById<ImageView?>(R.id.Pause)
         time = findViewById(R.id.durability)
 
-
         viewModel.preparePlayer(url,
             onPrepared = {
                 play.isEnabled = true
             },
             onComplete = {
                 time.text = "00:00"
-
-
                 play.visibility = View.VISIBLE
                 pause.visibility = View.INVISIBLE
                 pause.isEnabled = false
             })
-        Log.d("MyTest", "viewModelPreparePlayer")
-        viewModel.observeFavorite().observe(this){
+        viewModel.observeFavorite().observe(this) {
             renderFavorites(it)
 
         }
@@ -193,11 +175,15 @@ var playlistName = ""
         viewModel.observePlay().observe(this) {
             render(it)
         }
-        viewModel.observeaddStatus().observe(this){
-            if(!it) {
+        viewModel.observeaddStatus().observe(this) {
+            if (!it) {
                 Toast.makeText(this, "Добавлено в плейлист  $playlistName", Toast.LENGTH_LONG)
                     .show()
-            } else Toast.makeText(this, "Трек уже добавлен в плейлист  $playlistName", Toast.LENGTH_LONG)
+            } else Toast.makeText(
+                this,
+                "Трек уже добавлен в плейлист  $playlistName",
+                Toast.LENGTH_LONG
+            )
                 .show()
         }
 
@@ -218,7 +204,7 @@ var playlistName = ""
 
     }
 
-    fun renderFavorites(value: Boolean){
+    fun renderFavorites(value: Boolean) {
         if (value) {
             addtoFavorites.isVisible = false
             deleteFromVavorites.isVisible = true
@@ -229,6 +215,7 @@ var playlistName = ""
             addtoFavorites.isEnabled = true
         }
     }
+
     fun render(playerState: PlayerState) {
         when (playerState) {
             is PlayerState.Pause -> {

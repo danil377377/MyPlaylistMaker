@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
+import com.example.myplaylistmaker.player.data.MediaPlayerWrapper
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
@@ -24,7 +25,7 @@ import java.util.Locale
 class PlayerViewModel(application: Application,
                       val glideLoader : GlideLoader,
                       val favoritesInteractor: FavoritesInteractor,
-                      val mediaPlayer: MediaPlayer,
+                      val mediaPlayer: MediaPlayerWrapper,
                       private val makePlaylistInteractor: MakePlaylistInteractor
 ) : AndroidViewModel(application) {
     var time = ""
@@ -108,9 +109,7 @@ getListOfPlaylists()
     }
 
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {
-        mediaPlayer.reset()
         mediaPlayer.setDataSource(url)
-        mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
             playerState = STATE_PREPARED
             onPrepared()
@@ -136,12 +135,12 @@ getListOfPlaylists()
 
     private fun startTimer() {
         timerJob = viewModelScope.launch {
-            while (mediaPlayer.isPlaying) {
+            while (mediaPlayer.isPlaying()) {
                 delay(300L)
                 time = SimpleDateFormat(
                     "mm:ss",
                     Locale.getDefault()
-                ).format(mediaPlayer.currentPosition)
+                ).format(mediaPlayer.currentPosition())
             }
         }
     }
