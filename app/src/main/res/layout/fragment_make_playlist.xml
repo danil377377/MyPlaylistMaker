@@ -87,6 +87,7 @@
         android:layout_marginTop="@dimen/_16dp"
         android:hint="@string/description"
 
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -94,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textCursorDrawable="@drawable/cursor"
+
 
             />
 

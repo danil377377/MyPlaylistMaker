@@ -22,6 +22,7 @@ import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +39,7 @@ class PlayerActivity : AppCompatActivity() {
     private val viewModel: PlayerViewModel by viewModel()
     private lateinit var addtoFavorites: ImageView
     private lateinit var deleteFromVavorites: ImageView
+    private lateinit var adapter : PlaylistsBottomSheetAdapter
 
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,7 +96,7 @@ class PlayerActivity : AppCompatActivity() {
         })
         var playlistName = ""
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = PlaylistsBottomSheetAdapter(emptyList()) {
+         adapter = PlaylistsBottomSheetAdapter(emptyList()) {
             playlistName = it.name
             lifecycleScope.launch {
                 viewModel.checkTrackInPlaylist(it, track!!)
@@ -187,6 +189,7 @@ class PlayerActivity : AppCompatActivity() {
                 .show()
         }
 
+
         play.setOnClickListener {
             playbackControl()
         }
@@ -203,6 +206,7 @@ class PlayerActivity : AppCompatActivity() {
         render(PlayerState.Pause())
 
     }
+
 
     fun renderFavorites(value: Boolean) {
         if (value) {

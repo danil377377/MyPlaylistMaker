@@ -44,6 +44,7 @@ class PlayerViewModel(
         }
     }
 
+
     lateinit var track: Track
     private var timerJob: Job? = null
     private var favoriteLiveData = MutableLiveData<Boolean>()
@@ -96,9 +97,11 @@ class PlayerViewModel(
     }
 
     fun pausePlayback() {
-        mediaPlayer.pause()
-        playerState = STATE_PAUSED
-        renderState(PlayerState.Pause())
+        if (playerState == STATE_PLAYING) {
+            mediaPlayer.pause()
+            playerState = STATE_PAUSED
+            renderState(PlayerState.Pause())
+        }
     }
 
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {

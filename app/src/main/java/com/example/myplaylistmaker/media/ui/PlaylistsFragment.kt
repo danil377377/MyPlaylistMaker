@@ -47,8 +47,6 @@ viewModel.getListOfPlaylists()
         recyclerView.adapter = adapter
         lifecycleScope.launch {
             viewModel.getListOfPlaylists()}
-
-
         viewModel.observePlaylists().observe(viewLifecycleOwner){
             if(it != emptyList<Playlist>()) {
                 recyclerView.isVisible = true
