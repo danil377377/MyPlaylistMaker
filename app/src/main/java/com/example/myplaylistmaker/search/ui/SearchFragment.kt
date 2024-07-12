@@ -42,9 +42,7 @@ class SearchFragment : Fragment() {
     companion object {
         const val INPUT = "input"
         private const val CLICK_DEBOUNCE_DELAY = 1000L
-
         const val TAG = "SearchFragment"
-
         fun newInstance(): Fragment {
             return SearchFragment()
         }
@@ -74,11 +72,8 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         val view: TracksSearchViewModel by viewModel()
         viewModel = view
         tracksAdapter = TrackAdapter(
@@ -90,18 +85,14 @@ class SearchFragment : Fragment() {
                 viewModel.addToHistory(it)
                 Log.d("MyTest", "BeforeIntent")
                 findNavController().navigate(R.id.action_searchFragment_to_playerActivity, bundle)
-
-                Log.d("MyTest", "afterIntent")
             }
         }
         historyAdapter = TrackAdapter() {
             if (clickDebounce()) {
-                Log.d("MyTest", "BeforeIntent")
                 val bundle = Bundle().apply {
                     putSerializable("track", it)
                 }
                 findNavController().navigate(R.id.action_searchFragment_to_playerActivity, bundle)
-                Log.d("MyTest", "afterIntent")
             }
         }
         val clearHistoryButton = binding.clearHistoryButton
@@ -123,10 +114,6 @@ class SearchFragment : Fragment() {
             inputMethodManager?.hideSoftInputFromWindow(clearButton.windowToken, 0)
             inputEditText.clearFocus()
         }
-
-
-
-
         if (historyLinearLayout.visibility == View.VISIBLE) recyclerView.visibility =
             View.GONE else recyclerView.visibility = View.VISIBLE
         clearButton.setOnClickListener {
@@ -174,19 +161,14 @@ class SearchFragment : Fragment() {
             }
             false
         }
-
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 internetProblems.setVisibility(View.GONE)
                 nothingFound.setVisibility(View.GONE)
-
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 lifecycleScope.launch {
-
                     if (s.isNullOrEmpty() && inputEditText.hasFocus() && viewModel.getHistoryTrackList()
                             .isNotEmpty()
                     ) {
@@ -199,20 +181,15 @@ class SearchFragment : Fragment() {
 
                         editTextValue = s.toString()
                         searchDebounce(editTextValue!!)
-
-                    }else {
-                        delay(100)
+                    } else {
                         recyclerView.visibility = View.GONE
                         viewModel.latestSearchText = null
                     }
                 }
-
                 clearButton.visibility = clearButtonVisibility(s)
-
             }
 
             override fun afterTextChanged(s: Editable?) {
-
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
@@ -222,10 +199,7 @@ class SearchFragment : Fragment() {
         viewModel.observeHistoryState().observe(viewLifecycleOwner) {
             historyRender(it)
         }
-
-
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -234,11 +208,8 @@ class SearchFragment : Fragment() {
             historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())
             tracksAdapter.trackList.clear()
             viewModel.searchRequest(viewModel.latestSearchText ?: "check")
-
         }
-
     }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -262,7 +233,6 @@ class SearchFragment : Fragment() {
         }
         return current
     }
-
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
