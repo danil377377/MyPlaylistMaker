@@ -15,13 +15,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.databinding.FragmentFavoritesBinding
 import com.example.myplaylistmaker.databinding.FragmentMakePlaylistBinding
+import com.example.myplaylistmaker.media.presentation.FavoritesViewModel
 import com.example.myplaylistmaker.media.presentation.MakePlaylistViewModel
+import com.example.myplaylistmaker.search.domain.models.Track
+import com.example.myplaylistmaker.search.ui.TrackAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MakePlaylistFragment : Fragment() {
+class MakePlaylistFragment: Fragment() {
+
 
 
     private lateinit var binding: FragmentMakePlaylistBinding
@@ -55,8 +62,8 @@ class MakePlaylistFragment : Fragment() {
                 Log.d("PhotoPicker", "No media selected")
             }
         }
-        viewModel.name.observe(viewLifecycleOwner) { name ->
-            if (name.isNotEmpty()) binding.createButton.isEnabled = true
+        viewModel.name.observe(viewLifecycleOwner){name ->
+            if(name.isNotEmpty()) binding.createButton.isEnabled = true
             else binding.createButton.isEnabled = false
         }
 
@@ -67,7 +74,6 @@ class MakePlaylistFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onNameChanged(s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -76,7 +82,6 @@ class MakePlaylistFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.onDescriptionChanged(s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -88,17 +93,15 @@ class MakePlaylistFragment : Fragment() {
                 findNavController().navigateUp()
             }
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (viewModel.shouldShowConfirmDialog()) {
-                        confirmDialog.show()
-                    } else {
-                        findNavController().navigateUp()
-                    }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.shouldShowConfirmDialog()) {
+                    confirmDialog.show()
+                } else {
+                    findNavController().navigateUp()
                 }
-            })
+            }
+        })
 
         binding.backButton.setOnClickListener {
             if (viewModel.shouldShowConfirmDialog()) {
@@ -107,19 +110,15 @@ class MakePlaylistFragment : Fragment() {
                 findNavController().navigateUp()
             }
         }
-        binding.createButton.setOnClickListener {
+        binding.createButton.setOnClickListener{
             lifecycleScope.launch {
-                viewModel.saveToDb()
-            }
-            Toast.makeText(
-                requireContext(),
-                "Плейлист ${viewModel.name.value} создан",
-                Toast.LENGTH_LONG
-            )
+            viewModel.saveToDb()}
+            Toast.makeText(requireContext(), "Плейлист ${viewModel.name.value} создан", Toast.LENGTH_LONG)
                 .show()
             findNavController().navigateUp()
         }
     }
 
 
-}
+
+    }
