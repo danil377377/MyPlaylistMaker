@@ -22,25 +22,29 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class PlayerViewModel(application: Application,
-                      val glideLoader : GlideLoader,
-                      val favoritesInteractor: FavoritesInteractor,
-                      val mediaPlayer: MediaPlayerWrapper,
-                      private val makePlaylistInteractor: MakePlaylistInteractor
+class PlayerViewModel(
+    application: Application,
+    val glideLoader: GlideLoader,
+    val favoritesInteractor: FavoritesInteractor,
+    val mediaPlayer: MediaPlayerWrapper,
+    private val makePlaylistInteractor: MakePlaylistInteractor
 ) : AndroidViewModel(application) {
-    var time = ""
+    private var _time = ""
+    val time: String
+        get() = _time
 
     private val playlistsList = MutableLiveData<List<Playlist>>()
-    fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList
-    fun getListOfPlaylists(){
+    fun observePlaylists(): LiveData<List<Playlist>> = playlistsList
+
+    fun getListOfPlaylists() {
         viewModelScope.launch {
-            makePlaylistInteractor.getPlaylists().collect{playlists ->
+            makePlaylistInteractor.getPlaylists().collect { playlists ->
                 playlistsList.postValue(playlists)
             }
         }
     }
 
-    lateinit var track:Track
+    lateinit var track: Track
     private var timerJob: Job? = null
     private var favoriteLiveData = MutableLiveData<Boolean>()
     fun observeFavorite(): LiveData<Boolean> = favoriteLiveData
@@ -60,42 +64,33 @@ class PlayerViewModel(application: Application,
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
-
     }
 
     private var playerState = STATE_DEFAULT
+
     fun loadIcon(context: Context, url: String, imageView: ImageView) {
         glideLoader.loadRoundedImage(context, url, imageView)
-
     }
 
-    suspend fun  checkTrackInPlaylist(playlist: Playlist, track: Track){
+    suspend fun checkTrackInPlaylist(playlist: Playlist, track: Track) {
         val trackList: List<String> = playlist.tracksIds.split(",").map { it.trim() }
         addStatusLiveData.postValue(track.trackId.toString() in trackList)
-        if(track.trackId.toString() !in trackList){
+        if (track.trackId.toString() !in trackList) {
             makePlaylistInteractor.addTrackToPlaylist(playlist, track)
-getListOfPlaylists()
+            getListOfPlaylists()
         }
     }
+
     fun playbackControl() {
         when (playerState) {
-
-            STATE_PLAYING -> {
-                pausePlayback()
-            }
-
-            STATE_PREPARED, STATE_PAUSED -> {
-                startPlayback()
-            }
+            STATE_PLAYING -> pausePlayback()
+            STATE_PREPARED, STATE_PAUSED -> startPlayback()
         }
     }
 
     fun startPlayback() {
-
         mediaPlayer.start()
-
         playerState = STATE_PLAYING
-
         startTimer()
         renderState(PlayerState.Play())
     }
@@ -103,9 +98,7 @@ getListOfPlaylists()
     fun pausePlayback() {
         mediaPlayer.pause()
         playerState = STATE_PAUSED
-
         renderState(PlayerState.Pause())
-
     }
 
     fun preparePlayer(url: String, onPrepared: () -> Unit, onComplete: () -> Unit) {
@@ -113,21 +106,19 @@ getListOfPlaylists()
         mediaPlayer.setOnPreparedListener {
             playerState = STATE_PREPARED
             onPrepared()
-
         }
         mediaPlayer.setOnCompletionListener {
             onComplete()
-
             mediaPlayer.pause()
             playerState = STATE_PAUSED
             renderState(PlayerState.Pause())
         }
-
     }
 
     private fun renderState(state: PlayerState) {
         playLiveData.postValue(state)
     }
+
     override fun onCleared() {
         pausePlayback()
         mediaPlayer.release()
@@ -137,30 +128,22 @@ getListOfPlaylists()
         timerJob = viewModelScope.launch {
             while (mediaPlayer.isPlaying()) {
                 delay(300L)
-                time = SimpleDateFormat(
-                    "mm:ss",
-                    Locale.getDefault()
-                ).format(mediaPlayer.currentPosition())
+                _time = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition())
             }
         }
     }
+
     fun onFavoriteClicked() {
-        if (track != null) {
-            viewModelScope.launch {
-                if (track.isFavorite) {
-                    favoritesInteractor.deleteTrackFromFavorites(track)
-
-                } else {
-                    favoritesInteractor.addTrackToFavorites(track)
-
-                }
-                track.isFavorite = !track.isFavorite
-                favoriteLiveData.postValue(track.isFavorite)
+        viewModelScope.launch {
+            if (track.isFavorite) {
+                favoritesInteractor.deleteTrackFromFavorites(track)
+            } else {
+                favoritesInteractor.addTrackToFavorites(track)
             }
+            track.isFavorite = !track.isFavorite
+            favoriteLiveData.postValue(track.isFavorite)
         }
     }
-
-
 }
 
 
