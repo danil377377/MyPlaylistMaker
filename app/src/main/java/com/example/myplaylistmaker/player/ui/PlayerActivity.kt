@@ -207,6 +207,10 @@ class PlayerActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getListOfPlaylists()
+    }
 
     fun renderFavorites(value: Boolean) {
         if (value) {
