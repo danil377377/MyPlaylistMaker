@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -50,6 +51,8 @@ class MakePlaylistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.name.cursorColor= ContextCompat.getColorStateList(requireContext(), R.color.nav_bar_active)
+        binding.description.cursorColor= ContextCompat.getColorStateList(requireContext(), R.color.nav_bar_active)
         val bottomNavigationView: BottomNavigationView =
             requireActivity().findViewById(R.id.bottomNavigationView)
         bottomNavigationView.visibility = View.GONE

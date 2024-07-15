@@ -18,7 +18,7 @@ class PlaylistsBottomSheetViewHolder(view: View): RecyclerView.ViewHolder(view) 
         name.text = playlist.name
 
         if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage())
-        quantity.text = "${getTrackCountString(playlist.quantityTracks)}"
+        quantity.text = getTrackCountString(playlist.quantityTracks)
     }
 
     fun getTrackCountString(count: Int): String {

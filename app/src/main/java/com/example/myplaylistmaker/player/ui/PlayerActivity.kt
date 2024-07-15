@@ -210,6 +210,8 @@ class PlayerActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.getListOfPlaylists()
+
+        adapter.notifyDataSetChanged()
     }
 
     fun renderFavorites(value: Boolean) {
