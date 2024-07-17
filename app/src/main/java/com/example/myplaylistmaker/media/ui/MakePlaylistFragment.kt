@@ -89,7 +89,7 @@ class MakePlaylistFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        confirmDialog = MaterialAlertDialogBuilder(requireContext())
+        confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
             .setTitle("Завершить создание плейлиста?")
             .setMessage("Все несохранённые данные будут потеряны")
             .setNeutralButton("Отмена") { dialog, which -> }

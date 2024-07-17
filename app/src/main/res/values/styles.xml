@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Цвет текста кнопок -->
+        <item name="colorPrimary">@color/nav_bar_active</item>
+
+    </style>
     <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/edit_text_stroke</item>
         <item name="hintTextColor">@color/nav_bar_active</item>

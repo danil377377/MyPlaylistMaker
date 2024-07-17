@@ -31,7 +31,7 @@ android:id="@+id/Header"
         android:layout_height="wrap_content"
         style="@style/TablayoutTextMedia"
         app:textAllCaps="false"
-
+app:tabIndicatorColor="@color/nav_bar_active"
 
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="@id/leftInfoBorder"
