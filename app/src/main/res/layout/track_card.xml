@@ -49,7 +49,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/text_card_margin_start"
             android:layout_marginTop="@dimen/arrow_song_margin_top"
-            android:layout_marginEnd="@dimen/arrow_song_margin_end"
+
             android:layout_marginBottom="@dimen/arrow_song_margin_bottom">
         </ImageView>
     </LinearLayout>
