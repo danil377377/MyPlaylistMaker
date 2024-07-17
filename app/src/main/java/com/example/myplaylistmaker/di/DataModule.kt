@@ -8,8 +8,9 @@ import com.example.myplaylistmaker.media.data.converters.PlaylistDbConvertor
 import com.example.myplaylistmaker.media.data.db.MakePlaylistRepositoryImpl
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
-import com.example.myplaylistmaker.player.data.MediaPlayerWrapper
+import com.example.myplaylistmaker.player.data.MediaPlayerWrapperImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
+import com.example.myplaylistmaker.player.domain.MediaPlayerWrapper
 import com.example.myplaylistmaker.search.data.converters.TrackDbConvertor
 import com.example.myplaylistmaker.search.data.db.FavoritesRepositoryImpl
 import com.example.myplaylistmaker.search.data.network.ITunesApi
@@ -20,12 +21,9 @@ import com.example.myplaylistmaker.search.data.sharedprefs.SharedPrefsImpl
 import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
 import com.example.myplaylistmaker.search.domain.db.FavoritesRepository
-import com.example.myplaylistmaker.settings.data.SettingsRepositoryImpl
 import com.example.myplaylistmaker.settings.data.SettingsSharedPrefsImpl
-import com.example.myplaylistmaker.settings.domen.SettingsRepository
 import com.example.myplaylistmaker.settings.domen.SettingsSharedPrefs
 import com.example.myplaylistmaker.sharing.domen.ExternalNavigator
-import com.example.myplaylistmaker.utility.App
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -78,7 +76,7 @@ val repositoryModule = module {
         SettingsSharedPrefsImpl(get())
     }
     factory<MediaPlayerWrapper> {
-        MediaPlayerWrapper(get())
+        MediaPlayerWrapperImpl(get())
     }
     single {
         androidContext()

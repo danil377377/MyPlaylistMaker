@@ -1,10 +1,11 @@
 package com.example.myplaylistmaker.player.data
 
 import android.media.MediaPlayer
+import com.example.myplaylistmaker.player.domain.MediaPlayerWrapper
 
-class MediaPlayerWrapper(
-    private val mediaPlayer: MediaPlayer = MediaPlayer()
-) {
+class MediaPlayerWrapperImpl(
+    private val mediaPlayer: MediaPlayer
+): MediaPlayerWrapper {
 
     private var onCompletionListener: (() -> Unit)? = null
     private var onPreparedListener: (() -> Unit)? = null
@@ -18,37 +19,37 @@ class MediaPlayerWrapper(
         }
     }
 
-    fun setDataSource(url: String) {
+    override fun setDataSource(url: String) {
         mediaPlayer.reset()
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepareAsync()
     }
 
-    fun start() {
+    override fun start() {
         mediaPlayer.start()
     }
 
-    fun pause() {
+    override fun pause() {
         mediaPlayer.pause()
     }
 
-    fun release() {
+    override fun release() {
         mediaPlayer.release()
     }
 
-    fun isPlaying(): Boolean {
+    override fun isPlaying(): Boolean {
         return mediaPlayer.isPlaying
     }
 
-    fun currentPosition(): Int {
+    override fun currentPosition(): Int {
         return mediaPlayer.currentPosition
     }
 
-    fun setOnCompletionListener(listener: () -> Unit) {
+    override fun setOnCompletionListener(listener: () -> Unit) {
         onCompletionListener = listener
     }
 
-    fun setOnPreparedListener(listener: () -> Unit) {
+    override fun setOnPreparedListener(listener: () -> Unit) {
         onPreparedListener = listener
     }
 }

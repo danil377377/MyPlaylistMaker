@@ -2,7 +2,6 @@ package com.example.myplaylistmaker.player.ui.presentation
 
 import android.app.Application
 import android.content.Context
-import android.media.MediaPlayer
 import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,8 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
-import com.example.myplaylistmaker.player.data.MediaPlayerWrapper
 import com.example.myplaylistmaker.player.domain.GlideLoader
+import com.example.myplaylistmaker.player.domain.MediaPlayerWrapper
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
 import com.example.myplaylistmaker.search.domain.models.Track
