@@ -204,9 +204,7 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            historyAdapter.trackList.clear()
-            historyAdapter.trackList.addAll(viewModel.getHistoryTrackList())
-            tracksAdapter.trackList.clear()
+
             viewModel.searchRequest(viewModel.latestSearchText ?: "check")
         }
     }
@@ -221,6 +219,7 @@ class SearchFragment : Fragment() {
         val savedInput = savedInstanceState?.getString(INPUT) ?: ""
         inputEditText.setText(savedInput)
     }
+
 
     private fun clickDebounce(): Boolean {
         val current = isClickAllowed
