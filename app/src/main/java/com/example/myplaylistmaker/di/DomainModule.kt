@@ -38,7 +38,7 @@ val interactorModule = module {
     single<FavoritesInteractor> {
         FavoritesInteractorImpl(get())
     }
-    single<MakePlaylistInteractor> {  MakePlaylistInteractorImpl(get(),  androidContext())}
+    single<MakePlaylistInteractor> {  MakePlaylistInteractorImpl(get(),  get())}
 
 
 }

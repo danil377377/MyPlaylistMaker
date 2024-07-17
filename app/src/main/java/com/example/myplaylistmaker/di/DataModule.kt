@@ -4,8 +4,10 @@ import android.app.Application
 import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.myplaylistmaker.db.AppDatabase
+import com.example.myplaylistmaker.media.data.ImageStorageImpl
 import com.example.myplaylistmaker.media.data.converters.PlaylistDbConvertor
 import com.example.myplaylistmaker.media.data.db.MakePlaylistRepositoryImpl
+import com.example.myplaylistmaker.media.domain.ImageStorage
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.data.MediaPlayerWrapperImpl
@@ -71,6 +73,9 @@ val repositoryModule = module {
     factory { MediaPlayer() }
     factory<GlideLoader> {
         GlideLoaderImpl(get())
+    }
+    factory<ImageStorage> {
+        ImageStorageImpl(androidContext())
     }
     factory<SettingsSharedPrefs> {
         SettingsSharedPrefsImpl(get())
