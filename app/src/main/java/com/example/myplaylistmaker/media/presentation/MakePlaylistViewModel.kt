@@ -1,22 +1,14 @@
 package com.example.myplaylistmaker.media.presentation
 
 import android.app.Application
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.os.Environment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
-import com.example.myplaylistmaker.search.domain.db.FavoritesInteractor
-import com.example.myplaylistmaker.search.domain.models.Track
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
 
 class MakePlaylistViewModel(
     application: Application,
@@ -29,8 +21,8 @@ private val _name = MutableLiveData<String>()
     private val _description = MutableLiveData<String>()
     val description: LiveData<String> = _description
 
-    private val _imageUri = MutableLiveData<Uri?>()
-    val imageUri: LiveData<Uri?> = _imageUri
+    private val _imageUri = MutableLiveData<String?>()
+    val imageUri: LiveData<String?> = _imageUri
     private val _filePath = MutableLiveData<File>()
     val filePath:LiveData<File> = _filePath
     private val playlistsList = MutableLiveData<List<Playlist>>()
@@ -38,13 +30,13 @@ private val _name = MutableLiveData<String>()
 
     var lastPlaylists = emptyList<Playlist>()
 
-    fun onImageSelected(uri: Uri?) {
+    fun onImageSelected(uri: String?) {
         _imageUri.value = uri
         uri?.let { saveImageToPrivateStorage(it) }
 
     }
 
-    private fun saveImageToPrivateStorage(uri: Uri) {
+    private fun saveImageToPrivateStorage(uri: String) {
         _filePath.value= makePlaylistInteractor.saveImageToPrivateStorage(uri, name.value?:"")
     }
 

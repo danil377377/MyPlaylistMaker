@@ -5,9 +5,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.models.Playlist
 
-class PlaylistsBottomSheetViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class PlaylistsBottomSheetViewHolder(view: View, private val imageDecoder: ImageDecoder): RecyclerView.ViewHolder(view) {
 
     private val name: TextView = itemView.findViewById(R.id.playlist_name)
 
@@ -17,7 +18,7 @@ class PlaylistsBottomSheetViewHolder(view: View): RecyclerView.ViewHolder(view) 
     fun bind(playlist: Playlist) {
         name.text = playlist.name
 
-        if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage())
+        if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage(imageDecoder))
         quantity.text = getTrackCountString(playlist.quantityTracks)
     }
 

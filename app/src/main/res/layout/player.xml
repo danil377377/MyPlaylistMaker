@@ -65,10 +65,13 @@
         <TextView
             android:id="@+id/songName"
             style="@style/PlayerSongTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/leftBorder"
+app:layout_constraintEnd_toEndOf="@id/rightBorder"
+
+            app:layout_constraintStart_toStartOf="@id/leftBorder"
             app:layout_constraintTop_toBottomOf="@id/icon"
+            app:layout_constraintBottom_toTopOf="@id/singerName"
             android:layout_marginTop="@dimen/_24dp"
             android:text="Yesterday (Remastered 2009)"
             >
@@ -287,6 +290,7 @@
         android:background="#99000000"
         android:visibility="gone"/>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/standard_bottom_sheet"
         style="@style/bottom_sheet_background"
         android:layout_width="match_parent"
@@ -322,7 +326,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-android:layout_marginTop="28dp"
+            android:layout_marginTop="28dp"
             android:textAllCaps="false">
 
         </Button>

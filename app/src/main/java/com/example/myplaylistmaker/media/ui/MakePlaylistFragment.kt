@@ -1,5 +1,6 @@
 package com.example.myplaylistmaker.media.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -37,7 +38,7 @@ class MakePlaylistFragment : Fragment() {
     private val viewModel: MakePlaylistViewModel by viewModel()
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            viewModel.onImageSelected(uri)
+            viewModel.onImageSelected(uri.toString())
         }
 
     override fun onCreateView(
@@ -62,7 +63,7 @@ class MakePlaylistFragment : Fragment() {
         viewModel.imageUri.observe(viewLifecycleOwner) { uri ->
             if (uri != null) {
                 binding.playlistPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
-                binding.playlistPhoto.setImageURI(uri)
+                binding.playlistPhoto.setImageURI(Uri.parse(uri))
             }
         }
         viewModel.name.observe(viewLifecycleOwner) { name ->

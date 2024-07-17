@@ -1,6 +1,6 @@
 package com.example.myplaylistmaker.media.domain.db
 
-import android.net.Uri
+
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +13,6 @@ interface MakePlaylistInteractor {
     suspend fun addPlaylist(playlist: Playlist)
     suspend fun deletePlaylist(playlist: Playlist)
     suspend fun addTrackToPlaylist(playlistId: Playlist, track: Track)
-    fun saveImageToPrivateStorage(uri: Uri, name: String): File
+    fun saveImageToPrivateStorage(uri: String, name: String): File
 
 }

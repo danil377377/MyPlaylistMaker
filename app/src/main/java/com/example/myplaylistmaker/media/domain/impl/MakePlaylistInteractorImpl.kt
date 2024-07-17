@@ -1,6 +1,5 @@
 package com.example.myplaylistmaker.media.domain.impl
 
-import android.net.Uri
 import com.example.myplaylistmaker.media.domain.ImageStorage
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
 import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
@@ -11,7 +10,7 @@ import java.io.File
 
 class MakePlaylistInteractorImpl(private val makePlaylistRepository: MakePlaylistRepository, private val imageStorage: ImageStorage):
     MakePlaylistInteractor {
-     override fun saveImageToPrivateStorage(uri: Uri, name: String): File {
+     override fun saveImageToPrivateStorage(uri: String, name: String): File {
         return imageStorage.saveImage(uri, name)
     }
 

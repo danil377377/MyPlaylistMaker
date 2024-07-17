@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.models.Playlist
 
-class PlaylistsBottomSheetAdapter(private var playlists: List<Playlist>, val clickListener: PlaylistsBottomSheetAdapter.LocationClickListener): RecyclerView.Adapter<PlaylistsBottomSheetViewHolder>() {
+class PlaylistsBottomSheetAdapter(private var playlists: List<Playlist>, val clickListener: PlaylistsBottomSheetAdapter.LocationClickListener, private val imageDecoder: ImageDecoder): RecyclerView.Adapter<PlaylistsBottomSheetViewHolder>() {
     fun clear(){
         playlists = emptyList()
     }
@@ -15,7 +16,7 @@ class PlaylistsBottomSheetAdapter(private var playlists: List<Playlist>, val cli
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistsBottomSheetViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.playlist_card_for_bottom_sheet, parent, false)
-        return PlaylistsBottomSheetViewHolder(view)
+        return PlaylistsBottomSheetViewHolder(view, imageDecoder)
     }
 
     override fun getItemCount(): Int {

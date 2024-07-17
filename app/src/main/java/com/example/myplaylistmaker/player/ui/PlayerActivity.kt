@@ -4,7 +4,6 @@ package com.example.myplaylistmaker.player.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -18,13 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.main.ui.RootActivity
+import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -37,6 +37,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var time: TextView
     private lateinit var url: String
     private val viewModel: PlayerViewModel by viewModel()
+    private val imageDecoder: ImageDecoder by inject()
     private lateinit var addtoFavorites: ImageView
     private lateinit var deleteFromVavorites: ImageView
     private lateinit var adapter : PlaylistsBottomSheetAdapter
@@ -96,12 +97,12 @@ class PlayerActivity : AppCompatActivity() {
         })
         var playlistName = ""
         recyclerView.layoutManager = LinearLayoutManager(this)
-         adapter = PlaylistsBottomSheetAdapter(emptyList()) {
+         adapter = PlaylistsBottomSheetAdapter(emptyList(), {
             playlistName = it.name
             lifecycleScope.launch {
                 viewModel.checkTrackInPlaylist(it, track!!)
             }
-        }
+        }, imageDecoder)
         recyclerView.adapter = adapter
         lifecycleScope.launch {
             viewModel.getListOfPlaylists()

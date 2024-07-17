@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
+import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.TrackAdapter
 
-class PlaylistsAdapter(private var playlists: List<Playlist>, val clickListener: PlaylistsAdapter.LocationClickListener): RecyclerView.Adapter<PlaylistsViewHolder>() {
+class PlaylistsAdapter(private var playlists: List<Playlist>, val clickListener: PlaylistsAdapter.LocationClickListener, private val imageDecoder: ImageDecoder): RecyclerView.Adapter<PlaylistsViewHolder>() {
     fun clear(){
         playlists = emptyList()
     }
@@ -17,7 +18,7 @@ class PlaylistsAdapter(private var playlists: List<Playlist>, val clickListener:
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.playlist_card, parent, false)
-        return PlaylistsViewHolder(view)
+        return PlaylistsViewHolder(view, imageDecoder)
     }
 
     override fun getItemCount(): Int {

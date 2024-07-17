@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myplaylistmaker.R
 
 import com.example.myplaylistmaker.databinding.FragmentPlaylistsBinding
+import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.media.presentation.MakePlaylistViewModel
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaylistsFragment: Fragment() {
@@ -25,6 +27,7 @@ class PlaylistsFragment: Fragment() {
 
     private lateinit var binding: FragmentPlaylistsBinding
     private val viewModel: MakePlaylistViewModel by viewModel()
+    private val imageDecoder: ImageDecoder by inject()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
@@ -41,9 +44,9 @@ binding.newPlaylistButton.setOnClickListener{
         val recyclerView = binding.recyclerView
 viewModel.getListOfPlaylists()
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        val adapter = PlaylistsAdapter(viewModel.lastPlaylists){
+        val adapter = PlaylistsAdapter(viewModel.lastPlaylists,{
 
-        }
+        }, imageDecoder)
         recyclerView.adapter = adapter
         lifecycleScope.launch {
             viewModel.getListOfPlaylists()}
