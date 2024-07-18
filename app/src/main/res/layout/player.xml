@@ -290,7 +290,7 @@ app:layout_constraintEnd_toEndOf="@id/rightBorder"
         android:background="#99000000"
         android:visibility="gone"/>
     <LinearLayout
-        android:visibility="gone"
+
         android:id="@+id/standard_bottom_sheet"
         style="@style/bottom_sheet_background"
         android:layout_width="match_parent"
