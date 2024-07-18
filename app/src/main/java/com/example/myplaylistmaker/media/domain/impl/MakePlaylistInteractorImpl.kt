@@ -10,7 +10,7 @@ import java.io.File
 
 class MakePlaylistInteractorImpl(private val makePlaylistRepository: MakePlaylistRepository, private val imageStorage: ImageStorage):
     MakePlaylistInteractor {
-     override fun saveImageToPrivateStorage(uri: String, name: String): File {
+     override fun saveImageToPrivateStorage(uri: String, name: String): String? {
         return imageStorage.saveImage(uri, name)
     }
 

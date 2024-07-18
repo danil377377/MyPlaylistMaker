@@ -4,5 +4,5 @@ import android.graphics.Bitmap
 import java.io.File
 
 interface ImageDecoder {
-    fun decodeImage(file: File?): Bitmap?
+    fun decodeImage(path: String?): Bitmap?
 }

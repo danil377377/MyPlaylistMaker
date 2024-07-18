@@ -8,7 +8,7 @@ data class Playlist(
     val id: Int,
     val name: String,
     val description : String,
-    val pathToFile: File?,
+    val pathToFile: String?,
     val tracksIds: String,
     val quantityTracks: Int
 ){

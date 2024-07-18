@@ -6,9 +6,8 @@ import com.example.myplaylistmaker.media.domain.ImageDecoder
 import java.io.File
 
 class ImageDecoderImpl : ImageDecoder {
-    override fun decodeImage(file: File?): Bitmap? {
-        return file?.let {
-            BitmapFactory.decodeFile(it.path)
-        }
+    override fun decodeImage(path: String?): Bitmap? {
+        return BitmapFactory.decodeFile(path)
+
     }
 }

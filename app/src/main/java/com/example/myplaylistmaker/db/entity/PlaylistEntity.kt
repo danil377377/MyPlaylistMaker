@@ -9,7 +9,7 @@ data class PlaylistEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val description : String,
-    val pathToFile: File?,
+    val pathToFile: String?,
     val tracksIds: String,
     var quantityTracks: Int
 )

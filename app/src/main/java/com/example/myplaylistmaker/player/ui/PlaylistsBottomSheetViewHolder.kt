@@ -18,7 +18,7 @@ class PlaylistsBottomSheetViewHolder(view: View, private val imageDecoder: Image
     fun bind(playlist: Playlist) {
         name.text = playlist.name
 
-        if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage(imageDecoder))
+        if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage(imageDecoder))  else image.setImageResource(R.drawable.placeholder)
         quantity.text = getTrackCountString(playlist.quantityTracks)
     }
 

@@ -13,6 +13,6 @@ interface MakePlaylistInteractor {
     suspend fun addPlaylist(playlist: Playlist)
     suspend fun deletePlaylist(playlist: Playlist)
     suspend fun addTrackToPlaylist(playlistId: Playlist, track: Track)
-    fun saveImageToPrivateStorage(uri: String, name: String): File
+    fun saveImageToPrivateStorage(uri: String, name: String): String?
 
 }

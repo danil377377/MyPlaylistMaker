@@ -23,8 +23,8 @@ private val _name = MutableLiveData<String>()
 
     private val _imageUri = MutableLiveData<String?>()
     val imageUri: LiveData<String?> = _imageUri
-    private val _filePath = MutableLiveData<File>()
-    val filePath:LiveData<File> = _filePath
+    private val _filePath = MutableLiveData<String?>()
+    val filePath:LiveData<String?> = _filePath
     private val playlistsList = MutableLiveData<List<Playlist>>()
     fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList
 
@@ -37,7 +37,7 @@ private val _name = MutableLiveData<String>()
     }
 
     private fun saveImageToPrivateStorage(uri: String) {
-        _filePath.value= makePlaylistInteractor.saveImageToPrivateStorage(uri, name.value?:"")
+        _filePath.value= makePlaylistInteractor.saveImageToPrivateStorage(uri, name.value?:"test")
     }
 
 
