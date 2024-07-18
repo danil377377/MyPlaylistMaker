@@ -69,7 +69,7 @@ viewModel.getListOfPlaylists()
 
     override fun onResume() {
         super.onResume()
-
+viewModel.getListOfPlaylists()
     }
 
 }
