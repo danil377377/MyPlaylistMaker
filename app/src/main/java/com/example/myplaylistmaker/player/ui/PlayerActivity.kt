@@ -22,7 +22,9 @@ import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.ui.models.PlayerState
 import com.example.myplaylistmaker.player.ui.presentation.PlayerViewModel
 import com.example.myplaylistmaker.search.domain.models.Track
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDragHandleView
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,6 +43,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var addtoFavorites: ImageView
     private lateinit var deleteFromVavorites: ImageView
     private lateinit var adapter : PlaylistsBottomSheetAdapter
+
 
     @SuppressLint("MissingInflatedId", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +66,7 @@ class PlayerActivity : AppCompatActivity() {
         val newPlaylistButton = findViewById<Button>(R.id.newPlaylistButton)
         val bottomSheetContainer = findViewById<LinearLayout>(R.id.standard_bottom_sheet)
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetContainer)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+       bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         addToPlaylist.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -100,8 +103,9 @@ class PlayerActivity : AppCompatActivity() {
          adapter = PlaylistsBottomSheetAdapter(emptyList(), {
             playlistName = it.name
             lifecycleScope.launch {
-                viewModel.checkTrackInPlaylist(it, track!!)
+                if(!viewModel.checkTrackInPlaylist(it, track!!)) bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }
+
         }, imageDecoder)
         recyclerView.adapter = adapter
         lifecycleScope.launch {
@@ -210,6 +214,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         viewModel.getListOfPlaylists()
 
         adapter.notifyDataSetChanged()

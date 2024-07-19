@@ -32,7 +32,7 @@ private val _name = MutableLiveData<String>()
 
     fun onImageSelected(uri: String?) {
         _imageUri.value = uri
-        uri?.let { saveImageToPrivateStorage(it) }
+
 
     }
 
@@ -62,6 +62,8 @@ private val _name = MutableLiveData<String>()
         return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri.value == null)
     }
     suspend fun saveToDb(){
+
+        imageUri.value?.let { saveImageToPrivateStorage(it) }
 makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))
        viewModelScope.launch {  makePlaylistInteractor.getPlaylists().collect{playlistsList->
            lastPlaylists = playlistsList

@@ -72,13 +72,15 @@ class PlayerViewModel(
         glideLoader.loadRoundedImage(context, url, imageView)
     }
 
-    suspend fun checkTrackInPlaylist(playlist: Playlist, track: Track) {
+    suspend fun checkTrackInPlaylist(playlist: Playlist, track: Track): Boolean {
         val trackList: List<String> = playlist.tracksIds.split(",").map { it.trim() }
         addStatusLiveData.postValue(track.trackId.toString() in trackList)
         if (track.trackId.toString() !in trackList) {
             makePlaylistInteractor.addTrackToPlaylist(playlist, track)
             getListOfPlaylists()
+            return false
         }
+        return true
     }
 
     fun playbackControl() {
