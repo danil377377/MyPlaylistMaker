@@ -1,6 +1,8 @@
 package com.example.myplaylistmaker.di
 
 import android.content.Context
+import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
+import com.example.myplaylistmaker.media.domain.impl.MakePlaylistInteractorImpl
 import com.example.myplaylistmaker.search.data.network.TracksRepositoryImpl
 import com.example.myplaylistmaker.search.domain.api.TracksInteractor
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
@@ -36,6 +38,7 @@ val interactorModule = module {
     single<FavoritesInteractor> {
         FavoritesInteractorImpl(get())
     }
+    single<MakePlaylistInteractor> {  MakePlaylistInteractorImpl(get(),  get())}
 
 
 }

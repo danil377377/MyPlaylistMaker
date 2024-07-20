@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/SettingsScreenBackStyle">
 
     <LinearLayout
@@ -40,7 +41,9 @@ android:layout_marginTop="-2dp"
                 android:id="@+id/themeSwitcher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end" />
+                android:layout_gravity="end"
+                app:thumbTint="@color/switcher_selector_thumb"
+                app:trackTint="@color/switcher_selector"/>
         </LinearLayout>
 
         <FrameLayout

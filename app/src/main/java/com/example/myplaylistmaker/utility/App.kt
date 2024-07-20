@@ -25,9 +25,7 @@ class App : Application(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            // Метод специального класса, переданного как this, для добавления контекста в граф
             androidContext(this@App)
-            // Передаём все модули, чтобы их содержимое было передано в граф
             modules(interactorModule,repositoryModule, viewModelModule, dataModule)
         }
 

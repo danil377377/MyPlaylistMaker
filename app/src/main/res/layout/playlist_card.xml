@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+
+    android:layout_marginBottom="@dimen/_16dp"
+    android:layout_marginEnd="8dp"
+    card_view:cardElevation="0dp"
+    >
+
+    <LinearLayout
+
+        style="@style/ScreenBackStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/playlist_image"
+            style="@style/playlist"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:background="@drawable/radius_corner_8"
+            android:clipToOutline="true"
+            >
+
+        </ImageView>
+        <TextView
+            style="@style/TextStyle"
+            android:textSize="@dimen/_12dp"
+            android:paddingTop="4dp"
+            android:id="@+id/playlist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="vlldldkdjsjs"
+            android:ellipsize="end">
+
+        </TextView>
+        <TextView
+            style="@style/TextStyle"
+            android:textSize="@dimen/_12dp"
+            android:id="@+id/playlist_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 songs"
+            android:ellipsize="end"
+            >
+
+        </TextView>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView> 

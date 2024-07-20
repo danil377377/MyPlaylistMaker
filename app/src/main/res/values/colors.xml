@@ -8,6 +8,13 @@
     <color name="grey_hint">#AEAFB4</color>
     <color name="progress_bar">#6200EE</color>
     <color name="nav_bar_active">#3772E7</color>
+    <color name="edit_selector"><selector xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- Active (focused) state -->
+        <item android:color="@color/nav_bar_active" android:state_focused="true" />
+        <!-- Default state -->
+        <item android:color="@color/white" />
+    </selector></color>
+
 
 
 

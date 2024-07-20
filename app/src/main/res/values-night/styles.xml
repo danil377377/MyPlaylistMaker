@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/edit_text_stroke_dark</item>
+        <item name="hintTextColor">@color/nav_bar_active</item>
+        <item name="boxBackgroundColor">@color/YP_Black</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="shapeAppearance">@style/CustomShapeAppearance</item>
+
+    </style>
+    <style name="CustomShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+
+    </style>
+
+    <style name="backStyle">
+        <item name="android:background">@color/YP_Black</item>
+    </style>
     <style name="bottom_nav">
         <item name="android:background">@color/YP_Black</item>
         <item name="itemIconTint">@color/nav_bar_dark</item>
         <item name="itemTextColor">@color/nav_bar_dark</item>
-
-
     </style>
+
+
+    <style name="handle_bottom_sheet">
+        <item name="android:background">@drawable/handle_bottom_sheet_dark</item>
+    </style>
+
+    <style name="bottom_sheet_background">
+        <item name="android:background">@drawable/bottom_sheet_bacground</item>
+    </style>
+
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -47,7 +72,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">start</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/settingsTextSize</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
@@ -151,16 +176,29 @@
     <style name="Delete_from_favorites">
         <item name="android:src">@drawable/deletefromfavoritesbuttondark</item>
     </style>
+
+
+    <style name="Edit_text_dashes">
+        <item name="android:background">@drawable/edit_text_selector_make_playlist_dark</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+
+
+
     <style name="PlaceHolder">
         <item name="android:layout_width">@dimen/card_image</item>
         <item name="android:layout_height">@dimen/card_image</item>
         <item name="android:src">@drawable/placeholder</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:background">@color/black</item>
+    </style>
 
-
-
-
+    <style name="Add_photo">
+        <item name="android:src">@drawable/add_photo_placeholder_dark</item>
+    </style>
+    <style name="playlist">
+        <item name="android:src">@drawable/playlist_placeholder_svg_dark</item>
     </style>
 
     <style name="MainScreenBackStyle">
@@ -181,7 +219,7 @@
     <style name="ScreenBackStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/YP_Black</item>
+        <item name="android:backgroundTint">@color/YP_Black</item>
     </style>
 
     <style name="editText">
@@ -237,6 +275,5 @@
     <style name="TablayoutTextMedia">
         <item name="android:background">@color/YP_Black</item>
         <item name="tabTextColor">@color/white</item>
-<!--        <item name="tabIndicator">@color/white</item>-->
     </style>
 </resources>

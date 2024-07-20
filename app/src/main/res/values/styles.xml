@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Цвет текста кнопок -->
+        <item name="colorPrimary">@color/nav_bar_active</item>
 
+    </style>
+    <style name="CustomOutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/edit_text_stroke</item>
+        <item name="hintTextColor">@color/nav_bar_active</item>
+        <item name="boxBackgroundColor">@color/white</item>
+
+        <item name="android:textColorHint">@color/YP_Black</item>
+        <item name="shapeAppearance">@style/CustomShapeAppearance</item>
+
+    </style>
+    <style name="CustomShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+
+    </style>
+
+
+    <style name="backStyle">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="bottom_sheet_background">
+        <item name="android:background">@drawable/bottom_sheet_bacground_dark</item>
+    </style>
 
 
 
@@ -10,6 +37,10 @@
         <item name="itemIconTint">@color/nav_bar</item>
         <item name="itemTextColor">@color/nav_bar</item>
         <!-- Другие атрибуты для светлой темы -->
+    </style>
+
+    <style name="handle_bottom_sheet">
+        <item name="android:background">@drawable/handle_bottom_sheet</item>
     </style>
 
 
@@ -146,7 +177,7 @@
     <style name="ScreenBackStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
     </style>
 
     <style name="Share">
@@ -191,6 +222,18 @@
     </style>
     <style name="Delete_from_favorites">
         <item name="android:src">@drawable/deletefromfavoritesbutton</item>
+    </style>
+    <style name="Add_photo">
+        <item name="android:src">@drawable/add_photo_placeholder</item>
+    </style>
+    <style name="playlist">
+        <item name="android:src">@drawable/playlist_placeholder</item>
+    </style>
+
+
+    <style name="Edit_text_dashes">
+        <item name="android:background">@drawable/edit_text_selector_make_playlist</item>
+        <item name="android:textColorHint">@color/YP_Black</item>
     </style>
 
 
