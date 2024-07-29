@@ -85,6 +85,21 @@
         <item name="icon">@drawable/searchbig</item>
     </style>
 
+    <style name="PlaylistHeaderTextStyle">
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textSize">@dimen/_24dp</item>
+        <item name="android:fontFamily">@font/ys_display_bold</item>
+        <item name="android:textFontWeight">700</item>
+
+    </style>
+    <style name="PlaylistTextStyle">
+        <item name="android:textColor">@color/YP_Black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+
+    </style>
+
     <style name="TextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
