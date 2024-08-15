@@ -8,6 +8,5 @@ import java.io.File
 class ImageDecoderImpl : ImageDecoder {
     override fun decodeImage(path: String?): Bitmap? {
         return BitmapFactory.decodeFile(path)
-
     }
 }
