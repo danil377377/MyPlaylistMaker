@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.models.Playlist
+import com.example.myplaylistmaker.utility.StringUtils
 
 class PlaylistsViewHolder(view: View,private val imageDecoder: ImageDecoder): RecyclerView.ViewHolder(view) {
 
@@ -19,17 +20,7 @@ class PlaylistsViewHolder(view: View,private val imageDecoder: ImageDecoder): Re
         name.text = playlist.name
 
        if(playlist.pathToFile!=null) image.setImageBitmap(playlist.getImage(imageDecoder)) else image.setImageResource(R.drawable.placeholder)
-        quantity.text = getTrackCountString(playlist.quantityTracks)
+        quantity.text = StringUtils.getTrackCountString(playlist.quantityTracks)
     }
-    fun getTrackCountString(count: Int): String {
-        val lastDigit = count % 10
-        val lastTwoDigits = count % 100
 
-        return when {
-            lastTwoDigits in 11..19 -> "$count треков"
-            lastDigit == 1 -> "$count трек"
-            lastDigit in 2..4 -> "$count трека"
-            else -> "$count треков"
-        }
-    }
 }

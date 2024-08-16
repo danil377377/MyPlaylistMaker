@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.databinding.FragmentPlaylistBinding
 import com.example.myplaylistmaker.databinding.FragmentPlaylistsBinding
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.media.presentation.PlaylistViewModel
+import com.example.myplaylistmaker.utility.StringUtils
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class PlaylistFragment: Fragment() {
@@ -24,6 +30,9 @@ class PlaylistFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.visibility = View.GONE
         val playlist = requireArguments().getSerializable("playlist") as Playlist
         if(playlist.pathToFile != null) binding.playlistImage.setImageBitmap(viewModel.getImageBitmap(playlist))
 
@@ -34,5 +43,12 @@ class PlaylistFragment: Fragment() {
             val coordinatorLayoutBottom = binding.coordinatorLayout.bottom
             bottomSheetBehavior.peekHeight = coordinatorLayoutBottom - constraintLayoutBottom - 24
         }
+        binding.backButton.bringToFront()
+        binding.backButton.setOnClickListener{
+            findNavController().navigateUp()
+        }
+        binding.description.text = playlist.description
+        binding.trackCounting.text = "${SimpleDateFormat("mm", Locale.getDefault()).format(550000000)} минут • ${StringUtils.getTrackCountString(playlist.quantityTracks)} "
+
     }
 }
