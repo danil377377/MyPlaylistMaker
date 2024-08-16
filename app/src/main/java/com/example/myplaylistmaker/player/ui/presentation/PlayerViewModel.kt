@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
+import com.example.myplaylistmaker.media.domain.db.PlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.player.domain.GlideLoader
 import com.example.myplaylistmaker.player.domain.MediaPlayerWrapper
@@ -26,7 +26,7 @@ class PlayerViewModel(
     val glideLoader: GlideLoader,
     val favoritesInteractor: FavoritesInteractor,
     val mediaPlayer: MediaPlayerWrapper,
-    private val makePlaylistInteractor: MakePlaylistInteractor
+    private val playlistInteractor: PlaylistInteractor
 ) : AndroidViewModel(application) {
     private var _time = ""
     val time: String
@@ -37,7 +37,7 @@ class PlayerViewModel(
 
     fun getListOfPlaylists() {
         viewModelScope.launch {
-            makePlaylistInteractor.getPlaylists().collect { playlists ->
+            playlistInteractor.getPlaylists().collect { playlists ->
                 playlistsList.postValue(playlists)
             }
         }
@@ -76,7 +76,7 @@ class PlayerViewModel(
         val trackList: List<String> = playlist.tracksIds.split(",").map { it.trim() }
         addStatusLiveData.postValue(track.trackId.toString() in trackList)
         if (track.trackId.toString() !in trackList) {
-            makePlaylistInteractor.addTrackToPlaylist(playlist, track)
+            playlistInteractor.addTrackToPlaylist(playlist, track)
             getListOfPlaylists()
             return false
         }
