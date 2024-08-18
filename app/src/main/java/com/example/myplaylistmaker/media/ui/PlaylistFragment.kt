@@ -48,7 +48,11 @@ class PlaylistFragment: Fragment() {
             findNavController().navigateUp()
         }
         binding.description.text = playlist.description
-        binding.trackCounting.text = "${SimpleDateFormat("mm", Locale.getDefault()).format(550000000)} минут • ${StringUtils.getTrackCountString(playlist.quantityTracks)} "
+        viewModel.getTotalTime(playlist)
+        viewModel.observeTotalTime().observe(viewLifecycleOwner){
+            binding.trackCounting.text = "${SimpleDateFormat("mm", Locale.getDefault()).format(it!!)} минут • ${StringUtils.getTrackCountString(playlist.quantityTracks)} "
+
+        }
 
     }
 }
