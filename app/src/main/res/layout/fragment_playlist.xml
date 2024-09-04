@@ -147,8 +147,8 @@
             tools:listitem="@layout/track_card"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             >
-
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 

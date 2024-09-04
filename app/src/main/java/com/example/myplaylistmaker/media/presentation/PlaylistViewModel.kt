@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 
 class PlaylistViewModel(application: Application, val imageDecoder: ImageDecoder, val playlistInteractor: PlaylistInteractor): AndroidViewModel(application)  {
 
-    private val tracksList = MutableLiveData<List<Track>>()
-    fun  observeTracks(): LiveData<List<Track>> = tracksList
+    private val tracksList = MutableLiveData<ArrayList<Track>>()
+    fun  observeTracks(): LiveData<ArrayList<Track>> = tracksList
 
     private val totalTime = MutableLiveData<Long>()
     fun observeTotalTime(): LiveData<Long> = totalTime
@@ -25,11 +25,10 @@ class PlaylistViewModel(application: Application, val imageDecoder: ImageDecoder
     fun getImageBitmap(playlist: Playlist): Bitmap?{
         return playlist.getImage(imageDecoder)
     }
-    fun getTracks(playlist: Playlist){
-
+      fun getTracks(playlist: Playlist){
         viewModelScope.launch {
             playlistInteractor.getTracksFromPlaylist(playlist.id).collect{
-                tracks -> tracksList.postValue(tracks)
+                tracks -> tracksList.postValue(ArrayList(tracks))
             }
         }
     }
