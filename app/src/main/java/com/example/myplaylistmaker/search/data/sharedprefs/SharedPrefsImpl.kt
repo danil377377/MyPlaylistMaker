@@ -33,7 +33,7 @@ class SharedPrefsImpl(private val context: Context, val gson: Gson, private val 
      }
 
     override suspend fun getHistory(): ArrayList<Track>{
-        val favoritesIds:List<String> = appDatabase.trackDao().getTracksId()
+        val favoritesIds:List<String> = appDatabase.favoriteTracksDao().getTracksId()
         val tracks =  createTracksFromJson(getHistoryFromJson())
         tracks.forEach{
             track -> track.isFavorite = favoritesIds.contains(track.trackId.toString())

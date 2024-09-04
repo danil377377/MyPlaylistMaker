@@ -22,7 +22,8 @@ class PlaylistRepositoryImpl(
 
     override suspend fun getAllTracksFromPlaylists(id: Int): Flow<List<Track>> = flow {
         val tracks = appDatabase.TrackInPlaylistEntityDao().getTracks()
-        emit(tracks.map {track ->  Track(track.id.toInt(), track.trackName, track.artistName,track.trackTimeMillis, track.artworkUrl100, track.collectionName, track.releaseDate, track.collectionName, track.country, track.artworkUrl100, track.coverArtWork,false) })
+        val favoritesIds = appDatabase.favoriteTracksDao().getTracksId()
+        emit(tracks.map {track ->  Track(track.id.toInt(), track.trackName, track.artistName,track.trackTimeMillis, track.artworkUrl100, track.collectionName, track.releaseDate, track.collectionName, track.country, track.artworkUrl100, track.coverArtWork,favoritesIds.contains(track.id))})
     }
 
     override fun getPlaylists(): Flow<List<Playlist>> = flow {

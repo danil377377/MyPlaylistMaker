@@ -31,6 +31,7 @@ class PlaylistFragment: Fragment() {
     private val viewModel by viewModel<PlaylistViewModel>()
     private lateinit var tracksAdapter: TrackAdapter
     private var isClickAllowed = true
+    private lateinit var playlist: Playlist
 
     companion object{
         private const val CLICK_DEBOUNCE_DELAY = 1000L
@@ -47,7 +48,7 @@ class PlaylistFragment: Fragment() {
         val bottomNavigationView: BottomNavigationView =
             requireActivity().findViewById(R.id.bottomNavigationView)
         bottomNavigationView.visibility = View.GONE
-        val playlist = requireArguments().getSerializable("playlist") as Playlist
+        playlist = requireArguments().getSerializable("playlist") as Playlist
 
         if(playlist.pathToFile != null) binding.playlistImage.setImageBitmap(viewModel.getImageBitmap(playlist))
 
@@ -104,5 +105,10 @@ Log.d("треки", it.toString())
             }
         }
         return current
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getTracks(playlist)
     }
 }

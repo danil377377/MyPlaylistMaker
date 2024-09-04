@@ -18,7 +18,7 @@ class TracksRepositoryImpl(private val networkClient: NetworkClient, private val
                 emit(Resource.Error("Проверьте подключение к интернету"))
             }
             200 -> {
-                val favoritesIds:List<String> = appDatabase.trackDao().getTracksId()
+                val favoritesIds:List<String> = appDatabase.favoriteTracksDao().getTracksId()
                 emit(Resource.Success((response as ITunesResponse).results.map {
                     Track(it.trackId, it.trackName, it.artistName, it.trackTimeMillis, it.artworkUrl100, it.collectionName, it.releaseDate,
                         it.primaryGenreName, it.country, it.previewUrl, it.getCoverArtwork(), favoritesIds.contains(it.trackId.toString()))}))
