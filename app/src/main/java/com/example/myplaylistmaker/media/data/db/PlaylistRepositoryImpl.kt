@@ -57,5 +57,27 @@ class PlaylistRepositoryImpl(
         appDatabase.TrackInPlaylistEntityDao().insertTrack(TrackInPlaylistEntity(track.trackId.toString(), track.trackName, track.artistName,track.trackTimeMillis, track.artworkUrl100, track.collectionName, track.releaseDate, track.collectionName, track.country, track.artworkUrl100, track.coverArtWork,"trackFile"))
     }
 
+    override suspend fun deleteTrackFromPlaylist(trackId: Int, playlistId: Int) {
+        val playlist = appDatabase.playlistDao().getPlaylistById(playlistId)
+        val playlists = appDatabase.playlistDao().getPlaylists()
+        var containingInPlaylists = 0
+        playlists.forEach{
+            if(it.tracksIds.split(",").map { it.trim() }.contains(trackId.toString())) containingInPlaylists++
+        }
+        if(containingInPlaylists <= 1) {
+            appDatabase.TrackInPlaylistEntityDao().deleteTrackById(trackId)
+        }
+        if (playlist != null) {
+            val trackIdsList: MutableList<String> = playlist.tracksIds.split(",").map { it.trim() }.toMutableList()
+            if (trackIdsList.contains(trackId.toString())) {
+                trackIdsList.remove(trackId.toString())
+                val changedPlaylist = PlaylistEntity(playlist.id, playlist.name, playlist.description, playlist.pathToFile, trackIdsList.joinToString(","), playlist.quantityTracks-1)
+
+                appDatabase.playlistDao().updatePlaylist(changedPlaylist)
+
+            }
+        }
+    }
+
 
 }

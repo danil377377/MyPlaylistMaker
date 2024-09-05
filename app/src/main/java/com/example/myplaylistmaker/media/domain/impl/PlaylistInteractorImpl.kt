@@ -1,5 +1,6 @@
 package com.example.myplaylistmaker.media.domain.impl
 
+import com.example.myplaylistmaker.db.entity.TrackInPlaylistEntity
 import com.example.myplaylistmaker.media.domain.ImageStorage
 import com.example.myplaylistmaker.media.domain.db.PlaylistInteractor
 import com.example.myplaylistmaker.media.domain.db.PlaylistRepository
@@ -13,6 +14,10 @@ class PlaylistInteractorImpl(private val playlistRepository: PlaylistRepository,
     PlaylistInteractor {
      override fun saveImageToPrivateStorage(uri: String, name: String): String? {
         return imageStorage.saveImage(uri, name)
+    }
+
+    override suspend fun deleteTrackFromPlaylist(trackId: Int, playlistId: Int) {
+        playlistRepository.deleteTrackFromPlaylist(trackId, playlistId)
     }
 
     override suspend fun getPlaylist(id: Int): Flow<Playlist> {

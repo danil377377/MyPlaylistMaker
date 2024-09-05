@@ -19,6 +19,7 @@ import com.example.myplaylistmaker.search.ui.TrackAdapter
 import com.example.myplaylistmaker.utility.StringUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,7 +33,7 @@ class PlaylistFragment: Fragment() {
     private lateinit var tracksAdapter: TrackAdapter
     private var isClickAllowed = true
     private lateinit var playlist: Playlist
-
+    lateinit var confirmDialog: MaterialAlertDialogBuilder
     companion object{
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
@@ -69,6 +70,7 @@ class PlaylistFragment: Fragment() {
 
         }
 
+
         tracksAdapter = TrackAdapter(
         ) {
             if (clickDebounce()) {
@@ -78,6 +80,18 @@ class PlaylistFragment: Fragment() {
                 findNavController().navigate(R.id.action_playlistFragment_to_playerActivity, bundle)
             }
         }
+        tracksAdapter.setOnItemLongClickListener{
+            confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+                .setTitle("Вы уверены, что хотите удалить трек?")
+                .setNeutralButton("Отмена") { dialog, which -> }
+                .setPositiveButton("Удалить") { dialog, which ->
+                    viewModel.deleteTrackFromPlaylist(it, playlist)
+                    viewModel.getTracks(playlist)
+                    viewModel.getTotalTime(playlist)
+                }
+            confirmDialog.show()
+
+            true}
 
         val recyclerView = binding.recyclerView
         recyclerView.adapter = tracksAdapter
@@ -89,9 +103,9 @@ Log.d("треки", it.toString())
             tracksAdapter.trackList.clear()
             tracksAdapter.trackList.addAll(it)
             tracksAdapter.notifyDataSetChanged()
-
-
         }
+
+
     }
 
 
