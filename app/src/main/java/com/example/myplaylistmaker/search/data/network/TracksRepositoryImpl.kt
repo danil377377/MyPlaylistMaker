@@ -7,6 +7,7 @@ import com.example.myplaylistmaker.search.data.dto.ITunesResponse
 import com.example.myplaylistmaker.search.domain.api.TracksRepository
 import com.example.myplaylistmaker.search.domain.models.Track
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class TracksRepositoryImpl(private val networkClient: NetworkClient, private val appDatabase: AppDatabase) : TracksRepository {
@@ -18,7 +19,7 @@ class TracksRepositoryImpl(private val networkClient: NetworkClient, private val
                 emit(Resource.Error("Проверьте подключение к интернету"))
             }
             200 -> {
-                val favoritesIds:List<String> = appDatabase.favoriteTracksDao().getTracksId()
+                val favoritesIds:List<String> = appDatabase.favoriteTracksDao().getTracksId().first()
                 emit(Resource.Success((response as ITunesResponse).results.map {
                     Track(it.trackId, it.trackName, it.artistName, it.trackTimeMillis, it.artworkUrl100, it.collectionName, it.releaseDate,
                         it.primaryGenreName, it.country, it.previewUrl, it.getCoverArtwork(), favoritesIds.contains(it.trackId.toString()))}))

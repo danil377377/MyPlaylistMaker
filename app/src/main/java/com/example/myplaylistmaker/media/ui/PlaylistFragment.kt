@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,7 @@ class PlaylistFragment: Fragment() {
     private var isClickAllowed = true
     private lateinit var playlist: Playlist
     lateinit var confirmDialog: MaterialAlertDialogBuilder
+
     companion object{
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
@@ -63,10 +65,13 @@ class PlaylistFragment: Fragment() {
         binding.backButton.setOnClickListener{
             findNavController().navigateUp()
         }
+        binding.header.text = playlist.name
         binding.description.text = playlist.description
+
         viewModel.getTotalTime(playlist)
+        var countingTracks = playlist.quantityTracks
         viewModel.observeTotalTime().observe(viewLifecycleOwner){
-            binding.trackCounting.text = "${StringUtils.getMinutesCountString(SimpleDateFormat("mm", Locale.getDefault()).format(it!!).toInt())} • ${StringUtils.getTrackCountString(playlist.quantityTracks)} "
+            binding.trackCounting.text = "${StringUtils.getMinutesCountString(SimpleDateFormat("mm", Locale.getDefault()).format(it!!).toInt())} • ${StringUtils.getTrackCountString(countingTracks)} "
 
         }
 
@@ -103,8 +108,24 @@ Log.d("треки", it.toString())
             tracksAdapter.trackList.clear()
             tracksAdapter.trackList.addAll(it)
             tracksAdapter.notifyDataSetChanged()
+            countingTracks = it.size
+
         }
 
+        binding.shareButton.setOnClickListener{
+            if(playlist.tracksIds == "") {
+                Toast.makeText(
+                    requireContext(),
+                    "В этом плейлисте нет списка треков, которым можно поделиться",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            }else{
+                lifecycleScope.launch {
+                    viewModel.sharePlaylist(viewModel.getPlaylistInfo(playlist), requireContext())
+                }
+            }
+        }
 
     }
 
