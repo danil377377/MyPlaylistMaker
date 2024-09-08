@@ -72,12 +72,15 @@ class PlaylistViewModel(
     fun sharePlaylist(text: String, context: Context) {
         context.startActivity(externalNavigator.shareLink(text))
     }
+    fun checkTracList():Boolean{
+        return tracksList.value == ArrayList<Track>()
+    }
 
-    suspend fun getPlaylistInfo(playlist: Playlist): String {
-        val tracks = playlistInteractor.getTracksFromPlaylist(playlist.id).single()
+     fun getPlaylistInfo(playlist: Playlist): String {
+        val tracks = tracksList.value
 
         val tracksStringInfo = buildString {
-            tracks.forEachIndexed { index, track ->
+            tracks?.forEachIndexed { index, track ->
                 append("${index+1}. ${track.artistName} - ${track.trackName} (${SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)})\n")
 
             }

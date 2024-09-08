@@ -162,7 +162,20 @@ class PlaylistFragment : Fragment() {
         }
 
         binding.shareButton.setOnClickListener {
-            if (playlist.tracksIds == "") {
+            if (viewModel.checkTracList()) {
+                Toast.makeText(
+                    requireContext(),
+                    "В этом плейлисте нет списка треков, которым можно поделиться",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            } else {
+                    viewModel.sharePlaylist(viewModel.getPlaylistInfo(playlist), requireContext())
+
+            }
+        }
+        binding.shareButtonBottomSheet.setOnClickListener {
+            if (viewModel.checkTracList()) {
                 Toast.makeText(
                     requireContext(),
                     "В этом плейлисте нет списка треков, которым можно поделиться",
