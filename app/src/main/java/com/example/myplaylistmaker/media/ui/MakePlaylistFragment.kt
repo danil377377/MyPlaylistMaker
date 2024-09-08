@@ -31,11 +31,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MakePlaylistFragment : Fragment() {
+open class MakePlaylistFragment : Fragment() {
 
-    private lateinit var binding: FragmentMakePlaylistBinding
+     lateinit var binding: FragmentMakePlaylistBinding
     lateinit var confirmDialog: MaterialAlertDialogBuilder
-    private val viewModel: MakePlaylistViewModel by viewModel()
+     open val viewModel: MakePlaylistViewModel by viewModel()
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null)

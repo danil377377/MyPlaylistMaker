@@ -9,7 +9,7 @@ import com.example.myplaylistmaker.media.domain.db.PlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import kotlinx.coroutines.launch
 
-class MakePlaylistViewModel(
+open class MakePlaylistViewModel(
     application: Application,
     private val playlistInteractor: PlaylistInteractor,
 ) : AndroidViewModel(application) {

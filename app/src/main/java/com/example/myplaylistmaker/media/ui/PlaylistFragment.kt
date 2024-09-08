@@ -95,6 +95,7 @@ class PlaylistFragment : Fragment() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
+
         binding.playlistName.text = playlist.name
         binding.playlistQuantity.text = StringUtils.getTrackCountString(playlist.quantityTracks)
 
@@ -104,6 +105,13 @@ class PlaylistFragment : Fragment() {
             val coordinatorLayoutBottom = binding.coordinatorLayout.bottom
             bottomSheetBehavior.peekHeight = coordinatorLayoutBottom - constraintLayoutBottom - 24
         }
+        binding.editInfoButtonBottomSheet.setOnClickListener{
+            val bundle = Bundle().apply {
+                putSerializable("editPlaylist", playlist)
+            }
+            findNavController().navigate(R.id.action_playlistFragment_to_editPlaylistFragment, bundle)
+        }
+
         binding.backButton.bringToFront()
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
