@@ -260,6 +260,8 @@ class PlayerActivity : AppCompatActivity() {
                         pause.isEnabled = false
                     })
             }
+
+            else -> {}
         }
     }
 

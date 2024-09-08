@@ -87,10 +87,12 @@ class PlaylistFragment : Fragment() {
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         overlay.visibility = View.GONE
                     }
+
                     else -> {
                     }
                 }
             }
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
         binding.playlistName.text = playlist.name
@@ -135,7 +137,7 @@ class PlaylistFragment : Fragment() {
         }
         tracksAdapter.setOnItemLongClickListener {
             confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
-                .setTitle("Вы уверены, что хотите удалить трек?")
+                .setTitle("Хотите удалить трек?")
                 .setNeutralButton("Отмена") { dialog, which -> }
                 .setPositiveButton("Удалить") { dialog, which ->
                     viewModel.deleteTrackFromPlaylist(it, playlist)
@@ -160,6 +162,20 @@ class PlaylistFragment : Fragment() {
             countingTracks = it.size
 
         }
+        binding.deletePlaylistButtonBottomSheet.setOnClickListener {
+            moreBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+                .setTitle("Хотите удалить плэйлист «${playlist.name}»?")
+                .setNeutralButton("Отмена") { dialog, which -> }
+                .setPositiveButton("Удалить") { dialog, which ->
+                    viewModel.deletePlaylistById(playlist.id)
+                    findNavController().popBackStack()
+                }
+            confirmDialog.show()
+
+            true
+        }
+
 
         binding.shareButton.setOnClickListener {
             if (viewModel.checkTracList()) {
@@ -170,7 +186,7 @@ class PlaylistFragment : Fragment() {
                 )
                     .show()
             } else {
-                    viewModel.sharePlaylist(viewModel.getPlaylistInfo(playlist), requireContext())
+                viewModel.sharePlaylist(viewModel.getPlaylistInfo(playlist), requireContext())
 
             }
         }

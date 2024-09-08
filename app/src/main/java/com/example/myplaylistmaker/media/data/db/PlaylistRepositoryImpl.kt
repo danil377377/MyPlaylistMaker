@@ -24,12 +24,6 @@ class PlaylistRepositoryImpl(
         emit(convertFromPlaylistEntity(playlist!!))
     }
 
-    //    override suspend fun getAllTracksFromPlaylists(id: Int): Flow<List<Track>> = flow {
-//        val tracks = appDatabase.TrackInPlaylistEntityDao().getTracks()
-//        val favoritesIds = appDatabase.favoriteTracksDao().getTracksId()
-//        emit(tracks.map {track ->  Track(track.id.toInt(), track.trackName, track.artistName,track.trackTimeMillis, track.artworkUrl100, track.collectionName, track.releaseDate, track.collectionName, track.country, track.artworkUrl100, track.coverArtWork,favoritesIds.contains(track.id))})
-//    }
-
     override suspend fun getAllTracksFromPlaylists(id: Int): Flow<List<Track>> {
         val favoritesIds = withContext(Dispatchers.IO) {
             appDatabase.favoriteTracksDao().getTracksId().first()
@@ -65,9 +59,8 @@ class PlaylistRepositoryImpl(
 
     }
 
-    override suspend fun deletePlaylist(playlist: Playlist) {
-        val playlistDb = playlistDbConvertor.map(playlist)
-        appDatabase.playlistDao().deletePlaylist(playlistDb)
+    override suspend fun deletePlaylistbyId(playlistId: Int) {
+        appDatabase.playlistDao().deletePlaylistbyId(playlistId)
     }
 
     private fun convertFromPlaylistEntity(playlists: List<PlaylistEntity>): List<Playlist> {

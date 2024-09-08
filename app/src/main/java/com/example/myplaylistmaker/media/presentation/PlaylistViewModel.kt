@@ -68,6 +68,11 @@ class PlaylistViewModel(
         }
 
     }
+     fun deletePlaylistById(playlistId: Int){
+        viewModelScope.launch {
+            playlistInteractor.deletePlaylistById(playlistId)
+        }
+    }
 
     fun sharePlaylist(text: String, context: Context) {
         context.startActivity(externalNavigator.shareLink(text))
