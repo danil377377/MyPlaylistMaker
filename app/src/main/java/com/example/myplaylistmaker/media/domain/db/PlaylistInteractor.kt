@@ -20,5 +20,6 @@ interface PlaylistInteractor {
     suspend fun addTrackToPlaylist(playlistId: Playlist, track: Track)
     fun saveImageToPrivateStorage(uri: String, name: String): String?
     suspend fun deleteTrackFromPlaylist(trackId: Int, playlistId: Int)
+    suspend fun updatePlaylistById(playlistId: Int, name:String,description:String, pathToFIle:String?)
 
 }

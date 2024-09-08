@@ -20,6 +20,10 @@ class PlaylistInteractorImpl(private val playlistRepository: PlaylistRepository,
         playlistRepository.deleteTrackFromPlaylist(trackId, playlistId)
     }
 
+    override suspend fun updatePlaylistById(playlistId: Int, name:String,description:String, pathToFIle:String?) {
+        playlistRepository.updatePlaylistById(playlistId,name,description,pathToFIle)
+    }
+
     override suspend fun getPlaylist(id: Int): Flow<Playlist> {
         return playlistRepository.getPlaylist(id)
     }

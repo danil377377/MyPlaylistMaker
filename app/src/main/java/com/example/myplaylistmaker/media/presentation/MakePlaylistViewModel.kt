@@ -15,15 +15,15 @@ open class MakePlaylistViewModel(
 ) : AndroidViewModel(application) {
 
 private val _name = MutableLiveData<String>()
-    val name: LiveData<String> = _name
+    open val name: LiveData<String> = _name
 
     private val _description = MutableLiveData<String>()
-    val description: LiveData<String> = _description
+    open val description: LiveData<String> = _description
 
     private val _imageUri = MutableLiveData<String?>()
-    val imageUri: LiveData<String?> = _imageUri
+    open val imageUri: LiveData<String?> = _imageUri
     private val _filePath = MutableLiveData<String?>()
-    val filePath:LiveData<String?> = _filePath
+    open val filePath:LiveData<String?> = _filePath
     private val playlistsList = MutableLiveData<List<Playlist>>()
     fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList
 
@@ -35,7 +35,7 @@ private val _name = MutableLiveData<String>()
 
     }
 
-    private fun saveImageToPrivateStorage(uri: String) {
+    fun saveImageToPrivateStorage(uri: String) {
         _filePath.value= playlistInteractor.saveImageToPrivateStorage(uri, name.value?:"test")
     }
 
@@ -60,7 +60,7 @@ private val _name = MutableLiveData<String>()
     fun shouldShowConfirmDialog(): Boolean {
         return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri.value == null)
     }
-    suspend fun saveToDb(){
+    open suspend fun saveToDb(){
 
         imageUri.value?.let { saveImageToPrivateStorage(it) }
 playlistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))

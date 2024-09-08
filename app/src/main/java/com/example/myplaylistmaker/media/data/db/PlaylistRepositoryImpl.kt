@@ -63,6 +63,10 @@ class PlaylistRepositoryImpl(
         appDatabase.playlistDao().deletePlaylistbyId(playlistId)
     }
 
+    override suspend fun updatePlaylistById(playlistId: Int, name:String,description:String, pathToFIle:String?) {
+        appDatabase.playlistDao().updatePlaylistById(playlistId,name,description,pathToFIle)
+    }
+
     private fun convertFromPlaylistEntity(playlists: List<PlaylistEntity>): List<Playlist> {
         return playlists.map { playlist -> playlistDbConvertor.map(playlist) }
     }
