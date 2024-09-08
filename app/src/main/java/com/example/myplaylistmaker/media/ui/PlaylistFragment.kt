@@ -11,11 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.databinding.FragmentPlaylistBinding
-import com.example.myplaylistmaker.databinding.FragmentPlaylistsBinding
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.media.presentation.PlaylistViewModel
-import com.example.myplaylistmaker.search.domain.models.Track
-import com.example.myplaylistmaker.search.ui.SearchFragment
 import com.example.myplaylistmaker.search.ui.TrackAdapter
 import com.example.myplaylistmaker.utility.StringUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,7 +25,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class PlaylistFragment: Fragment() {
+class PlaylistFragment : Fragment() {
     private lateinit var binding: FragmentPlaylistBinding
     private val viewModel by viewModel<PlaylistViewModel>()
     private lateinit var tracksAdapter: TrackAdapter
@@ -36,11 +33,14 @@ class PlaylistFragment: Fragment() {
     private lateinit var playlist: Playlist
     lateinit var confirmDialog: MaterialAlertDialogBuilder
 
-    companion object{
+    companion object {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         binding = FragmentPlaylistBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -53,7 +53,48 @@ class PlaylistFragment: Fragment() {
         bottomNavigationView.visibility = View.GONE
         playlist = requireArguments().getSerializable("playlist") as Playlist
 
-        if(playlist.pathToFile != null) binding.playlistImage.setImageBitmap(viewModel.getImageBitmap(playlist))
+        if (playlist.pathToFile != null) {
+            binding.playlistImage.setImageBitmap(
+                viewModel.getImageBitmap(
+                    playlist
+                )
+            )
+            binding.playlistImageBottomView.setImageBitmap(
+                viewModel.getImageBitmap(
+                    playlist
+                )
+            )
+        }
+        val moreBottomSheetBehavior = BottomSheetBehavior.from(binding.moreBottomSheet)
+        val overlay = binding.overlay
+        moreBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        binding.moreButton.setOnClickListener {
+            moreBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            overlay.visibility = View.VISIBLE
+        }
+        moreBottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        overlay.visibility = View.VISIBLE
+                    }
+
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        overlay.visibility = View.VISIBLE
+                    }
+
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        overlay.visibility = View.GONE
+                    }
+                    else -> {
+                    }
+                }
+            }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+        binding.playlistName.text = playlist.name
+        binding.playlistQuantity.text = StringUtils.getTrackCountString(playlist.quantityTracks)
 
         binding.constraintLayout.post {
             val bottomSheetBehavior = BottomSheetBehavior.from(binding.standardBottomSheet)
@@ -62,7 +103,7 @@ class PlaylistFragment: Fragment() {
             bottomSheetBehavior.peekHeight = coordinatorLayoutBottom - constraintLayoutBottom - 24
         }
         binding.backButton.bringToFront()
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
         binding.header.text = playlist.name
@@ -70,9 +111,16 @@ class PlaylistFragment: Fragment() {
 
         viewModel.getTotalTime(playlist)
         var countingTracks = playlist.quantityTracks
-        viewModel.observeTotalTime().observe(viewLifecycleOwner){
-            binding.trackCounting.text = "${StringUtils.getMinutesCountString(SimpleDateFormat("mm", Locale.getDefault()).format(it!!).toInt())} • ${StringUtils.getTrackCountString(countingTracks)} "
-
+        viewModel.observeTotalTime().observe(viewLifecycleOwner) {
+            binding.trackCounting.text = "${
+                StringUtils.getMinutesCountString(
+                    SimpleDateFormat(
+                        "mm",
+                        Locale.getDefault()
+                    ).format(it!!).toInt()
+                )
+            } • ${StringUtils.getTrackCountString(countingTracks)} "
+            binding.playlistQuantity.text = StringUtils.getTrackCountString(countingTracks)
         }
 
 
@@ -85,7 +133,7 @@ class PlaylistFragment: Fragment() {
                 findNavController().navigate(R.id.action_playlistFragment_to_playerActivity, bundle)
             }
         }
-        tracksAdapter.setOnItemLongClickListener{
+        tracksAdapter.setOnItemLongClickListener {
             confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
                 .setTitle("Вы уверены, что хотите удалить трек?")
                 .setNeutralButton("Отмена") { dialog, which -> }
@@ -96,15 +144,16 @@ class PlaylistFragment: Fragment() {
                 }
             confirmDialog.show()
 
-            true}
+            true
+        }
 
         val recyclerView = binding.recyclerView
         recyclerView.adapter = tracksAdapter
 
-            viewModel.getTracks(playlist)
+        viewModel.getTracks(playlist)
 
-        viewModel.observeTracks().observe(viewLifecycleOwner){
-Log.d("треки", it.toString())
+        viewModel.observeTracks().observe(viewLifecycleOwner) {
+            Log.d("треки", it.toString())
             tracksAdapter.trackList.clear()
             tracksAdapter.trackList.addAll(it)
             tracksAdapter.notifyDataSetChanged()
@@ -112,20 +161,21 @@ Log.d("треки", it.toString())
 
         }
 
-        binding.shareButton.setOnClickListener{
-            if(playlist.tracksIds == "") {
+        binding.shareButton.setOnClickListener {
+            if (playlist.tracksIds == "") {
                 Toast.makeText(
                     requireContext(),
                     "В этом плейлисте нет списка треков, которым можно поделиться",
                     Toast.LENGTH_LONG
                 )
                     .show()
-            }else{
+            } else {
                 lifecycleScope.launch {
                     viewModel.sharePlaylist(viewModel.getPlaylistInfo(playlist), requireContext())
                 }
             }
         }
+
 
     }
 

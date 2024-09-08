@@ -38,6 +38,8 @@ class PlaylistViewModel(
         return playlist.getImage(imageDecoder)
     }
 
+
+
     fun getTracks(playlist: Playlist) {
         viewModelScope.launch {
             playlistInteractor.getTracksFromPlaylist(playlist.id).collect { tracks ->

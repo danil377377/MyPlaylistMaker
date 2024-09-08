@@ -29,5 +29,7 @@
     <string name="description">Описание</string>
     <string name="Create">Создать</string>
     <string name="add_to_playlist">Добавить в плейлист</string>
+    <string name="delete_playlist">Удалить плейлист</string>
+    <string name="edit_info">Редактировать информацию</string>
 
 </resources>

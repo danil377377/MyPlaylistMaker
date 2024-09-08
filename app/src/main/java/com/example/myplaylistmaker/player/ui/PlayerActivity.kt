@@ -75,24 +75,19 @@ class PlayerActivity : AppCompatActivity() {
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                // newState — новое состояние BottomSheet
                 when (newState) {
                     BottomSheetBehavior.STATE_EXPANDED -> {
-                        // загружаем рекламный баннер
                         overlay.visibility = View.VISIBLE
                     }
 
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        // останавливаем трейлер
                         overlay.visibility = View.VISIBLE
                     }
 
                     BottomSheetBehavior.STATE_HIDDEN -> {
-                        // возобновляем трейлер
                         overlay.visibility = View.GONE
                     }
                     else -> {
-                        // Остальные состояния не обрабатываем
                     }
                 }
             }
