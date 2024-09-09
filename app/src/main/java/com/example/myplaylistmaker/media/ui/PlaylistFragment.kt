@@ -105,11 +105,14 @@ class PlaylistFragment : Fragment() {
             val coordinatorLayoutBottom = binding.coordinatorLayout.bottom
             bottomSheetBehavior.peekHeight = coordinatorLayoutBottom - constraintLayoutBottom - 24
         }
-        binding.editInfoButtonBottomSheet.setOnClickListener{
+        binding.editInfoButtonBottomSheet.setOnClickListener {
             val bundle = Bundle().apply {
                 putSerializable("editPlaylist", playlist)
             }
-            findNavController().navigate(R.id.action_playlistFragment_to_editPlaylistFragment, bundle)
+            findNavController().navigate(
+                R.id.action_playlistFragment_to_editPlaylistFragment,
+                bundle
+            )
         }
 
         binding.backButton.bringToFront()
@@ -212,6 +215,22 @@ class PlaylistFragment : Fragment() {
                 }
             }
         }
+        viewModel.observeName().observe(viewLifecycleOwner) {
+            binding.header.text = it
+            binding.playlistName.text = it
+        }
+        viewModel.observeDescription().observe(viewLifecycleOwner) {
+            binding.description.text = it
+        }
+        viewModel.observeImage().observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.playlistImage.setImageBitmap(it)
+                binding.playlistImageBottomView.setImageBitmap(it)
+            } else {
+                binding.playlistImage.setImageResource(R.drawable.placeholder)
+                binding.playlistImageBottomView.setImageBitmap(it)
+            }
+        }
 
 
     }
@@ -232,5 +251,9 @@ class PlaylistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getTracks(playlist)
+        viewModel.getPlaylistName(playlist.id)
+        viewModel.getPlaylistDescription(playlist.id)
+        viewModel.getPlaylistImage(playlist.id)
+
     }
 }

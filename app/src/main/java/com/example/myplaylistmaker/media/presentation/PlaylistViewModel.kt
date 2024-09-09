@@ -33,11 +33,33 @@ class PlaylistViewModel(
 
     private val totalTime = MutableLiveData<Long>()
     fun observeTotalTime(): LiveData<Long> = totalTime
+    private val playlistName = MutableLiveData<String>()
+    fun observeName():LiveData<String> = playlistName
+    private val playlistDescription = MutableLiveData<String>()
+    fun observeDescription():LiveData<String> = playlistDescription
+    private val playlistImageBitmap = MutableLiveData<Bitmap?>()
+    fun observeImage(): LiveData<Bitmap?> = playlistImageBitmap
+
 
     fun getImageBitmap(playlist: Playlist): Bitmap? {
         return playlist.getImage(imageDecoder)
     }
 
+    fun getPlaylistImage(playlistId: Int){
+        viewModelScope.launch {
+            playlistImageBitmap.postValue(getImageBitmap(playlistInteractor.getPlaylist(playlistId).single()))
+        }
+    }
+    fun getPlaylistName(playlistId: Int){
+        viewModelScope.launch {
+            playlistName.postValue(playlistInteractor.getPlaylist(playlistId).single().name)
+        }
+    }
+    fun getPlaylistDescription(playlistId: Int){
+        viewModelScope.launch {
+            playlistDescription.postValue(playlistInteractor.getPlaylist(playlistId).single().description)
+        }
+    }
 
 
     fun getTracks(playlist: Playlist) {

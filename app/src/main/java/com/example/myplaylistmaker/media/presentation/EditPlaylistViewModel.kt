@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.db.PlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
 class EditPlaylistViewModel(application: Application,
@@ -30,6 +31,11 @@ class EditPlaylistViewModel(application: Application,
     fun updatePlaylist(playlistId: Int){
         viewModelScope.launch {
             playlistInteractor.updatePlaylistById(playlistId, name = super.name.value?:"errorr",super.description.value?:"",super.filePath.value)
+        }
+    }
+    fun updatePlaylistInfoForFragment(playlistId: Int){
+        viewModelScope.launch {
+            _playlist.postValue(playlistInteractor.getPlaylist(playlistId).single())
         }
     }
     override suspend fun saveToDb(){

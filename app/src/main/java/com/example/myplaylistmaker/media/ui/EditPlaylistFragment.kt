@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.media.presentation.EditPlaylistViewModel
 import kotlinx.coroutines.launch
@@ -32,7 +33,12 @@ viewModel.initPlaylist(playlist)
         super.binding.textInputName.setText(playlist.name)
         super.binding.textInputDescription.setText(playlist.description)
         super.binding.playlistPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
-        super.binding.playlistPhoto.setImageBitmap(viewModel.getImageBitmap(playlist))
+            if (it.pathToFile != null) {
+                binding.playlistPhoto.setImageBitmap(viewModel.getImageBitmap(it))
+            } else {
+                binding.playlistPhoto.setImageResource(R.drawable.placeholder)
+            }
+
     }
 
         super.binding.backButton.setOnClickListener{
@@ -53,7 +59,14 @@ viewModel.initPlaylist(playlist)
             }
             viewModel.updatePlaylist(playlist.id)
 
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
+
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.updatePlaylistInfoForFragment(playlist.id)
+//
+//    }
 }
