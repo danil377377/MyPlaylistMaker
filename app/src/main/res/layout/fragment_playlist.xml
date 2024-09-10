@@ -143,6 +143,16 @@
             android:layout_gravity="center_horizontal"
 
             android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/no_tracks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="В этом плейлисте нет треков"
+            android:layout_marginTop="@dimen/_16dp"
+            android:layout_gravity="center"
+            style="@style/TextStyle"
+            >
+        </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -153,6 +163,7 @@
             android:layout_marginEnd="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/track_card"></androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
     <LinearLayout

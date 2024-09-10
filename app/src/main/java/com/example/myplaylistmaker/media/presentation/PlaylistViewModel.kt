@@ -67,7 +67,7 @@ class PlaylistViewModel(
     fun getTracks(playlist: Playlist) {
         viewModelScope.launch {
             playlistInteractor.getTracksFromPlaylist(playlist.id).collect { tracks ->
-                tracksList.postValue(ArrayList(tracks))
+                tracksList.postValue(ArrayList(tracks.reversed()))
             }
         }
     }

@@ -13,6 +13,7 @@ import com.example.myplaylistmaker.R
 import com.example.myplaylistmaker.databinding.FragmentPlaylistBinding
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import com.example.myplaylistmaker.media.presentation.PlaylistViewModel
+import com.example.myplaylistmaker.search.domain.models.Track
 import com.example.myplaylistmaker.search.ui.TrackAdapter
 import com.example.myplaylistmaker.utility.StringUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -125,6 +126,7 @@ class PlaylistFragment : Fragment() {
         viewModel.getTotalTime(playlist)
         var countingTracks = playlist.quantityTracks
         viewModel.observeTotalTime().observe(viewLifecycleOwner) {
+            if(countingTracks==0)binding.noTracks.visibility = View.VISIBLE else binding.noTracks.visibility = View.GONE
             binding.trackCounting.text = "${
                 StringUtils.getMinutesCountString(
                     SimpleDateFormat(
