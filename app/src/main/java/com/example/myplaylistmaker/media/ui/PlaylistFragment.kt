@@ -211,7 +211,11 @@ class PlaylistFragment : Fragment() {
                     Toast.LENGTH_LONG
                 )
                     .show()
+                moreBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                overlay.visibility = View.GONE
             } else {
+                moreBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                overlay.visibility = View.GONE
                 lifecycleScope.launch {
                     viewModel.sharePlaylist(viewModel.getPlaylistInfo(playlist), requireContext())
                 }
