@@ -23,6 +23,7 @@ class EditPlaylistViewModel(application: Application,
 
     fun initPlaylist(playlist:Playlist){
         _playlist.postValue(playlist)
+        super._filePath.postValue(playlist.pathToFile)
     }
     fun getImageBitmap(playlist: Playlist): Bitmap? {
         return playlist.getImage(imageDecoder)
@@ -30,15 +31,12 @@ class EditPlaylistViewModel(application: Application,
 
     fun updatePlaylist(playlistId: Int){
         viewModelScope.launch {
+
             playlistInteractor.updatePlaylistById(playlistId, name = super.name.value?:"errorr",super.description.value?:"",super.filePath.value)
-        }
-    }
-    fun updatePlaylistInfoForFragment(playlistId: Int){
-        viewModelScope.launch {
-            _playlist.postValue(playlistInteractor.getPlaylist(playlistId).single())
         }
     }
     override suspend fun saveToDb(){
         imageUri.value?.let { saveImageToPrivateStorage(it) }
+
     }
 }

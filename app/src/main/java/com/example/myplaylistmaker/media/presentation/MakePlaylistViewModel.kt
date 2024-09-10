@@ -22,7 +22,7 @@ private val _name = MutableLiveData<String>()
 
     private val _imageUri = MutableLiveData<String?>()
     open val imageUri: LiveData<String?> = _imageUri
-    private val _filePath = MutableLiveData<String?>()
+    val _filePath = MutableLiveData<String?>()
     open val filePath:LiveData<String?> = _filePath
     private val playlistsList = MutableLiveData<List<Playlist>>()
     fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList

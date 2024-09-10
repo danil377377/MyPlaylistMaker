@@ -64,9 +64,4 @@ viewModel.initPlaylist(playlist)
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.updatePlaylistInfoForFragment(playlist.id)
-//
-//    }
 }

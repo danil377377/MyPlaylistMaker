@@ -39,6 +39,8 @@ class PlaylistViewModel(
     fun observeDescription():LiveData<String> = playlistDescription
     private val playlistImageBitmap = MutableLiveData<Bitmap?>()
     fun observeImage(): LiveData<Bitmap?> = playlistImageBitmap
+    private val playlist = MutableLiveData<Playlist>()
+    fun observePlaylist():LiveData<Playlist> = playlist
 
 
     fun getImageBitmap(playlist: Playlist): Bitmap? {
@@ -89,6 +91,11 @@ class PlaylistViewModel(
             }
         }
 
+    }
+    fun getPlaylist(id:Int){
+        viewModelScope.launch {
+            playlist.postValue(playlistInteractor.getPlaylist(id).single())
+        }
     }
      fun deletePlaylistById(playlistId: Int){
         viewModelScope.launch {

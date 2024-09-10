@@ -231,6 +231,9 @@ class PlaylistFragment : Fragment() {
                 binding.playlistImageBottomView.setImageBitmap(it)
             }
         }
+        viewModel.observePlaylist().observe(viewLifecycleOwner){
+            playlist=it
+        }
 
 
     }
@@ -254,6 +257,6 @@ class PlaylistFragment : Fragment() {
         viewModel.getPlaylistName(playlist.id)
         viewModel.getPlaylistDescription(playlist.id)
         viewModel.getPlaylistImage(playlist.id)
-
+        viewModel.getPlaylist(playlist.id)
     }
 }
