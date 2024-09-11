@@ -112,10 +112,12 @@ class PlayerViewModel(
             onPrepared()
         }
         mediaPlayer.setOnCompletionListener {
-            onComplete()
-            mediaPlayer.pause()
-            playerState = STATE_PAUSED
-            renderState(PlayerState.Pause())
+            if(playerState!=0) {
+                onComplete()
+                mediaPlayer.pause()
+                playerState = STATE_PAUSED
+                renderState(PlayerState.Pause())
+            }
         }
     }
 
