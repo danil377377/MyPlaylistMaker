@@ -5,26 +5,25 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myplaylistmaker.media.domain.db.MakePlaylistInteractor
+import com.example.myplaylistmaker.media.domain.db.PlaylistInteractor
 import com.example.myplaylistmaker.media.domain.models.Playlist
 import kotlinx.coroutines.launch
-import java.io.File
 
-class MakePlaylistViewModel(
+open class MakePlaylistViewModel(
     application: Application,
-    private val makePlaylistInteractor: MakePlaylistInteractor,
+    private val playlistInteractor: PlaylistInteractor,
 ) : AndroidViewModel(application) {
 
 private val _name = MutableLiveData<String>()
-    val name: LiveData<String> = _name
+    open val name: LiveData<String> = _name
 
     private val _description = MutableLiveData<String>()
-    val description: LiveData<String> = _description
+    open val description: LiveData<String> = _description
 
     private val _imageUri = MutableLiveData<String?>()
-    val imageUri: LiveData<String?> = _imageUri
-    private val _filePath = MutableLiveData<String?>()
-    val filePath:LiveData<String?> = _filePath
+    open val imageUri: LiveData<String?> = _imageUri
+    val _filePath = MutableLiveData<String?>()
+    open val filePath:LiveData<String?> = _filePath
     private val playlistsList = MutableLiveData<List<Playlist>>()
     fun  observePlaylists(): LiveData<List<Playlist>> = playlistsList
 
@@ -36,14 +35,14 @@ private val _name = MutableLiveData<String>()
 
     }
 
-    private fun saveImageToPrivateStorage(uri: String) {
-        _filePath.value= makePlaylistInteractor.saveImageToPrivateStorage(uri, name.value?:"test")
+    fun saveImageToPrivateStorage(uri: String) {
+        _filePath.value= playlistInteractor.saveImageToPrivateStorage(uri, name.value?:"test")
     }
 
 
     fun getListOfPlaylists(){
         viewModelScope.launch {
-            makePlaylistInteractor.getPlaylists().collect{playlists ->
+            playlistInteractor.getPlaylists().collect{ playlists ->
                 playlistsList.postValue(playlists)
             }
         }
@@ -61,11 +60,11 @@ private val _name = MutableLiveData<String>()
     fun shouldShowConfirmDialog(): Boolean {
         return !(_name.value.isNullOrEmpty() && _description.value.isNullOrEmpty() && _imageUri.value == null)
     }
-    suspend fun saveToDb(){
+    open suspend fun saveToDb(){
 
         imageUri.value?.let { saveImageToPrivateStorage(it) }
-makePlaylistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))
-       viewModelScope.launch {  makePlaylistInteractor.getPlaylists().collect{playlistsList->
+playlistInteractor.addPlaylist(Playlist(id = 0, name = name.value.toString(), description = description.value.toString(), pathToFile = filePath.value, tracksIds = "", quantityTracks = 0))
+       viewModelScope.launch {  playlistInteractor.getPlaylists().collect{ playlistsList->
            lastPlaylists = playlistsList
 
        }}

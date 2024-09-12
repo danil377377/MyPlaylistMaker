@@ -3,6 +3,7 @@ package com.example.myplaylistmaker.media.domain.models
 import android.graphics.Bitmap
 import com.example.myplaylistmaker.media.domain.ImageDecoder
 import java.io.File
+import java.io.Serializable
 
 data class Playlist(
     val id: Int,
@@ -11,7 +12,7 @@ data class Playlist(
     val pathToFile: String?,
     val tracksIds: String,
     val quantityTracks: Int
-){
+):Serializable{
     fun getImage(imageDecoder: ImageDecoder): Bitmap? {
         return imageDecoder.decodeImage(pathToFile)
     }

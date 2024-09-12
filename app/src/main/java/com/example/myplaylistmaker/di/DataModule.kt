@@ -7,10 +7,10 @@ import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.media.data.ImageDecoderImpl
 import com.example.myplaylistmaker.media.data.ImageStorageImpl
 import com.example.myplaylistmaker.media.data.converters.PlaylistDbConvertor
-import com.example.myplaylistmaker.media.data.db.MakePlaylistRepositoryImpl
+import com.example.myplaylistmaker.media.data.db.PlaylistRepositoryImpl
 import com.example.myplaylistmaker.media.domain.ImageDecoder
 import com.example.myplaylistmaker.media.domain.ImageStorage
-import com.example.myplaylistmaker.media.domain.db.MakePlaylistRepository
+import com.example.myplaylistmaker.media.domain.db.PlaylistRepository
 import com.example.myplaylistmaker.player.data.GlideLoaderImpl
 import com.example.myplaylistmaker.player.data.MediaPlayerWrapperImpl
 import com.example.myplaylistmaker.player.domain.GlideLoader
@@ -51,7 +51,7 @@ val repositoryModule = module {
     single<FavoritesRepository> {
         FavoritesRepositoryImpl(get(), get())
     }
-    single<MakePlaylistRepository> { MakePlaylistRepositoryImpl(get(), get()) }
+    single<PlaylistRepository> { PlaylistRepositoryImpl(get(), get()) }
 
     factory<TracksRepository> {
         TracksRepositoryImpl(get(), get())

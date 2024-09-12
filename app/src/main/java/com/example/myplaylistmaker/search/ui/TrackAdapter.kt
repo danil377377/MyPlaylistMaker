@@ -1,6 +1,7 @@
 package com.example.myplaylistmaker.search.ui
 
 import android.view.LayoutInflater
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myplaylistmaker.R
@@ -9,6 +10,7 @@ import com.example.myplaylistmaker.search.domain.models.Track
 class TrackAdapter( val clickListener: LocationClickListener) : RecyclerView.Adapter<TrackViewHolder>() {
 
     var trackList = ArrayList<Track>()
+    private var onItemLongClickListener: ((track: Track) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_card, parent, false)
         return TrackViewHolder(view)
@@ -17,6 +19,10 @@ class TrackAdapter( val clickListener: LocationClickListener) : RecyclerView.Ada
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(trackList[position])
         holder.itemView.setOnClickListener { clickListener.onLocationClick(trackList.get(position)) }
+        holder.itemView.setOnLongClickListener {
+            onItemLongClickListener?.invoke(trackList[position])
+            true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -24,6 +30,9 @@ class TrackAdapter( val clickListener: LocationClickListener) : RecyclerView.Ada
     }
     fun interface LocationClickListener {
         fun onLocationClick(location: Track)
+    }
+    fun setOnItemLongClickListener(listener: ((track: Track) -> Unit)) {
+        onItemLongClickListener = listener
     }
 
 

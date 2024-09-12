@@ -6,6 +6,7 @@ import com.example.myplaylistmaker.db.AppDatabase
 import com.example.myplaylistmaker.search.domain.api.SharedPrefs
 import com.example.myplaylistmaker.search.domain.models.Track
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
 
 class SharedPrefsImpl(private val context: Context, val gson: Gson, private val appDatabase: AppDatabase):SharedPrefs {
     companion object {
@@ -33,7 +34,7 @@ class SharedPrefsImpl(private val context: Context, val gson: Gson, private val 
      }
 
     override suspend fun getHistory(): ArrayList<Track>{
-        val favoritesIds:List<String> = appDatabase.trackDao().getTracksId()
+        val favoritesIds:List<String> = appDatabase.favoriteTracksDao().getTracksId().first()
         val tracks =  createTracksFromJson(getHistoryFromJson())
         tracks.forEach{
             track -> track.isFavorite = favoritesIds.contains(track.trackId.toString())

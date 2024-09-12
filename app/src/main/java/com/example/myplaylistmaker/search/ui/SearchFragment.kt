@@ -83,7 +83,6 @@ class SearchFragment : Fragment() {
                     putSerializable("track", it)
                 }
                 viewModel.addToHistory(it)
-                Log.d("MyTest", "BeforeIntent")
                 findNavController().navigate(R.id.action_searchFragment_to_playerActivity, bundle)
             }
         }
