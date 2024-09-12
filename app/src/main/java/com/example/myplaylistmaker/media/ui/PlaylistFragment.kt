@@ -168,7 +168,6 @@ class PlaylistFragment : Fragment() {
         viewModel.getTracks(playlist)
 
         viewModel.observeTracks().observe(viewLifecycleOwner) {
-            Log.d("треки", it.toString())
             tracksAdapter.trackList.clear()
             tracksAdapter.trackList.addAll(it)
             tracksAdapter.notifyDataSetChanged()

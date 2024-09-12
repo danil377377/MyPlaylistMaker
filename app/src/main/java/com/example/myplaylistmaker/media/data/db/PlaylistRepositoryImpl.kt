@@ -40,7 +40,7 @@ class PlaylistRepositoryImpl(
                     track.releaseDate,
                     track.collectionName,
                     track.country,
-                    track.artworkUrl100,
+                    track.previewUrl,
                     track.coverArtWork,
                     favoritesIds.contains(track.id)
                 )
@@ -92,7 +92,7 @@ class PlaylistRepositoryImpl(
                 track.releaseDate,
                 track.collectionName,
                 track.country,
-                track.artworkUrl100,
+                track.previewUrl,
                 track.coverArtWork,
                 "trackFile"
             )
